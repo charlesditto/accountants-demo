@@ -1221,20 +1221,20 @@
 
               <g class="node node-out" data-node="out-fin" data-goto="m1">
                 <rect x="40" y="795" width="160" height="64" rx="10"/>
-                <text x="120" y="817" class="n-title">Financial Reports</text>
-                <text x="120" y="835" class="n-sub">AI narrative reporting</text>
+                <text x="120" y="817" class="n-title" id="outFinTitle">Financial Reports</text>
+                <text x="120" y="835" class="n-sub" id="outFinSub">AI narrative reporting</text>
                 <text x="120" y="851" class="n-cta">View demo →</text>
               </g>
               <g class="node node-out" data-node="out-not" data-goto="m2">
                 <rect x="280" y="795" width="160" height="64" rx="10"/>
-                <text x="360" y="817" class="n-title">Notice Automation</text>
-                <text x="360" y="835" class="n-sub">Tax + client reminders</text>
+                <text x="360" y="817" class="n-title" id="outNotTitle">Notice Automation</text>
+                <text x="360" y="835" class="n-sub" id="outNotSub">Tax + client reminders</text>
                 <text x="360" y="851" class="n-cta">View demo →</text>
               </g>
               <g class="node node-out" data-node="out-cod" data-goto="m3">
                 <rect x="520" y="795" width="160" height="64" rx="10"/>
-                <text x="600" y="817" class="n-title">Accounts Coding</text>
-                <text x="600" y="835" class="n-sub">AI transaction coding</text>
+                <text x="600" y="817" class="n-title" id="outCodTitle">Accounts Coding</text>
+                <text x="600" y="835" class="n-sub" id="outCodSub">AI transaction coding</text>
                 <text x="600" y="851" class="n-cta">View demo →</text>
               </g>
 
@@ -1400,6 +1400,23 @@
               <div class="field"><label>Staff 3 role</label><input id="cfg-s2-role" placeholder="e.g. Accountant"/></div>
               <div class="field"><label>Staff 4 name</label><input id="cfg-s3-name" placeholder="e.g. Rahul Naidu"/></div>
               <div class="field"><label>Staff 4 role</label><input id="cfg-s3-role" placeholder="e.g. Bookkeeper"/></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output module labels -->
+        <div class="card">
+          <div class="card-head">
+            <div><h2>🧩 Output Module Labels</h2><div class="sub">Rename the three output boxes shown on the Architecture diagram</div></div>
+          </div>
+          <div class="card-body">
+            <div class="setup-grid">
+              <div class="field"><label>Module 1 title</label><input id="cfg-o0-title" placeholder="e.g. Financial Reports"/></div>
+              <div class="field"><label>Module 1 subtitle</label><input id="cfg-o0-sub" placeholder="e.g. AI narrative reporting"/></div>
+              <div class="field"><label>Module 2 title</label><input id="cfg-o1-title" placeholder="e.g. Notice Automation"/></div>
+              <div class="field"><label>Module 2 subtitle</label><input id="cfg-o1-sub" placeholder="e.g. Tax + client reminders"/></div>
+              <div class="field"><label>Module 3 title</label><input id="cfg-o2-title" placeholder="e.g. Accounts Coding"/></div>
+              <div class="field"><label>Module 3 subtitle</label><input id="cfg-o2-sub" placeholder="e.g. AI transaction coding"/></div>
             </div>
           </div>
         </div>
@@ -2187,6 +2204,11 @@ const DEFAULT_CONFIG = {
     {name:'Harbour Cafe Ltd'},
     {name:'Greenfield Landscapes Ltd'},
     {name:'Aoraki Consulting Ltd'}
+  ],
+  outputs:[
+    {title:'Financial Reports', sub:'AI narrative reporting'},
+    {title:'Notice Automation', sub:'Tax + client reminders'},
+    {title:'Accounts Coding',   sub:'AI transaction coding'}
   ]
 };
 
@@ -2340,6 +2362,13 @@ window.applyConfig = function(){
   if(m3s3) m3s3.innerHTML=`<div class="check">3</div> Applying ${c.practice.short} coding rules &amp; GST treatment`;
   // Browser tab title
   document.title=`${c.practice.short} · AI Workspace for Accountants`;
+  // Architecture output module labels
+  const outIds = [['outFinTitle','outFinSub'],['outNotTitle','outNotSub'],['outCodTitle','outCodSub']];
+  outIds.forEach((ids,i)=>{
+    const t=document.getElementById(ids[0]); const s=document.getElementById(ids[1]);
+    if(t && c.outputs[i]) t.textContent=c.outputs[i].title;
+    if(s && c.outputs[i]) s.textContent=c.outputs[i].sub;
+  });
 
   // Dynamic re-renders
   renderTeamCards();
@@ -2366,6 +2395,7 @@ function populateSetupForm(){
     byId(`cfg-s${i}-role`,c.staff[i].role);
   }
   for(let i=0;i<4;i++) byId(`cfg-c${i}-name`,c.clients[i].name);
+  for(let i=0;i<3;i++){ byId(`cfg-o${i}-title`,c.outputs[i].title); byId(`cfg-o${i}-sub`,c.outputs[i].sub); }
   // Logo preview
   const lp=document.getElementById('cfgLogoPreview');
   if(lp){
@@ -2397,6 +2427,10 @@ window.saveSetupForm = function(){
   }
   for(let i=0;i<4;i++){
     c.clients[i].name=v(`cfg-c${i}-name`)||c.clients[i].name;
+  }
+  for(let i=0;i<3;i++){
+    c.outputs[i].title=v(`cfg-o${i}-title`)||c.outputs[i].title;
+    c.outputs[i].sub=v(`cfg-o${i}-sub`)||c.outputs[i].sub;
   }
   try{ localStorage.setItem('ditto-config', JSON.stringify(CONFIG)); }catch(e){ console.warn('Config save failed — localStorage may be full (logo too large?)',e); }
   applyConfig();
