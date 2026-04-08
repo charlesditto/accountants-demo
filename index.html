@@ -401,6 +401,28 @@
   .arch-svg .node-ai .n-sub{fill:#6d28d9}
   .arch-svg .node-ai:hover rect{fill:#e9dffb}
 
+  /* Security nodes (neutral gray) */
+  .arch-svg .node-sec rect{fill:#f4f6f8;stroke:#6b7280;stroke-width:1.5}
+  .arch-svg .node-sec .n-title{fill:#374151}
+  .arch-svg .node-sec .n-sub{fill:#6b7280}
+  .arch-svg .node-sec:hover rect{fill:#e9ecf0}
+
+  /* Security strip badges */
+  .arch-svg .sec-strip{pointer-events:none}
+  .arch-svg .sec-badge{cursor:pointer}
+  .arch-svg .sec-badge rect{transition:fill .2s}
+  .arch-svg .sec-badge:hover rect{fill:#e4e7ec}
+  .arch-svg .sec-badge.selected rect{fill:#dde1e9}
+  .arch-svg .sec-t{font-size:12px;font-weight:700;fill:#374151;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+  .arch-svg .sec-s{font-size:10px;font-weight:500;fill:#6b7280;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+
+  /* Legend */
+  .arch-svg .arch-legend .leg-title{font-size:12px;font-weight:700;fill:#0b1220}
+  .arch-svg .arch-legend .leg-t{font-size:10.5px;fill:#374151;font-weight:500;dominant-baseline:middle}
+
+  /* Panel detail - sec type */
+  .arch-panel-detail.sec .ap-tag{background:#eef0f4;color:#374151}
+
   /* Output nodes (lime/green strong hover) */
   .arch-svg .node-out rect{fill:#f2fbdc;stroke:#8dc71f;stroke-width:1.8}
   .arch-svg .node-out .n-title{fill:#3e5a0a}
@@ -975,93 +997,195 @@
       <div class="arch-layout">
         <div class="card arch-card">
           <div class="card-body" style="padding:24px">
-            <svg class="arch-svg" viewBox="0 0 680 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MPG private AI architecture">
+            <svg class="arch-svg" viewBox="0 0 720 1055" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MPG private AI architecture">
               <defs>
                 <marker id="arrHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                   <path d="M2 1L8 5L2 9" fill="none" stroke="#6b7280" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
                 </marker>
+                <symbol id="lockIcon" viewBox="0 0 14 16">
+                  <rect x="1.5" y="6" width="11" height="9" rx="1.4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                  <path d="M4 6 V3.8 a3 3 0 0 1 6 0 V6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                </symbol>
               </defs>
 
-              <!-- Secure infra container -->
-              <rect class="secure-zone" x="40" y="128" width="600" height="280" rx="18" fill="#fafbfc" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="6 5"/>
-              <text x="60" y="152" class="zone-title">🔒 Ditto Secure Infrastructure</text>
-              <text x="60" y="170" class="zone-sub">AWS Sydney region · NZ data sovereignty · zero model training</text>
+              <!-- LAYER 0 · Perimeter -->
+              <g class="node node-sec" data-node="waf">
+                <rect x="100" y="40" width="220" height="58" rx="10"/>
+                <text x="210" y="64" class="n-title">AWS WAF</text>
+                <text x="210" y="84" class="n-sub">Common ruleset · bad input blocking</text>
+              </g>
+              <g class="node node-sec" data-node="tls">
+                <rect x="400" y="40" width="220" height="58" rx="10"/>
+                <text x="510" y="64" class="n-title">TLS 1.3</text>
+                <text x="510" y="84" class="n-sub">All traffic encrypted in transit</text>
+              </g>
+              <line x1="320" y1="69" x2="400" y2="69" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="3 3"/>
+              <rect x="302" y="59" width="116" height="18" rx="3" fill="#fff"/>
+              <text x="360" y="72" class="edge-label" text-anchor="middle">All inbound traffic</text>
 
-              <!-- Xero API -->
+              <!-- perimeter → sources -->
+              <line x1="210" y1="98" x2="210" y2="158" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="510" y1="98" x2="510" y2="158" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+
+              <!-- LAYER 1 · Data sources -->
               <g class="node node-src" data-node="xero">
-                <rect x="80" y="40" width="200" height="60" rx="10"/>
-                <text x="180" y="64" class="n-title">Xero API</text>
-                <text x="180" y="84" class="n-sub">Accounting &amp; bookkeeping</text>
+                <rect x="110" y="160" width="200" height="58" rx="10"/>
+                <text x="210" y="184" class="n-title">Xero API</text>
+                <text x="210" y="204" class="n-sub">Accounting &amp; bookkeeping</text>
+                <use href="#lockIcon" x="282" y="168" width="14" height="16" color="#047a4e"/>
               </g>
-
-              <!-- XPM API -->
               <g class="node node-src" data-node="xpm">
-                <rect x="400" y="40" width="200" height="60" rx="10"/>
-                <text x="500" y="64" class="n-title">XPM API</text>
-                <text x="500" y="84" class="n-sub">Practice management</text>
+                <rect x="410" y="160" width="200" height="58" rx="10"/>
+                <text x="510" y="184" class="n-title">XPM API</text>
+                <text x="510" y="204" class="n-sub">Practice management</text>
+                <use href="#lockIcon" x="582" y="168" width="14" height="16" color="#047a4e"/>
               </g>
+              <text x="210" y="236" class="edge-label" text-anchor="middle">OAuth 2.0 · scoped access only</text>
+              <text x="510" y="236" class="edge-label" text-anchor="middle">OAuth 2.0 · scoped access only</text>
 
-              <!-- OAuth labels -->
-              <text x="196" y="118" class="edge-label">OAuth 2.0</text>
-              <text x="516" y="118" class="edge-label">OAuth 2.0</text>
+              <!-- sources → middleware -->
+              <line x1="210" y1="248" x2="210" y2="325" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="510" y1="248" x2="510" y2="325" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
 
-              <!-- Arrows src -> middleware -->
-              <line x1="180" y1="100" x2="180" y2="188" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="500" y1="100" x2="500" y2="188" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <!-- LAYER 2 · Secure infrastructure container -->
+              <rect class="secure-zone" x="40" y="265" width="640" height="286" rx="18" fill="#fafbfc" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="6 5"/>
+              <text x="60" y="289" class="zone-title">🔒 Ditto Secure Infrastructure</text>
+              <text x="60" y="307" class="zone-sub">AWS Sydney ap-southeast-2 · VPC private subnet · KMS encryption · GuardDuty enabled · CloudTrail logging</text>
 
               <!-- Middleware -->
               <g class="node node-platform" data-node="mw">
-                <rect x="140" y="190" width="400" height="60" rx="10"/>
-                <text x="340" y="214" class="n-title">Ditto Middleware</text>
-                <text x="340" y="234" class="n-sub">Secure data processing · pull, process, discard</text>
+                <rect x="140" y="325" width="440" height="60" rx="10"/>
+                <text x="360" y="349" class="n-title">Ditto Middleware</text>
+                <text x="360" y="369" class="n-sub">Secure data processing · pull, process, discard</text>
               </g>
 
-              <line x1="340" y1="250" x2="340" y2="298" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="360" y1="385" x2="360" y2="405" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+
+              <!-- Security control strip -->
+              <rect class="sec-strip" x="60" y="405" width="600" height="40" rx="8" fill="#eef0f4" stroke="#cdd2dd" stroke-width="1"/>
+              <g class="node sec-badge" data-node="secrets">
+                <rect x="60" y="405" width="200" height="40" fill="transparent"/>
+                <text x="160" y="421" class="sec-t">Secrets Manager</text>
+                <text x="160" y="435" class="sec-s">token storage</text>
+              </g>
+              <line x1="260" y1="413" x2="260" y2="437" stroke="#cdd2dd" stroke-width="1"/>
+              <g class="node sec-badge" data-node="iam">
+                <rect x="260" y="405" width="200" height="40" fill="transparent"/>
+                <text x="360" y="421" class="sec-t">IAM least privilege</text>
+                <text x="360" y="435" class="sec-s">app role scoped</text>
+              </g>
+              <line x1="460" y1="413" x2="460" y2="437" stroke="#cdd2dd" stroke-width="1"/>
+              <g class="node sec-badge" data-node="vpce">
+                <rect x="460" y="405" width="200" height="40" fill="transparent"/>
+                <text x="560" y="421" class="sec-t">VPC endpoints</text>
+                <text x="560" y="435" class="sec-s">no public internet</text>
+              </g>
+
+              <line x1="360" y1="445" x2="360" y2="465" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
 
               <!-- LLM -->
               <g class="node node-ai" data-node="llm">
-                <rect x="140" y="300" width="400" height="60" rx="10"/>
-                <text x="340" y="324" class="n-title">Private LLM Engine</text>
-                <text x="340" y="344" class="n-sub">Claude via AWS Bedrock · no logging · no retention</text>
+                <rect x="140" y="465" width="440" height="60" rx="10"/>
+                <text x="360" y="489" class="n-title">Private LLM Engine</text>
+                <text x="360" y="509" class="n-sub">Claude via AWS Bedrock · no logging · no retention</text>
               </g>
 
-              <!-- LLM -> Staff interface (exits secure zone) -->
-              <line x1="340" y1="360" x2="340" y2="448" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <rect x="368" y="396" width="108" height="22" rx="4" fill="#fff" stroke="none"/>
-              <text x="422" y="411" class="edge-label" text-anchor="middle">🔐 Encrypted output</text>
+              <!-- LLM → staff (exits container) -->
+              <line x1="360" y1="525" x2="360" y2="623" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <rect x="192" y="565" width="336" height="22" rx="4" fill="#fff"/>
+              <text x="360" y="580" class="edge-label" text-anchor="middle">AES-256 encrypted · JWT verified · tenant isolated</text>
 
-              <!-- Staff interface -->
+              <!-- LAYER 4 · Staff interface -->
               <g class="node node-platform" data-node="staff">
-                <rect x="160" y="450" width="360" height="56" rx="10"/>
-                <text x="340" y="472" class="n-title">MPG Staff Interface</text>
-                <text x="340" y="492" class="n-sub">MFA · role-based access · full audit log</text>
+                <rect x="160" y="623" width="400" height="60" rx="10"/>
+                <text x="360" y="647" class="n-title">MPG Staff Interface</text>
+                <text x="360" y="667" class="n-sub">MFA enforced · RBAC · full audit log · session timeout</text>
               </g>
 
-              <!-- Trunk + bar -->
-              <line x1="340" y1="506" x2="340" y2="528" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="150" y1="528" x2="530" y2="528" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="150" y1="528" x2="150" y2="548" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="340" y1="528" x2="340" y2="548" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="530" y1="528" x2="530" y2="548" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="360" y1="683" x2="360" y2="703" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
 
-              <!-- Output modules -->
+              <!-- Monitoring strip -->
+              <rect class="sec-strip" x="60" y="703" width="600" height="40" rx="8" fill="#eef0f4" stroke="#cdd2dd" stroke-width="1"/>
+              <g class="node sec-badge" data-node="cloudwatch">
+                <rect x="60" y="703" width="200" height="40" fill="transparent"/>
+                <text x="160" y="719" class="sec-t">CloudWatch</text>
+                <text x="160" y="733" class="sec-s">real-time monitoring</text>
+              </g>
+              <line x1="260" y1="711" x2="260" y2="735" stroke="#cdd2dd" stroke-width="1"/>
+              <g class="node sec-badge" data-node="guardduty">
+                <rect x="260" y="703" width="200" height="40" fill="transparent"/>
+                <text x="360" y="719" class="sec-t">GuardDuty</text>
+                <text x="360" y="733" class="sec-s">threat detection</text>
+              </g>
+              <line x1="460" y1="711" x2="460" y2="735" stroke="#cdd2dd" stroke-width="1"/>
+              <g class="node sec-badge" data-node="cloudtrail">
+                <rect x="460" y="703" width="200" height="40" fill="transparent"/>
+                <text x="560" y="719" class="sec-t">CloudTrail</text>
+                <text x="560" y="733" class="sec-s">full AWS audit trail</text>
+              </g>
+
+              <!-- Trunk + branch -->
+              <line x1="360" y1="743" x2="360" y2="765" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="110" y1="765" x2="610" y2="765" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="110" y1="765" x2="110" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="360" y1="765" x2="360" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="610" y1="765" x2="610" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+
+              <!-- LAYER 5 · Output modules -->
               <g class="node node-out" data-node="out-fin" data-goto="m1">
-                <rect x="65" y="548" width="170" height="62" rx="10"/>
-                <text x="150" y="570" class="n-title">Financial Reports</text>
-                <text x="150" y="588" class="n-sub">AI narrative reporting</text>
-                <text x="150" y="604" class="n-cta">View demo →</text>
+                <rect x="30" y="795" width="160" height="64" rx="10"/>
+                <text x="110" y="817" class="n-title">Financial Reports</text>
+                <text x="110" y="835" class="n-sub">AI narrative reporting</text>
+                <text x="110" y="851" class="n-cta">View demo →</text>
               </g>
               <g class="node node-out" data-node="out-not" data-goto="m2">
-                <rect x="255" y="548" width="170" height="62" rx="10"/>
-                <text x="340" y="570" class="n-title">Notice Automation</text>
-                <text x="340" y="588" class="n-sub">Tax + client reminders</text>
-                <text x="340" y="604" class="n-cta">View demo →</text>
+                <rect x="280" y="795" width="160" height="64" rx="10"/>
+                <text x="360" y="817" class="n-title">Notice Automation</text>
+                <text x="360" y="835" class="n-sub">Tax + client reminders</text>
+                <text x="360" y="851" class="n-cta">View demo →</text>
               </g>
               <g class="node node-out" data-node="out-cod" data-goto="m3">
-                <rect x="445" y="548" width="170" height="62" rx="10"/>
-                <text x="530" y="570" class="n-title">Accounts Coding</text>
-                <text x="530" y="588" class="n-sub">AI transaction coding</text>
-                <text x="530" y="604" class="n-cta">View demo →</text>
+                <rect x="530" y="795" width="160" height="64" rx="10"/>
+                <text x="610" y="817" class="n-title">Accounts Coding</text>
+                <text x="610" y="835" class="n-sub">AI transaction coding</text>
+                <text x="610" y="851" class="n-cta">View demo →</text>
+              </g>
+
+              <!-- Output footer label -->
+              <text x="360" y="885" class="edge-label" text-anchor="middle">Rate limited · input validated · output logged per tenant</text>
+
+              <!-- Legend -->
+              <g class="arch-legend">
+                <rect x="408" y="905" width="292" height="140" rx="10" fill="#fafbfc" stroke="#d0d5dd" stroke-width="1"/>
+                <text x="422" y="925" class="leg-title">Legend</text>
+                <g transform="translate(422 939)">
+                  <line x1="0" y1="6" x2="22" y2="6" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="4 3"/>
+                  <text x="30" y="10" class="leg-t">Dashed border = secure boundary</text>
+                </g>
+                <g transform="translate(422 955)">
+                  <line x1="0" y1="6" x2="18" y2="6" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+                  <text x="30" y="10" class="leg-t">Solid arrow = encrypted data flow</text>
+                </g>
+                <g transform="translate(422 971)">
+                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#e5f6fd" stroke="#0a8cbd"/>
+                  <text x="30" y="10" class="leg-t">Blue boxes = Ditto platform</text>
+                </g>
+                <g transform="translate(422 987)">
+                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#f2edfd" stroke="#6d28d9"/>
+                  <text x="30" y="10" class="leg-t">Purple box = AI engine</text>
+                </g>
+                <g transform="translate(422 1003)">
+                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#e3f5ec" stroke="#047a4e"/>
+                  <text x="30" y="10" class="leg-t">Teal boxes = external APIs</text>
+                </g>
+                <g transform="translate(422 1019)">
+                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#f2fbdc" stroke="#8dc71f"/>
+                  <text x="30" y="10" class="leg-t">Green boxes = output modules</text>
+                </g>
+                <g transform="translate(422 1035)">
+                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#eef0f4" stroke="#9ca3af"/>
+                  <text x="30" y="10" class="leg-t">Gray bars = security controls</text>
+                </g>
               </g>
             </svg>
           </div>
@@ -1105,7 +1229,15 @@ const ARCH_NODES = {
   xpm:{tag:'External data source',type:'src',title:'XPM API',body:"Xero Practice Manager holds MPG's client jobs, due dates, and workflow statuses. Ditto reads this data to trigger notice automation and track lodgement deadlines — no permanent copy is stored.",facts:[['Auth','OAuth 2.0'],['Usage','Job list · due dates · client contacts'],['Retention','None — pulled on demand']]},
   mw:{tag:'Ditto platform',type:'platform',title:'Ditto Middleware',body:'The secure processing layer that sits between MPG\'s data and the AI engine. It authenticates API calls, enforces data scoping, manages token storage in AWS Secrets Manager, and ensures nothing is retained after each workflow runs.',facts:[['Hosting','AWS Sydney · ap-southeast-2'],['Secrets','AWS Secrets Manager · KMS encrypted'],['Logging','Access logs only · no payload data']]},
   llm:{tag:'AI layer',type:'ai',title:'Private LLM Engine',body:"Claude running via AWS Bedrock in the Sydney region. No prompts are logged, no client data is used for model training, and all processing stays within Australian/NZ jurisdiction. MPG's data never touches a public AI endpoint.",facts:[['Model','Claude (Anthropic) via AWS Bedrock'],['Region','ap-southeast-2 (Sydney)'],['Training','Zero — Bedrock does not train on your data']]},
-  staff:{tag:'Ditto platform',type:'platform',title:'MPG Staff Interface',body:'The web application Michael, Suhail, and Zabeen use to review AI outputs, approve notices before send, and access the audit log. Protected by MFA and role-based access — each team member sees only what they need.',facts:[['Auth','SSO + MFA mandatory'],['Access control','Role-based · per-client scoping'],['Audit','Full trail exported to S3 nightly']]}
+  staff:{tag:'Ditto platform',type:'platform',title:'MPG Staff Interface',body:'The web application Michael, Suhail, and Zabeen use to review AI outputs, approve notices before send, and access the audit log. Protected by MFA and role-based access — each team member sees only what they need.',facts:[['Auth','SSO + MFA mandatory'],['Access control','Role-based · per-client scoping'],['Audit','Full trail exported to S3 nightly']]},
+  waf:{tag:'Perimeter',type:'sec',title:'AWS WAF',body:'AWS WAF sits in front of the entire platform blocking SQL injection, XSS, known malicious IPs, and bad request patterns before they reach the application.',facts:[['Ruleset','AWS Managed + custom rules'],['Coverage','All inbound HTTPS traffic'],['Response','Block · log · alert on match']]},
+  tls:{tag:'Perimeter',type:'sec',title:'TLS 1.3',body:'All traffic between MPG staff, the Ditto platform, and AWS services is encrypted in transit using TLS 1.3. Older, weaker cipher suites are disabled at the load balancer.',facts:[['Protocol','TLS 1.3 only'],['Ciphers','Modern · forward secrecy'],['Certificates','AWS ACM · auto-rotated']]},
+  secrets:{tag:'Security control',type:'sec',title:'AWS Secrets Manager',body:'All API tokens and credentials are stored exclusively in AWS Secrets Manager — never in code, never in environment variables. Encrypted with a customer-managed KMS key that only Ditto controls.',facts:[['Storage','Secrets Manager only'],['Key','Customer-managed KMS'],['Rotation','Automatic']]},
+  iam:{tag:'Security control',type:'sec',title:'IAM Least Privilege',body:'The application role can only read its own secrets, invoke Bedrock models, and write logs. It has no access to other AWS services, other accounts, or any resources outside its defined scope.',facts:[['Scope','Narrow · read-only where possible'],['Boundary','Permission boundary enforced'],['Review','Quarterly audit']]},
+  vpce:{tag:'Security control',type:'sec',title:'VPC Endpoints',body:'Traffic between the application and AWS services — Secrets Manager, Bedrock, CloudWatch — travels entirely within the AWS private network. It never touches the public internet.',facts:[['Endpoints','Bedrock · Secrets · CloudWatch · S3'],['Subnet','Private · no Internet Gateway'],['Public internet','Blocked outbound']]},
+  cloudwatch:{tag:'Monitoring',type:'sec',title:'CloudWatch',body:'Real-time monitoring with alerts on 5xx error spikes, failed authentication attempts, and unusual usage patterns. Incidents trigger immediate notification to Ditto.',facts:[['Metrics','Latency · errors · auth failures'],['Alerts','Pager + email on incident'],['Dashboards','Per-tenant visibility']]},
+  guardduty:{tag:'Monitoring',type:'sec',title:'GuardDuty',body:'AWS GuardDuty continuously monitors for unusual API call patterns, credential misuse, and known threat actor IPs across the entire platform.',facts:[['Coverage','Account-wide · continuous'],['Feeds','AWS threat intel + custom'],['Response','Auto-ticket + triage']]},
+  cloudtrail:{tag:'Monitoring',type:'sec',title:'CloudTrail',body:'Every AWS API call across the platform is logged — who made it, when, from where, and what the result was. Retained for compliance and available for client audit on request.',facts:[['Retention','7 years'],['Storage','Immutable S3 + Object Lock'],['Access','Read-only · audit role']]}
 };
 
 function renderArchPanel(key){
