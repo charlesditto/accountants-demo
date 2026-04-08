@@ -1168,13 +1168,13 @@
 
               <g class="node node-src" data-node="xero">
                 <rect x="670" y="398" width="220" height="44" rx="8"/>
-                <text x="780" y="416" class="n-title" style="font-size:13.5px">Xero</text>
-                <text x="780" y="432" class="n-sub" style="font-size:11px">Accounting and bookkeeping</text>
+                <text x="780" y="416" class="n-title" id="srcXeroTitle" style="font-size:13.5px">Xero</text>
+                <text x="780" y="432" class="n-sub" id="srcXeroSub" style="font-size:11px">Accounting and bookkeeping</text>
               </g>
               <g class="node node-src" data-node="xpm">
                 <rect x="670" y="452" width="220" height="44" rx="8"/>
-                <text x="780" y="470" class="n-title" style="font-size:13.5px">Xero Practice Manager</text>
-                <text x="780" y="486" class="n-sub" style="font-size:11px">Jobs and deadlines</text>
+                <text x="780" y="470" class="n-title" id="srcXpmTitle" style="font-size:13.5px">Xero Practice Manager</text>
+                <text x="780" y="486" class="n-sub" id="srcXpmSub" style="font-size:11px">Jobs and deadlines</text>
               </g>
               <text x="780" y="513" class="edge-label" text-anchor="middle" style="font-size:10.5px">Delegated authorisation</text>
               <text x="780" y="527" class="edge-label" text-anchor="middle" style="font-size:10.5px">Pulled, used, discarded</text>
@@ -1404,6 +1404,21 @@
               <div class="field"><label>Staff 3 role</label><input id="cfg-s2-role" placeholder="e.g. Accountant"/></div>
               <div class="field"><label>Staff 4 name</label><input id="cfg-s3-name" placeholder="e.g. Rahul Naidu"/></div>
               <div class="field"><label>Staff 4 role</label><input id="cfg-s3-role" placeholder="e.g. Bookkeeper"/></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- External API labels -->
+        <div class="card">
+          <div class="card-head">
+            <div><h2>🔌 External Data Sources</h2><div class="sub">Rename the two external API boxes shown on the Architecture diagram</div></div>
+          </div>
+          <div class="card-body">
+            <div class="setup-grid">
+              <div class="field"><label>Source 1 title</label><input id="cfg-src0-title" placeholder="e.g. Xero"/></div>
+              <div class="field"><label>Source 1 subtitle</label><input id="cfg-src0-sub" placeholder="e.g. Accounting and bookkeeping"/></div>
+              <div class="field"><label>Source 2 title</label><input id="cfg-src1-title" placeholder="e.g. Xero Practice Manager"/></div>
+              <div class="field"><label>Source 2 subtitle</label><input id="cfg-src1-sub" placeholder="e.g. Jobs and deadlines"/></div>
             </div>
           </div>
         </div>
@@ -2213,6 +2228,10 @@ const DEFAULT_CONFIG = {
     {title:'Financial Reports', sub:'AI narrative reporting'},
     {title:'Notice Automation', sub:'Tax + client reminders'},
     {title:'Accounts Coding',   sub:'AI transaction coding'}
+  ],
+  sources:[
+    {title:'Xero',                 sub:'Accounting and bookkeeping'},
+    {title:'Xero Practice Manager',sub:'Jobs and deadlines'}
   ]
 };
 
@@ -2373,6 +2392,13 @@ window.applyConfig = function(){
     if(t && c.outputs[i]) t.textContent=c.outputs[i].title;
     if(s && c.outputs[i]) s.textContent=c.outputs[i].sub;
   });
+  // Architecture external data source labels
+  const srcIds = [['srcXeroTitle','srcXeroSub'],['srcXpmTitle','srcXpmSub']];
+  srcIds.forEach((ids,i)=>{
+    const t=document.getElementById(ids[0]); const s=document.getElementById(ids[1]);
+    if(t && c.sources[i]) t.textContent=c.sources[i].title;
+    if(s && c.sources[i]) s.textContent=c.sources[i].sub;
+  });
 
   // Dynamic re-renders
   renderTeamCards();
@@ -2400,6 +2426,7 @@ function populateSetupForm(){
   }
   for(let i=0;i<4;i++) byId(`cfg-c${i}-name`,c.clients[i].name);
   for(let i=0;i<3;i++){ byId(`cfg-o${i}-title`,c.outputs[i].title); byId(`cfg-o${i}-sub`,c.outputs[i].sub); }
+  for(let i=0;i<2;i++){ byId(`cfg-src${i}-title`,c.sources[i].title); byId(`cfg-src${i}-sub`,c.sources[i].sub); }
   // Logo preview
   const lp=document.getElementById('cfgLogoPreview');
   if(lp){
@@ -2435,6 +2462,10 @@ window.saveSetupForm = function(){
   for(let i=0;i<3;i++){
     c.outputs[i].title=v(`cfg-o${i}-title`)||c.outputs[i].title;
     c.outputs[i].sub=v(`cfg-o${i}-sub`)||c.outputs[i].sub;
+  }
+  for(let i=0;i<2;i++){
+    c.sources[i].title=v(`cfg-src${i}-title`)||c.sources[i].title;
+    c.sources[i].sub=v(`cfg-src${i}-sub`)||c.sources[i].sub;
   }
   try{ localStorage.setItem('ditto-config', JSON.stringify(CONFIG)); }catch(e){ console.warn('Config save failed — localStorage may be full (logo too large?)',e); }
   applyConfig();
