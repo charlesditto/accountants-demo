@@ -244,6 +244,33 @@
   .tile .sub{font-size:11px;color:var(--muted);margin-top:4px}
   .tile.hero .sub{color:rgba(255,255,255,.55)}
 
+  /* Toggle switch */
+  .toggle{display:inline-flex;align-items:center;gap:10px;padding:6px 12px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:12px;font-weight:600;color:var(--ink-2);cursor:pointer;user-select:none}
+  .toggle .sw{width:30px;height:18px;border-radius:999px;background:#d1d5db;position:relative;transition:background .2s}
+  .toggle .sw::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+  .toggle.on .sw{background:var(--lime);box-shadow:0 0 10px rgba(184,241,58,.5)}
+  .toggle.on .sw::after{transform:translateX(12px)}
+  .toggle.on{color:#0b1220;border-color:var(--lime)}
+
+  /* Email approval bar */
+  .email-actions{padding:10px 18px;border-top:1px solid var(--line-2);background:#fff;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .email-actions .spacer{flex:1}
+  .email-editing{padding:16px 18px}
+  .email-editing textarea{width:100%;min-height:140px;border:1px solid var(--accent);border-radius:8px;padding:12px;font:inherit;font-size:13px;line-height:1.6;color:var(--ink-2);resize:vertical;outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
+
+  /* Review queue */
+  .review-queue{margin-top:20px;animation:fade .5s ease}
+  .review-item{background:#fff;border:1px solid var(--line);border-left:3px solid var(--red);border-radius:12px;padding:16px 18px;margin-bottom:12px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;transition:all .4s}
+  .review-item.resolved{border-left-color:var(--green);opacity:.55;background:#fafbfc}
+  .review-item .ri-main{flex:1;min-width:240px}
+  .review-item .ri-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+  .review-item .ri-name{font-weight:700;color:var(--ink);font-size:14px}
+  .review-item .ri-amt{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--ink)}
+  .review-item .ri-note{font-size:12.5px;color:var(--red);margin-top:3px;line-height:1.5}
+  .review-item.resolved .ri-note{color:var(--green)}
+  .review-item .ri-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .review-item .ri-actions .btn{padding:7px 11px;font-size:12px}
+
   /* Filter chips */
   .chips{display:flex;gap:6px;flex-wrap:wrap}
   .fchip{padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;font-size:12px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:all .15s}
@@ -451,7 +478,10 @@
             <h2>Active Tax Returns · 2024 Financial Year</h2>
             <div class="sub">8 jobs · 2 overdue · 3 due this week · Assigned to Michael Prasad</div>
           </div>
-          <button class="btn btn-lime" id="runReminders">⚡ Run AI Automation</button>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <button class="toggle" id="autoToggle" title="Toggle auto-send"><span class="sw"></span><span id="autoLabel">Review before send</span></button>
+            <button class="btn btn-lime" id="runReminders">⚡ Run AI Automation</button>
+          </div>
         </div>
         <div style="padding:0">
           <table class="data" id="clientTable">
@@ -557,6 +587,20 @@
         <div class="tile"><div class="lbl">Flagged for Review</div><div class="val" id="sumFlagged" style="color:var(--red)">0</div><div class="sub">requires partner sign-off</div></div>
         <div class="tile"><div class="lbl">Avg Confidence</div><div class="val" id="sumConf">0%</div><div class="sub">across auto-coded lines</div></div>
         <div class="tile hero"><div class="lbl">Time Saved</div><div class="val" id="sumTime">0 min</div><div class="sub">vs manual reconciliation</div></div>
+      </div>
+
+      <div class="card review-queue" id="reviewQueue" style="display:none">
+        <div class="card-head">
+          <div>
+            <h2>🛎 Review Queue · Flagged by AI</h2>
+            <div class="sub">Ditto has routed these to the partner for sign-off · <span id="reviewRemaining">0</span> remaining</div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-ghost">Assign all to MP</button>
+            <button class="btn btn-primary" id="postXero" disabled>✓ Post 10 coded to Xero</button>
+          </div>
+        </div>
+        <div class="card-body" id="reviewList"></div>
       </div>
     </main>
   </section>
@@ -679,13 +723,32 @@ const emailTemplates = {
   'Remuera Property Co':`Hi Anna,\n\nYour FBT return for Q4 FY25 is due on 10 April. We have most of the data pulled from your Xero file already, but to finalise it we'll need:\n\n• Private use days per vehicle (x3)\n• Any changes to staff car park allocations since January\n• Confirmation of the entertainment expense split\n\nOnce we have those three bits we can file the same day.`,
 };
 
+/* Auto-send toggle */
+let autoSend = false;
+const autoToggle = document.getElementById('autoToggle');
+const autoLabel = document.getElementById('autoLabel');
+autoToggle.addEventListener('click',()=>{
+  autoSend = !autoSend;
+  autoToggle.classList.toggle('on', autoSend);
+  autoLabel.textContent = autoSend ? 'Auto-send ON' : 'Review before send';
+});
+
+function markRowSent(i){
+  const row=document.querySelector(`#clientTable tr[data-idx="${i}"]`);
+  row.classList.remove('flash');row.classList.add('done');
+  row.querySelector('.action').innerHTML='<span class="badge green"><span class="led"></span>✓ Sent · Logged to XPM</span>';
+  const sc=document.getElementById('sentCount');
+  sc.textContent = parseInt(sc.textContent)+1;
+}
+
 document.getElementById('runReminders').addEventListener('click',async e=>{
   const btn=e.currentTarget;btn.disabled=true;btn.innerHTML='Running…';
   document.getElementById('emailCard').style.display='block';
   const list=document.getElementById('emailList');list.innerHTML='';
   const flagged=clients.map((c,i)=>({c,i})).filter(o=>o.c.status!=='lodged');
   document.getElementById('sentTotal').textContent=flagged.length;
-  let sent=0;
+  document.getElementById('sentCount').textContent=0;
+
   for(const {c,i} of flagged){
     const row=document.querySelector(`#clientTable tr[data-idx="${i}"]`);
     row.classList.add('flash');
@@ -693,7 +756,9 @@ document.getElementById('runReminders').addEventListener('click',async e=>{
     await sleep(500);
     const wrap=document.createElement('div');
     wrap.className='email';
+    wrap.dataset.idx=i;
     const subject={overdue:'URGENT: '+c.type+' now overdue',due:'Reminder: '+c.type+' due '+c.due}[c.status];
+    const emailText = emailTemplates[c.name]||`Hi there,\n\nA quick reminder from MPG that your ${c.type} is due on ${c.due}. Let me know if you need anything from us.`;
     wrap.innerHTML=`
       <div class="email-head">
         <div class="email-to">📨 ${c.contact} &lt;${c.name.toLowerCase().replace(/[^a-z]/g,'')}@gmail.com&gt;</div>
@@ -703,14 +768,47 @@ document.getElementById('runReminders').addEventListener('click',async e=>{
         </div>
       </div>
       <div class="email-body"></div>
-      <div class="email-sig">Michael Prasad · Director, MPG Chartered Accountants · +64 9 555 0142 · mpg.co.nz</div>`;
+      <div class="email-sig" style="padding:0 18px 14px">Michael Prasad · Director, MPG Chartered Accountants · +64 9 555 0142 · mpg.co.nz</div>
+      <div class="email-actions" style="display:none">
+        <span class="badge amber"><span class="led"></span>Awaiting your approval</span>
+        <div class="spacer"></div>
+        <button class="btn btn-ghost btn-edit">✏ Edit</button>
+        <button class="btn btn-ghost btn-discard">✕ Discard</button>
+        <button class="btn btn-lime btn-approve">✓ Approve &amp; Send</button>
+      </div>`;
     list.appendChild(wrap);
-    await typeInto(wrap.querySelector('.email-body'), emailTemplates[c.name]||`Hi there,\n\nA quick reminder from MPG that your ${c.type} is due on ${c.due}. Let me know if you need anything from us.`, 5);
-    row.classList.remove('flash');row.classList.add('done');
-    row.querySelector('.action').innerHTML='<span class="badge green"><span class="led"></span>✓ Sent · Logged to XPM</span>';
-    sent++;
-    document.getElementById('sentCount').textContent=sent;
-    await sleep(250);
+    await typeInto(wrap.querySelector('.email-body'), emailText, 5);
+
+    if(autoSend){
+      markRowSent(i);
+      await sleep(250);
+    } else {
+      wrap.querySelector('.email-actions').style.display='flex';
+      row.classList.remove('flash');
+      row.querySelector('.action').innerHTML='<span class="badge amber"><span class="led"></span>Awaiting review</span>';
+      wrap.querySelector('.btn-approve').addEventListener('click',()=>{
+        wrap.querySelector('.email-actions').innerHTML='<span class="badge green"><span class="led"></span>✓ Sent · Logged to XPM · '+new Date().toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit'});
+        markRowSent(i);
+      });
+      wrap.querySelector('.btn-discard').addEventListener('click',()=>{
+        wrap.style.transition='all .3s';wrap.style.opacity='.4';
+        wrap.querySelector('.email-actions').innerHTML='<span class="badge gray">Discarded</span>';
+        document.querySelector(`#clientTable tr[data-idx="${i}"] .action`).innerHTML='<span class="badge gray">Discarded</span>';
+      });
+      wrap.querySelector('.btn-edit').addEventListener('click',()=>{
+        const body=wrap.querySelector('.email-body');
+        const current=body.textContent;
+        body.innerHTML=`<textarea>${current}</textarea>`;
+        body.classList.add('email-editing');
+        wrap.querySelector('.btn-edit').textContent='💾 Save';
+        wrap.querySelector('.btn-edit').addEventListener('click',()=>{
+          const v=body.querySelector('textarea').value;
+          body.classList.remove('email-editing');
+          body.textContent=v;
+        },{once:true});
+      });
+      await sleep(350);
+    }
   }
   btn.disabled=false;btn.innerHTML='⚡ Run Again';
 });
@@ -781,7 +879,63 @@ document.getElementById('runCoding').addEventListener('click',async e=>{
   document.getElementById('sumConf').textContent=(coded?Math.round(confSum/coded):0)+'%';
   document.getElementById('sumTime').textContent='~38 min';
   document.getElementById('txSummary').style.display='grid';
+
+  /* Populate review queue for flagged items */
+  const flaggedItems = txs.map((t,i)=>({t,i})).filter(o=>o.t.flag);
+  const reviewActions = {
+    11:[{label:'📎 Request receipt',next:'Receipt request sent to Michael via email'},
+        {label:'👤 Assign to partner',next:'Assigned to Michael Prasad for review'},
+        {label:'🗂 Code as Drawings',next:'Coded to 836 · Owner Drawings'}],
+    5:[{label:'🔍 Compare to 28 Feb',next:'Compared — confirmed duplicate, marked for refund'},
+       {label:'✉ Query with bank',next:'Dispute lodged with ANZ · Reference DMP-44212'},
+       {label:'👤 Assign to partner',next:'Assigned to Michael Prasad for review'}]
+  };
+  const rq=document.getElementById('reviewQueue');
+  const rl=document.getElementById('reviewList');
+  rl.innerHTML='';
+  document.getElementById('reviewRemaining').textContent=flaggedItems.length;
+  document.getElementById('postXero').textContent=`✓ Post ${coded} coded to Xero`;
+
+  flaggedItems.forEach(({t,i})=>{
+    const div=document.createElement('div');
+    div.className='review-item';
+    div.dataset.idx=i;
+    const actions=(reviewActions[i]||[{label:'👤 Assign to partner',next:'Assigned to Michael Prasad'}]).map(a=>`<button class="btn btn-ghost" data-next="${a.next}">${a.label}</button>`).join('');
+    div.innerHTML=`
+      <div class="tx-icon" style="width:40px;height:40px;font-size:18px">${t.icon}</div>
+      <div class="ri-main">
+        <div class="ri-head"><div class="ri-name">${t.payee}</div><div class="ri-amt">${fmt(t.amount)}</div><span class="badge gray">${t.date}</span></div>
+        <div class="ri-note">⚠ ${t.flag}</div>
+      </div>
+      <div class="ri-actions">${actions}</div>`;
+    rl.appendChild(div);
+    div.querySelectorAll('.ri-actions .btn').forEach(b=>{
+      b.addEventListener('click',()=>{
+        div.classList.add('resolved');
+        div.querySelector('.ri-note').innerHTML='✓ '+b.dataset.next;
+        div.querySelector('.ri-actions').innerHTML='<span class="badge green"><span class="led"></span>Resolved</span>';
+        const remEl=document.getElementById('reviewRemaining');
+        const rem=parseInt(remEl.textContent)-1;
+        remEl.textContent=rem;
+        if(rem===0){
+          document.getElementById('postXero').disabled=false;
+          document.getElementById('postXero').classList.remove('btn-primary');
+          document.getElementById('postXero').classList.add('btn-lime');
+        }
+      });
+    });
+  });
+  rq.style.display='block';
+
   btn.disabled=false;btn.innerHTML='⚡ Run Again';
+});
+
+/* Post to Xero handler */
+document.addEventListener('click',e=>{
+  if(e.target.id==='postXero' && !e.target.disabled){
+    e.target.innerHTML='✓ Posted to Xero · Reconciled';
+    e.target.disabled=true;
+  }
 });
 </script>
 </body>
