@@ -367,6 +367,69 @@
     .dh-metric{font-size:42px}
   }
 
+  /* ---------- ARCHITECTURE ---------- */
+  .arch-layout{display:grid;grid-template-columns:1fr 340px;gap:20px;align-items:start}
+  .arch-card{overflow:hidden}
+  .arch-svg{width:100%;height:auto;display:block;max-width:720px;margin:0 auto;font-family:'Inter',sans-serif}
+  .arch-svg .n-title{font-size:14px;font-weight:700;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+  .arch-svg .n-sub{font-size:11.5px;font-weight:500;text-anchor:middle;dominant-baseline:middle;pointer-events:none}
+  .arch-svg .n-cta{font-size:11px;font-weight:700;text-anchor:middle;dominant-baseline:middle;pointer-events:none;opacity:0;transition:opacity .2s}
+  .arch-svg .edge-label{font-size:11px;fill:#6b7280;font-weight:500}
+  .arch-svg .zone-title{font-size:13px;font-weight:700;fill:#0b1220}
+  .arch-svg .zone-sub{font-size:11px;fill:#6b7280;font-weight:500}
+
+  .arch-svg .node{cursor:pointer;transition:transform .2s}
+  .arch-svg .node rect{transition:all .2s}
+  .arch-svg .node:hover rect{filter:brightness(1.04)}
+  .arch-svg .node.selected rect{stroke-width:2.5}
+
+  /* Source nodes (teal/green) */
+  .arch-svg .node-src rect{fill:#e3f5ec;stroke:#047a4e;stroke-width:1.5}
+  .arch-svg .node-src .n-title{fill:#047a4e}
+  .arch-svg .node-src .n-sub{fill:#0a8f5a}
+  .arch-svg .node-src:hover rect{fill:#d4efe1}
+
+  /* Platform nodes (blue) */
+  .arch-svg .node-platform rect{fill:#e5f6fd;stroke:#0a8cbd;stroke-width:1.5}
+  .arch-svg .node-platform .n-title{fill:#074a68}
+  .arch-svg .node-platform .n-sub{fill:#0a8cbd}
+  .arch-svg .node-platform:hover rect{fill:#d3eefa}
+
+  /* AI node (purple) */
+  .arch-svg .node-ai rect{fill:#f2edfd;stroke:#6d28d9;stroke-width:1.5}
+  .arch-svg .node-ai .n-title{fill:#4c1d95}
+  .arch-svg .node-ai .n-sub{fill:#6d28d9}
+  .arch-svg .node-ai:hover rect{fill:#e9dffb}
+
+  /* Output nodes (lime/green strong hover) */
+  .arch-svg .node-out rect{fill:#f2fbdc;stroke:#8dc71f;stroke-width:1.8}
+  .arch-svg .node-out .n-title{fill:#3e5a0a}
+  .arch-svg .node-out .n-sub{fill:#5a7d0b}
+  .arch-svg .node-out .n-cta{fill:#0b1220}
+  .arch-svg .node-out:hover rect{fill:#b8f13a;stroke:#0b1220;stroke-width:2.5;filter:drop-shadow(0 6px 14px rgba(184,241,58,.55))}
+  .arch-svg .node-out:hover .n-cta{opacity:1}
+
+  .arch-panel{position:sticky;top:120px}
+  .arch-panel-inner{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow-sm);padding:22px;min-height:280px;animation:fade .3s ease}
+  .arch-panel-empty{text-align:center;padding:20px 10px}
+  .arch-panel-empty .ap-icon{font-size:32px;opacity:.5;margin-bottom:10px}
+  .arch-panel-empty .ap-title{font-weight:700;color:var(--ink);margin-bottom:6px}
+  .arch-panel-empty .ap-desc{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .arch-panel-detail .ap-tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .arch-panel-detail.src .ap-tag{background:var(--green-soft);color:var(--green)}
+  .arch-panel-detail.platform .ap-tag{background:var(--accent-soft);color:var(--accent-dark)}
+  .arch-panel-detail.ai .ap-tag{background:#f2edfd;color:#6d28d9}
+  .arch-panel-detail h3{margin:0 0 10px;font-size:18px;letter-spacing:-.01em;color:var(--ink)}
+  .arch-panel-detail p{margin:0 0 14px;font-size:13px;line-height:1.65;color:var(--ink-2)}
+  .arch-panel-detail .ap-facts{border-top:1px solid var(--line-2);padding-top:12px;display:flex;flex-direction:column;gap:8px}
+  .arch-panel-detail .ap-fact{display:flex;gap:10px;font-size:12px;color:var(--muted)}
+  .arch-panel-detail .ap-fact b{color:var(--ink-2)}
+
+  @media (max-width:900px){
+    .arch-layout{grid-template-columns:1fr}
+    .arch-panel{position:static}
+  }
+
   /* Demo badge */
   .demo-badge{position:fixed;bottom:20px;right:20px;background:rgba(11,18,32,.92);color:#fff;padding:8px 14px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;gap:8px}
   .demo-badge .d-dot{width:6px;height:6px;border-radius:50%;background:var(--lime)}
@@ -409,6 +472,7 @@
       <button class="tab" data-tab="m1">📊 Financial Narratives</button>
       <button class="tab" data-tab="m2">📬 Tax Reminders <span class="tab-num" id="m2count">2</span></button>
       <button class="tab" data-tab="m3">⚡ Bank Reconciliation <span class="tab-num" id="m3count">12</span></button>
+      <button class="tab" data-tab="m4">🏗 Architecture</button>
     </nav>
   </header>
 
@@ -888,6 +952,134 @@
     </main>
   </section>
 
+  <!-- ========== MODULE 4 · ARCHITECTURE ========== -->
+  <section class="module" id="m4">
+    <div class="subtoolbar">
+      <div class="subtoolbar-inner">
+        <div class="breadcrumb">MPG <span class="sep">›</span> <b>Private AI Deployment Architecture</b></div>
+        <div class="toolbar-actions">
+          <span class="chip">🔒 AWS Sydney · NZ sovereignty</span>
+          <span class="chip">🛡 Zero model training</span>
+        </div>
+      </div>
+    </div>
+    <main>
+      <div class="module-head">
+        <div>
+          <h1>Private AI Deployment Architecture</h1>
+          <p>How MPG's data flows securely from Xero and XPM through Ditto's infrastructure — and out to the three AI modules. Click any component to see what it does, or click an output module to jump straight into the demo.</p>
+        </div>
+        <span class="ditto-badge"><span class="lime-dot"></span> Ditto AI</span>
+      </div>
+
+      <div class="arch-layout">
+        <div class="card arch-card">
+          <div class="card-body" style="padding:24px">
+            <svg class="arch-svg" viewBox="0 0 680 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MPG private AI architecture">
+              <defs>
+                <marker id="arrHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M2 1L8 5L2 9" fill="none" stroke="#6b7280" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </marker>
+              </defs>
+
+              <!-- Secure infra container -->
+              <rect class="secure-zone" x="40" y="128" width="600" height="280" rx="18" fill="#fafbfc" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="6 5"/>
+              <text x="60" y="152" class="zone-title">🔒 Ditto Secure Infrastructure</text>
+              <text x="60" y="170" class="zone-sub">AWS Sydney region · NZ data sovereignty · zero model training</text>
+
+              <!-- Xero API -->
+              <g class="node node-src" data-node="xero">
+                <rect x="80" y="40" width="200" height="60" rx="10"/>
+                <text x="180" y="64" class="n-title">Xero API</text>
+                <text x="180" y="84" class="n-sub">Accounting &amp; bookkeeping</text>
+              </g>
+
+              <!-- XPM API -->
+              <g class="node node-src" data-node="xpm">
+                <rect x="400" y="40" width="200" height="60" rx="10"/>
+                <text x="500" y="64" class="n-title">XPM API</text>
+                <text x="500" y="84" class="n-sub">Practice management</text>
+              </g>
+
+              <!-- OAuth labels -->
+              <text x="196" y="118" class="edge-label">OAuth 2.0</text>
+              <text x="516" y="118" class="edge-label">OAuth 2.0</text>
+
+              <!-- Arrows src -> middleware -->
+              <line x1="180" y1="100" x2="180" y2="188" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="500" y1="100" x2="500" y2="188" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+
+              <!-- Middleware -->
+              <g class="node node-platform" data-node="mw">
+                <rect x="140" y="190" width="400" height="60" rx="10"/>
+                <text x="340" y="214" class="n-title">Ditto Middleware</text>
+                <text x="340" y="234" class="n-sub">Secure data processing · pull, process, discard</text>
+              </g>
+
+              <line x1="340" y1="250" x2="340" y2="298" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+
+              <!-- LLM -->
+              <g class="node node-ai" data-node="llm">
+                <rect x="140" y="300" width="400" height="60" rx="10"/>
+                <text x="340" y="324" class="n-title">Private LLM Engine</text>
+                <text x="340" y="344" class="n-sub">Claude via AWS Bedrock · no logging · no retention</text>
+              </g>
+
+              <!-- LLM -> Staff interface (exits secure zone) -->
+              <line x1="340" y1="360" x2="340" y2="448" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <rect x="368" y="396" width="108" height="22" rx="4" fill="#fff" stroke="none"/>
+              <text x="422" y="411" class="edge-label" text-anchor="middle">🔐 Encrypted output</text>
+
+              <!-- Staff interface -->
+              <g class="node node-platform" data-node="staff">
+                <rect x="160" y="450" width="360" height="56" rx="10"/>
+                <text x="340" y="472" class="n-title">MPG Staff Interface</text>
+                <text x="340" y="492" class="n-sub">MFA · role-based access · full audit log</text>
+              </g>
+
+              <!-- Trunk + bar -->
+              <line x1="340" y1="506" x2="340" y2="528" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="150" y1="528" x2="530" y2="528" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="150" y1="528" x2="150" y2="548" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="340" y1="528" x2="340" y2="548" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="530" y1="528" x2="530" y2="548" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+
+              <!-- Output modules -->
+              <g class="node node-out" data-node="out-fin" data-goto="m1">
+                <rect x="65" y="548" width="170" height="62" rx="10"/>
+                <text x="150" y="570" class="n-title">Financial Reports</text>
+                <text x="150" y="588" class="n-sub">AI narrative reporting</text>
+                <text x="150" y="604" class="n-cta">View demo →</text>
+              </g>
+              <g class="node node-out" data-node="out-not" data-goto="m2">
+                <rect x="255" y="548" width="170" height="62" rx="10"/>
+                <text x="340" y="570" class="n-title">Notice Automation</text>
+                <text x="340" y="588" class="n-sub">Tax + client reminders</text>
+                <text x="340" y="604" class="n-cta">View demo →</text>
+              </g>
+              <g class="node node-out" data-node="out-cod" data-goto="m3">
+                <rect x="445" y="548" width="170" height="62" rx="10"/>
+                <text x="530" y="570" class="n-title">Accounts Coding</text>
+                <text x="530" y="588" class="n-sub">AI transaction coding</text>
+                <text x="530" y="604" class="n-cta">View demo →</text>
+              </g>
+            </svg>
+          </div>
+        </div>
+
+        <aside class="arch-panel" id="archPanel">
+          <div class="arch-panel-inner" id="archPanelInner">
+            <div class="arch-panel-empty">
+              <div class="ap-icon">🛡</div>
+              <div class="ap-title">Click any component</div>
+              <div class="ap-desc">Select a box in the diagram to see what that part of Ditto's architecture does for MPG. Click an output module to jump to its live demo.</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </section>
+
   <footer>
     Powered by <span class="footer-logo">d<span class="i">i</span>tto</span> · <a href="https://ditto.vip" target="_blank" rel="noopener">ditto.vip</a> · Done-for-you AI for accounting practices
   </footer>
@@ -905,6 +1097,61 @@ document.querySelectorAll('.tab').forEach(t=>{
     document.getElementById(t.dataset.tab).classList.add('active');
     window.scrollTo({top:0,behavior:'smooth'});
   });
+});
+
+/* ---------- Architecture tab ---------- */
+const ARCH_NODES = {
+  xero:{tag:'External data source',type:'src',title:'Xero API',body:"MPG's accounting data connects via Xero's OAuth 2.0 API. Ditto pulls only what each workflow needs — transactions, reports, chart of accounts — and discards the raw data immediately after processing.",facts:[['Auth','OAuth 2.0 · refreshed every 30 min'],['Scopes','Read-only by default'],['Retention','Zero — discarded after each run']]},
+  xpm:{tag:'External data source',type:'src',title:'XPM API',body:"Xero Practice Manager holds MPG's client jobs, due dates, and workflow statuses. Ditto reads this data to trigger notice automation and track lodgement deadlines — no permanent copy is stored.",facts:[['Auth','OAuth 2.0'],['Usage','Job list · due dates · client contacts'],['Retention','None — pulled on demand']]},
+  mw:{tag:'Ditto platform',type:'platform',title:'Ditto Middleware',body:'The secure processing layer that sits between MPG\'s data and the AI engine. It authenticates API calls, enforces data scoping, manages token storage in AWS Secrets Manager, and ensures nothing is retained after each workflow runs.',facts:[['Hosting','AWS Sydney · ap-southeast-2'],['Secrets','AWS Secrets Manager · KMS encrypted'],['Logging','Access logs only · no payload data']]},
+  llm:{tag:'AI layer',type:'ai',title:'Private LLM Engine',body:"Claude running via AWS Bedrock in the Sydney region. No prompts are logged, no client data is used for model training, and all processing stays within Australian/NZ jurisdiction. MPG's data never touches a public AI endpoint.",facts:[['Model','Claude (Anthropic) via AWS Bedrock'],['Region','ap-southeast-2 (Sydney)'],['Training','Zero — Bedrock does not train on your data']]},
+  staff:{tag:'Ditto platform',type:'platform',title:'MPG Staff Interface',body:'The web application Michael, Suhail, and Zabeen use to review AI outputs, approve notices before send, and access the audit log. Protected by MFA and role-based access — each team member sees only what they need.',facts:[['Auth','SSO + MFA mandatory'],['Access control','Role-based · per-client scoping'],['Audit','Full trail exported to S3 nightly']]}
+};
+
+function renderArchPanel(key){
+  const n = ARCH_NODES[key];
+  const inner = document.getElementById('archPanelInner');
+  if(!n){
+    inner.innerHTML = `<div class="arch-panel-empty"><div class="ap-icon">🛡</div><div class="ap-title">Click any component</div><div class="ap-desc">Select a box in the diagram to see what that part of Ditto's architecture does for MPG. Click an output module to jump to its live demo.</div></div>`;
+    return;
+  }
+  inner.innerHTML = `
+    <div class="arch-panel-detail ${n.type}">
+      <span class="ap-tag">${n.tag}</span>
+      <h3>${n.title}</h3>
+      <p>${n.body}</p>
+      <div class="ap-facts">
+        ${n.facts.map(f=>`<div class="ap-fact"><b>${f[0]}</b><span>${f[1]}</span></div>`).join('')}
+      </div>
+    </div>`;
+}
+
+document.querySelectorAll('.arch-svg .node').forEach(node=>{
+  node.addEventListener('click',e=>{
+    e.stopPropagation();
+    const goto = node.dataset.goto;
+    if(goto){
+      const svg = document.querySelector('.arch-svg');
+      svg.style.transition='opacity .3s, transform .3s';
+      svg.style.opacity='0';svg.style.transform='scale(.97)';
+      setTimeout(()=>{
+        document.querySelector(`.tab[data-tab="${goto}"]`)?.click();
+        svg.style.opacity='1';svg.style.transform='none';
+      },300);
+      return;
+    }
+    document.querySelectorAll('.arch-svg .node').forEach(n=>n.classList.remove('selected'));
+    node.classList.add('selected');
+    renderArchPanel(node.dataset.node);
+  });
+});
+
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.arch-svg') && !e.target.closest('.arch-panel')){
+    document.querySelectorAll('.arch-svg .node').forEach(n=>n.classList.remove('selected'));
+    const inner=document.getElementById('archPanelInner');
+    if(inner && inner.querySelector('.arch-panel-detail')) renderArchPanel(null);
+  }
 });
 
 /* Dashboard attention-item click routing */
