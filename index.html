@@ -1085,7 +1085,11 @@
           <h1>Private AI Deployment Architecture</h1>
           <p id="m4Desc">How MPG's data flows securely from Xero and XPM through Ditto's infrastructure — and out to the three AI modules. Click any component to see what it does, or click an output module to jump straight into the demo.</p>
         </div>
-        <span class="ditto-badge"><span class="lime-dot"></span> Ditto AI</span>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <button class="btn btn-ghost" data-action="export-arch-svg">⬇ Export SVG</button>
+          <button class="btn btn-lime" data-action="export-arch-png">⬇ Export PNG</button>
+          <span class="ditto-badge"><span class="lime-dot"></span> Ditto AI</span>
+        </div>
       </div>
 
       <div class="arch-layout">
@@ -2606,8 +2610,89 @@ const ACTIONS = {
     Modal.open(`${tile('👤','Assign Flagged Items','Send all 2 flagged transactions to the partner for review')}
       <div class="check-success"><div class="ico">✓</div><div>Both flagged items will be assigned to ${CONFIG.partner.name} and added to their review queue.</div></div>
       <div class="modal-actions"><button class="btn btn-ghost" data-action="modal-close">Cancel</button><button class="btn btn-lime" data-action="modal-close">✓ Assign all</button></div>`);
-  }
+  },
+  'export-arch-svg'(){ exportArchitecture('svg'); },
+  'export-arch-png'(){ exportArchitecture('png'); }
 };
+
+/* ------ Architecture export ------ */
+function getArchStyles(){
+  const parts = [];
+  for (const sheet of document.styleSheets){
+    try {
+      for (const rule of sheet.cssRules){
+        const txt = rule.cssText || '';
+        if (txt.indexOf('.arch-svg') !== -1) parts.push(txt);
+      }
+    } catch(e){}
+  }
+  // Embed Inter font so exports render cleanly offline as well as online
+  parts.unshift("@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');");
+  return parts.join('\n');
+}
+function prepareArchClone(){
+  const orig = document.querySelector('.arch-svg');
+  if(!orig) return null;
+  const clone = orig.cloneNode(true);
+  clone.querySelectorAll('.selected').forEach(n=>n.classList.remove('selected'));
+  // Ensure required namespaces
+  clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+  clone.setAttribute('xmlns:xlink','http://www.w3.org/1999/xlink');
+  // Embed arch CSS so styles survive outside the page
+  let defs = clone.querySelector('defs');
+  if(!defs){
+    defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+    clone.insertBefore(defs, clone.firstChild);
+  }
+  const style = document.createElementNS('http://www.w3.org/2000/svg','style');
+  style.setAttribute('type','text/css');
+  style.textContent = getArchStyles();
+  defs.appendChild(style);
+  return clone;
+}
+function downloadBlob(blob, filename){
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(()=>{ document.body.removeChild(a); URL.revokeObjectURL(url); }, 200);
+}
+function exportArchitecture(format){
+  const clone = prepareArchClone();
+  if(!clone){ alert('Architecture diagram not ready'); return; }
+  const svgStr = new XMLSerializer().serializeToString(clone);
+  const suggested = `${CONFIG.practice.short.toLowerCase().replace(/\W+/g,'-')}-architecture`;
+  if(format==='svg'){
+    const blob = new Blob([svgStr], {type:'image/svg+xml;charset=utf-8'});
+    downloadBlob(blob, `${suggested}.svg`);
+    return;
+  }
+  // PNG path
+  const vb = clone.viewBox.baseVal;
+  const w = vb && vb.width || 900;
+  const h = vb && vb.height || 1100;
+  const scale = 2; // 2× for crisp proposals
+  const svgBlob = new Blob([svgStr], {type:'image/svg+xml;charset=utf-8'});
+  const url = URL.createObjectURL(svgBlob);
+  const img = new Image();
+  img.onload = ()=>{
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(w * scale);
+    canvas.height = Math.round(h * scale);
+    const ctx = canvas.getContext('2d');
+    // Transparent background — don't fill
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    ctx.drawImage(img, 0, 0, w, h);
+    canvas.toBlob(blob=>{
+      if(!blob){ alert('PNG export failed'); URL.revokeObjectURL(url); return; }
+      downloadBlob(blob, `${suggested}.png`);
+      URL.revokeObjectURL(url);
+    }, 'image/png');
+  };
+  img.onerror = (e)=>{ alert('PNG export failed — try the SVG export instead'); URL.revokeObjectURL(url); };
+  img.src = url;
+}
 
 document.addEventListener('click',e=>{
   const trigger = e.target.closest('[data-action]');
