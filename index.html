@@ -1041,12 +1041,12 @@
               <!-- LAYER 0 · Perimeter -->
               <g class="node node-sec" data-node="waf">
                 <rect x="100" y="40" width="220" height="58" rx="10"/>
-                <text x="210" y="64" class="n-title">AWS WAF</text>
-                <text x="210" y="84" class="n-sub">Common ruleset · bad input blocking</text>
+                <text x="210" y="64" class="n-title">Web Application Firewall</text>
+                <text x="210" y="84" class="n-sub">Blocks common attacks before they hit the app</text>
               </g>
               <g class="node node-sec" data-node="tls">
                 <rect x="400" y="40" width="220" height="58" rx="10"/>
-                <text x="510" y="64" class="n-title">TLS 1.3</text>
+                <text x="510" y="64" class="n-title">Transport Layer Security</text>
                 <text x="510" y="84" class="n-sub">All traffic encrypted in transit</text>
               </g>
               <!-- perimeter rail + label -->
@@ -1063,18 +1063,18 @@
               <!-- LAYER 1 · Data sources -->
               <g class="node node-src" data-node="xero">
                 <rect x="110" y="160" width="200" height="58" rx="10"/>
-                <text x="210" y="184" class="n-title">Xero API</text>
-                <text x="210" y="204" class="n-sub">Accounting &amp; bookkeeping</text>
+                <text x="210" y="184" class="n-title">Xero</text>
+                <text x="210" y="204" class="n-sub">Accounting and bookkeeping data</text>
                 <use href="#lockIcon" x="282" y="168" width="14" height="16" color="#047a4e"/>
               </g>
               <g class="node node-src" data-node="xpm">
                 <rect x="410" y="160" width="200" height="58" rx="10"/>
-                <text x="510" y="184" class="n-title">XPM API</text>
-                <text x="510" y="204" class="n-sub">Practice management</text>
+                <text x="510" y="184" class="n-title">Xero Practice Manager</text>
+                <text x="510" y="204" class="n-sub">Practice management data</text>
                 <use href="#lockIcon" x="582" y="168" width="14" height="16" color="#047a4e"/>
               </g>
-              <text x="210" y="236" class="edge-label" text-anchor="middle">OAuth 2.0 · scoped access only</text>
-              <text x="510" y="236" class="edge-label" text-anchor="middle">OAuth 2.0 · scoped access only</text>
+              <text x="210" y="236" class="edge-label" text-anchor="middle">Delegated authorisation · scoped access only</text>
+              <text x="510" y="236" class="edge-label" text-anchor="middle">Delegated authorisation · scoped access only</text>
 
               <!-- sources → middleware -->
               <line x1="210" y1="248" x2="210" y2="325" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
@@ -1083,7 +1083,7 @@
               <!-- LAYER 2 · Secure infrastructure container -->
               <rect class="secure-zone" x="40" y="265" width="640" height="286" rx="18" fill="#fafbfc" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="6 5"/>
               <text x="60" y="289" class="zone-title">🔒 Ditto Secure Infrastructure</text>
-              <text x="60" y="307" class="zone-sub">AWS Sydney ap-southeast-2 · VPC private subnet · KMS encryption · GuardDuty enabled · CloudTrail logging</text>
+              <text x="60" y="307" class="zone-sub">Amazon Web Services Sydney region · Private network · Encrypted at rest · Threat monitoring · Full activity logging</text>
 
               <!-- Middleware (Ditto brand lime) -->
               <g class="node node-ditto" data-node="mw">
@@ -1098,19 +1098,19 @@
               <rect class="sec-strip" x="60" y="405" width="600" height="40" rx="8" fill="#eef0f4" stroke="#cdd2dd" stroke-width="1"/>
               <g class="node sec-badge" data-node="secrets">
                 <rect x="60" y="405" width="200" height="40" fill="transparent"/>
-                <text x="160" y="421" class="sec-t">Secrets Manager</text>
-                <text x="160" y="435" class="sec-s">token storage</text>
+                <text x="160" y="421" class="sec-t">Credential Vault</text>
+                <text x="160" y="435" class="sec-s">encrypted token storage</text>
               </g>
               <line x1="260" y1="413" x2="260" y2="437" stroke="#cdd2dd" stroke-width="1"/>
               <g class="node sec-badge" data-node="iam">
                 <rect x="260" y="405" width="200" height="40" fill="transparent"/>
-                <text x="360" y="421" class="sec-t">IAM least privilege</text>
-                <text x="360" y="435" class="sec-s">app role scoped</text>
+                <text x="360" y="421" class="sec-t">Least-Privilege Access</text>
+                <text x="360" y="435" class="sec-s">narrow application role</text>
               </g>
               <line x1="460" y1="413" x2="460" y2="437" stroke="#cdd2dd" stroke-width="1"/>
               <g class="node sec-badge" data-node="vpce">
                 <rect x="460" y="405" width="200" height="40" fill="transparent"/>
-                <text x="560" y="421" class="sec-t">VPC endpoints</text>
+                <text x="560" y="421" class="sec-t">Private Network Routes</text>
                 <text x="560" y="435" class="sec-s">no public internet</text>
               </g>
 
@@ -1119,20 +1119,20 @@
               <!-- LLM -->
               <g class="node node-ai" data-node="llm">
                 <rect x="140" y="465" width="440" height="60" rx="10"/>
-                <text x="360" y="489" class="n-title">Private LLM Engine</text>
+                <text x="360" y="489" class="n-title">Private Language Model</text>
                 <text x="360" y="509" class="n-sub">Claude via AWS Bedrock · no logging · no retention</text>
               </g>
 
               <!-- LLM → staff (exits container) -->
               <line x1="360" y1="525" x2="360" y2="623" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <rect x="192" y="565" width="336" height="22" rx="4" fill="#fff"/>
-              <text x="360" y="580" class="edge-label" text-anchor="middle">AES-256 encrypted · JWT verified · tenant isolated</text>
+              <rect x="170" y="565" width="380" height="22" rx="4" fill="#fff"/>
+              <text x="360" y="580" class="edge-label" text-anchor="middle">256-bit encryption · Signed session token · Tenant isolated</text>
 
               <!-- LAYER 4 · Staff interface -->
               <g class="node node-platform" data-node="staff">
                 <rect x="160" y="623" width="400" height="60" rx="10"/>
-                <text x="360" y="647" class="n-title">MPG Staff Interface</text>
-                <text x="360" y="667" class="n-sub">MFA enforced · RBAC · full audit log · session timeout</text>
+                <text x="360" y="647" class="n-title">Staff Interface</text>
+                <text x="360" y="667" class="n-sub">Multi-factor login · Role-based access · Full audit log · Session timeout</text>
               </g>
 
               <line x1="360" y1="683" x2="360" y2="703" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
@@ -1154,7 +1154,7 @@
               <g class="node sec-badge" data-node="cloudtrail">
                 <rect x="460" y="703" width="200" height="40" fill="transparent"/>
                 <text x="560" y="719" class="sec-t">CloudTrail</text>
-                <text x="560" y="733" class="sec-s">full AWS audit trail</text>
+                <text x="560" y="733" class="sec-s">full activity audit trail</text>
               </g>
 
               <!-- Trunk + branch -->
@@ -1375,19 +1375,19 @@ document.querySelectorAll('.tab').forEach(t=>{
 
 /* ---------- Architecture tab ---------- */
 const ARCH_NODES = {
-  xero:{tag:'External data source',type:'src',title:'Xero API',body:"MPG's accounting data connects via Xero's OAuth 2.0 API. Ditto pulls only what each workflow needs — transactions, reports, chart of accounts — and discards the raw data immediately after processing.",facts:[['Auth','OAuth 2.0 · refreshed every 30 min'],['Scopes','Read-only by default'],['Retention','Zero — discarded after each run']]},
-  xpm:{tag:'External data source',type:'src',title:'XPM API',body:"Xero Practice Manager holds MPG's client jobs, due dates, and workflow statuses. Ditto reads this data to trigger notice automation and track lodgement deadlines — no permanent copy is stored.",facts:[['Auth','OAuth 2.0'],['Usage','Job list · due dates · client contacts'],['Retention','None — pulled on demand']]},
-  mw:{tag:'Ditto platform',type:'platform',title:'Ditto Middleware',body:'The secure processing layer that sits between MPG\'s data and the AI engine. It authenticates API calls, enforces data scoping, manages token storage in AWS Secrets Manager, and ensures nothing is retained after each workflow runs.',facts:[['Hosting','AWS Sydney · ap-southeast-2'],['Secrets','AWS Secrets Manager · KMS encrypted'],['Logging','Access logs only · no payload data']]},
-  llm:{tag:'AI layer',type:'ai',title:'Private LLM Engine',body:"Claude running via AWS Bedrock in the Sydney region. No prompts are logged, no client data is used for model training, and all processing stays within Australian/NZ jurisdiction. MPG's data never touches a public AI endpoint.",facts:[['Model','Claude (Anthropic) via AWS Bedrock'],['Region','ap-southeast-2 (Sydney)'],['Training','Zero — Bedrock does not train on your data']]},
-  staff:{tag:'Ditto platform',type:'platform',title:'MPG Staff Interface',body:'The web application Michael, Suhail, and Zabeen use to review AI outputs, approve notices before send, and access the audit log. Protected by MFA and role-based access — each team member sees only what they need.',facts:[['Auth','SSO + MFA mandatory'],['Access control','Role-based · per-client scoping'],['Audit','Full trail exported to S3 nightly']]},
-  waf:{tag:'Perimeter',type:'sec',title:'AWS WAF',body:'AWS WAF sits in front of the entire platform blocking SQL injection, XSS, known malicious IPs, and bad request patterns before they reach the application.',facts:[['Ruleset','AWS Managed + custom rules'],['Coverage','All inbound HTTPS traffic'],['Response','Block · log · alert on match']]},
-  tls:{tag:'Perimeter',type:'sec',title:'TLS 1.3',body:'All traffic between MPG staff, the Ditto platform, and AWS services is encrypted in transit using TLS 1.3. Older, weaker cipher suites are disabled at the load balancer.',facts:[['Protocol','TLS 1.3 only'],['Ciphers','Modern · forward secrecy'],['Certificates','AWS ACM · auto-rotated']]},
-  secrets:{tag:'Security control',type:'sec',title:'AWS Secrets Manager',body:'All API tokens and credentials are stored exclusively in AWS Secrets Manager — never in code, never in environment variables. Encrypted with a customer-managed KMS key that only Ditto controls.',facts:[['Storage','Secrets Manager only'],['Key','Customer-managed KMS'],['Rotation','Automatic']]},
-  iam:{tag:'Security control',type:'sec',title:'IAM Least Privilege',body:'The application role can only read its own secrets, invoke Bedrock models, and write logs. It has no access to other AWS services, other accounts, or any resources outside its defined scope.',facts:[['Scope','Narrow · read-only where possible'],['Boundary','Permission boundary enforced'],['Review','Quarterly audit']]},
-  vpce:{tag:'Security control',type:'sec',title:'VPC Endpoints',body:'Traffic between the application and AWS services — Secrets Manager, Bedrock, CloudWatch — travels entirely within the AWS private network. It never touches the public internet.',facts:[['Endpoints','Bedrock · Secrets · CloudWatch · S3'],['Subnet','Private · no Internet Gateway'],['Public internet','Blocked outbound']]},
-  cloudwatch:{tag:'Monitoring',type:'sec',title:'CloudWatch',body:'Real-time monitoring with alerts on 5xx error spikes, failed authentication attempts, and unusual usage patterns. Incidents trigger immediate notification to Ditto.',facts:[['Metrics','Latency · errors · auth failures'],['Alerts','Pager + email on incident'],['Dashboards','Per-tenant visibility']]},
-  guardduty:{tag:'Monitoring',type:'sec',title:'GuardDuty',body:'AWS GuardDuty continuously monitors for unusual API call patterns, credential misuse, and known threat actor IPs across the entire platform.',facts:[['Coverage','Account-wide · continuous'],['Feeds','AWS threat intel + custom'],['Response','Auto-ticket + triage']]},
-  cloudtrail:{tag:'Monitoring',type:'sec',title:'CloudTrail',body:'Every AWS API call across the platform is logged — who made it, when, from where, and what the result was. Retained for compliance and available for client audit on request.',facts:[['Retention','7 years'],['Storage','Immutable S3 + Object Lock'],['Access','Read-only · audit role']]}
+  xero:{tag:'External data source',type:'src',title:'Xero Connection',body:"Your accounting data connects via Xero's secure delegated authorisation. Ditto pulls only what each workflow needs — transactions, reports, chart of accounts — and discards the raw data immediately after processing.",facts:[['Access method','Delegated authorisation, refreshed every 30 minutes'],['Scope','Read-only by default'],['Retention','None — discarded after every run']]},
+  xpm:{tag:'External data source',type:'src',title:'Xero Practice Manager',body:'Xero Practice Manager holds your client jobs, due dates, and workflow statuses. Ditto reads this data to trigger notice automation and track lodgement deadlines — no permanent copy is stored.',facts:[['Access method','Delegated authorisation'],['Usage','Job list, due dates, client contacts'],['Retention','None — read on demand']]},
+  mw:{tag:'Ditto platform',type:'platform',title:'Ditto Middleware',body:'The secure processing layer that sits between your data and the AI engine. It authenticates every request, enforces data scoping, manages credential storage, and ensures nothing is retained after each workflow runs.',facts:[['Hosting','Amazon Web Services Sydney region'],['Credentials','Stored in AWS Secrets Manager, encrypted with a customer-managed key'],['Logging','Access logs only — no client data content']]},
+  llm:{tag:'AI layer',type:'ai',title:'Private Language Model',body:'Claude, running inside AWS Bedrock in the Sydney region. No prompts are logged, no client data is used for model training, and all processing stays within Australian and New Zealand jurisdiction. Your data never touches a public AI endpoint.',facts:[['Model','Claude (from Anthropic), delivered via AWS Bedrock'],['Region','AWS Sydney (Asia Pacific Southeast)'],['Training','Zero — Bedrock does not train on your data']]},
+  staff:{tag:'Ditto platform',type:'platform',title:'Staff Interface',body:'The web application your partners and staff use to review AI outputs, approve notices before they send, and access the full audit log. Protected by multi-factor login and role-based access — each team member sees only what they need.',facts:[['Sign-in','Single sign-on with multi-factor authentication'],['Access control','Role-based, scoped per client'],['Audit','Full activity trail exported nightly to secure storage']]},
+  waf:{tag:'Perimeter',type:'sec',title:'Web Application Firewall',body:'Sits in front of the entire platform blocking common web attacks — database injection, malicious scripts, known bad IP addresses, and malformed requests — before they ever reach the application.',facts:[['Rule set','Amazon managed rules plus custom rules'],['Coverage','All incoming secure web traffic'],['Response','Block, log and alert on every match']]},
+  tls:{tag:'Perimeter',type:'sec',title:'Transport Layer Security',body:'All traffic between your staff, the Ditto platform, and Amazon Web Services is encrypted in transit using Transport Layer Security version 1.3 — the current web security standard. Older, weaker encryption is switched off at the load balancer.',facts:[['Protocol','Transport Layer Security version 1.3 only'],['Encryption','Modern ciphers with forward secrecy'],['Certificates','Amazon-issued and automatically rotated']]},
+  secrets:{tag:'Security control',type:'sec',title:'Credential Vault',body:'All connection tokens and credentials are stored exclusively in AWS Secrets Manager — never in code, never in environment variables. Everything is encrypted with a customer-managed key that only Ditto controls.',facts:[['Storage','AWS Secrets Manager only'],['Encryption key','Customer-managed key (AWS Key Management Service)'],['Rotation','Automatic']]},
+  iam:{tag:'Security control',type:'sec',title:'Least-Privilege Access',body:'The Ditto application has the narrowest possible permissions. It can only read its own credentials, invoke the AI model, and write its own logs. It has no access to anything else — no other accounts, no other services, nothing outside its defined scope.',facts:[['Scope','Narrow — read-only wherever possible'],['Boundary','Permission boundary enforced at the platform level'],['Review','Quarterly audit']]},
+  vpce:{tag:'Security control',type:'sec',title:'Private Network Routes',body:'Traffic between the Ditto application and Amazon Web Services — credentials, AI model, logging, storage — travels entirely within Amazon\'s private network. It never touches the public internet.',facts:[['Endpoints','AI model, credentials, logging, storage'],['Network','Private subnet with no public internet gateway'],['Outbound','Public internet blocked']]},
+  cloudwatch:{tag:'Monitoring',type:'sec',title:'CloudWatch',body:'Real-time monitoring with alerts on server error spikes, failed authentication attempts, and unusual usage patterns. Incidents trigger immediate notification to the Ditto team.',facts:[['Metrics','Latency, errors, authentication failures'],['Alerts','Pager and email on incident'],['Dashboards','Per-client visibility']]},
+  guardduty:{tag:'Monitoring',type:'sec',title:'GuardDuty',body:"Amazon's GuardDuty continuously watches for unusual activity patterns, credential misuse, and known threat actor addresses across the entire platform.",facts:[['Coverage','Account-wide, continuous'],['Feeds','Amazon threat intelligence plus custom feeds'],['Response','Automatic ticket plus triage']]},
+  cloudtrail:{tag:'Monitoring',type:'sec',title:'CloudTrail',body:'Every action on the platform is logged — who performed it, when, from where, and what the result was. Retained for compliance and available for client audit on request.',facts:[['Retention','7 years'],['Storage','Immutable with object lock'],['Access','Read-only, audit role only']]}
 };
 
 function renderArchPanel(key){
