@@ -1406,28 +1406,35 @@ PRESENTER TIPS
 
               <!-- LAYER 5 · Output modules (rendered back in the staff interface) -->
               <line x1="360" y1="745" x2="360" y2="763" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="120" y1="763" x2="600" y2="763" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="120" y1="763" x2="120" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="360" y1="763" x2="360" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="600" y1="763" x2="600" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="90" y1="763" x2="630" y2="763" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="90" y1="763" x2="90" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="270" y1="763" x2="270" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="450" y1="763" x2="450" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="630" y1="763" x2="630" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
 
               <g class="node node-out" data-node="out-fin" data-goto="m1">
-                <rect x="40" y="795" width="160" height="64" rx="10"/>
-                <text x="120" y="817" class="n-title" id="outFinTitle">Financial Reports</text>
-                <text x="120" y="835" class="n-sub" id="outFinSub">AI narrative reporting</text>
-                <text x="120" y="851" class="n-cta">View demo →</text>
+                <rect x="10" y="795" width="160" height="64" rx="10"/>
+                <text x="90" y="817" class="n-title" id="outFinTitle">Financial Reports</text>
+                <text x="90" y="835" class="n-sub" id="outFinSub">AI narrative reporting</text>
+                <text x="90" y="851" class="n-cta">View demo →</text>
               </g>
               <g class="node node-out" data-node="out-not" data-goto="m2">
-                <rect x="280" y="795" width="160" height="64" rx="10"/>
-                <text x="360" y="817" class="n-title" id="outNotTitle">Notice Automation</text>
-                <text x="360" y="835" class="n-sub" id="outNotSub">Tax + client reminders</text>
-                <text x="360" y="851" class="n-cta">View demo →</text>
+                <rect x="190" y="795" width="160" height="64" rx="10"/>
+                <text x="270" y="817" class="n-title" id="outNotTitle">Notice Automation</text>
+                <text x="270" y="835" class="n-sub" id="outNotSub">Tax + client reminders</text>
+                <text x="270" y="851" class="n-cta">View demo →</text>
               </g>
               <g class="node node-out" data-node="out-cod" data-goto="m3">
-                <rect x="520" y="795" width="160" height="64" rx="10"/>
-                <text x="600" y="817" class="n-title" id="outCodTitle">Accounts Coding</text>
-                <text x="600" y="835" class="n-sub" id="outCodSub">AI transaction coding</text>
-                <text x="600" y="851" class="n-cta">View demo →</text>
+                <rect x="370" y="795" width="160" height="64" rx="10"/>
+                <text x="450" y="817" class="n-title" id="outCodTitle">Accounts Coding</text>
+                <text x="450" y="835" class="n-sub" id="outCodSub">AI transaction coding</text>
+                <text x="450" y="851" class="n-cta">View demo →</text>
+              </g>
+              <g class="node node-out" data-node="out-asst" data-goto="assist">
+                <rect x="550" y="795" width="160" height="64" rx="10"/>
+                <text x="630" y="817" class="n-title" id="outAsstTitle">AI Assistant</text>
+                <text x="630" y="835" class="n-sub" id="outAsstSub">Chat-driven workflows</text>
+                <text x="630" y="851" class="n-cta">View demo →</text>
               </g>
 
               <text x="360" y="884" class="edge-label" text-anchor="middle">Rate limited · input validated · output logged per tenant</text>
@@ -1624,6 +1631,8 @@ PRESENTER TIPS
               <div class="field"><label>Module 2 subtitle</label><input id="cfg-o1-sub" placeholder="e.g. Tax + client reminders"/></div>
               <div class="field"><label>Module 3 title</label><input id="cfg-o2-title" placeholder="e.g. Accounts Coding"/></div>
               <div class="field"><label>Module 3 subtitle</label><input id="cfg-o2-sub" placeholder="e.g. AI transaction coding"/></div>
+              <div class="field"><label>Module 4 title</label><input id="cfg-o3-title" placeholder="e.g. AI Assistant"/></div>
+              <div class="field"><label>Module 4 subtitle</label><input id="cfg-o3-sub" placeholder="e.g. Chat-driven workflows"/></div>
             </div>
           </div>
         </div>
@@ -2415,7 +2424,8 @@ const DEFAULT_CONFIG = {
   outputs:[
     {title:'Financial Reports', sub:'AI narrative reporting'},
     {title:'Notice Automation', sub:'Tax + client reminders'},
-    {title:'Accounts Coding',   sub:'AI transaction coding'}
+    {title:'Accounts Coding',   sub:'AI transaction coding'},
+    {title:'AI Assistant',      sub:'Chat-driven workflows'}
   ],
   sources:[
     {title:'Xero',                 sub:'Accounting and bookkeeping'},
@@ -2574,7 +2584,7 @@ window.applyConfig = function(){
   // Browser tab title
   document.title=`${c.practice.short} · AI Workspace for Accountants`;
   // Architecture output module labels
-  const outIds = [['outFinTitle','outFinSub'],['outNotTitle','outNotSub'],['outCodTitle','outCodSub']];
+  const outIds = [['outFinTitle','outFinSub'],['outNotTitle','outNotSub'],['outCodTitle','outCodSub'],['outAsstTitle','outAsstSub']];
   outIds.forEach((ids,i)=>{
     const t=document.getElementById(ids[0]); const s=document.getElementById(ids[1]);
     if(t && c.outputs[i]) t.textContent=c.outputs[i].title;
@@ -2613,7 +2623,7 @@ function populateSetupForm(){
     byId(`cfg-s${i}-role`,c.staff[i].role);
   }
   for(let i=0;i<4;i++) byId(`cfg-c${i}-name`,c.clients[i].name);
-  for(let i=0;i<3;i++){ byId(`cfg-o${i}-title`,c.outputs[i].title); byId(`cfg-o${i}-sub`,c.outputs[i].sub); }
+  for(let i=0;i<4;i++){ byId(`cfg-o${i}-title`,c.outputs[i].title); byId(`cfg-o${i}-sub`,c.outputs[i].sub); }
   for(let i=0;i<2;i++){ byId(`cfg-src${i}-title`,c.sources[i].title); byId(`cfg-src${i}-sub`,c.sources[i].sub); }
   // Logo preview
   const lp=document.getElementById('cfgLogoPreview');
@@ -2647,7 +2657,7 @@ window.saveSetupForm = function(){
   for(let i=0;i<4;i++){
     c.clients[i].name=v(`cfg-c${i}-name`)||c.clients[i].name;
   }
-  for(let i=0;i<3;i++){
+  for(let i=0;i<4;i++){
     c.outputs[i].title=v(`cfg-o${i}-title`)||c.outputs[i].title;
     c.outputs[i].sub=v(`cfg-o${i}-sub`)||c.outputs[i].sub;
   }
