@@ -458,6 +458,36 @@
     .arch-panel{position:static}
   }
 
+  /* ---------- MODAL ---------- */
+  .modal-overlay{position:fixed;inset:0;background:rgba(11,18,32,.55);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;animation:fade .2s}
+  .modal-overlay[hidden]{display:none}
+  .modal{background:#fff;border-radius:16px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;padding:30px 32px;position:relative;box-shadow:0 24px 80px rgba(0,0,0,.3);animation:modalIn .25s ease}
+  @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.96)}to{opacity:1;transform:none}}
+  .modal-close{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:8px;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:20px;line-height:1;color:var(--muted);transition:all .15s}
+  .modal-close:hover{background:#fafbfc;color:var(--ink)}
+  .modal h2{margin:0 0 6px;font-size:20px;letter-spacing:-.01em;color:var(--ink)}
+  .modal h2 + .modal-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+  .modal p{font-size:13.5px;line-height:1.65;color:var(--ink-2);margin:0 0 12px}
+  .modal .icon-circle{width:54px;height:54px;border-radius:14px;background:linear-gradient(135deg,#0b1220,#1a2336);display:grid;place-items:center;font-size:22px;margin-bottom:14px;color:var(--lime)}
+  .modal .modal-list{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+  .modal .modal-list-item{padding:14px 16px;border:1px solid var(--line);border-radius:10px;background:#fafbfc}
+  .modal .modal-list-item b{display:block;color:var(--ink);font-size:13.5px;margin-bottom:3px}
+  .modal .modal-list-item span{font-size:12px;color:var(--muted)}
+  .modal .modal-list-item .meta{display:inline-block;margin-top:4px}
+  .modal .modal-actions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+  .modal .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0}
+  .modal .form-grid .field{display:flex;flex-direction:column;gap:6px}
+  .modal .form-grid .field.wide{grid-column:1/-1}
+  .modal .form-grid label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .modal .form-grid input,.modal .form-grid select{padding:9px 11px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13px;color:var(--ink);background:#fff}
+  .modal .form-grid input:focus,.modal .form-grid select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .modal .check-success{display:flex;align-items:center;gap:14px;background:var(--green-soft);color:var(--green);padding:14px 18px;border-radius:10px;font-weight:600;font-size:13.5px;margin:8px 0 14px}
+  .modal .check-success .ico{width:32px;height:32px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:16px;flex-shrink:0}
+  .modal .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+  .modal .stat-row .stat{padding:12px;background:#fafbfc;border:1px solid var(--line);border-radius:10px;text-align:center}
+  .modal .stat-row .stat .v{font-size:18px;font-weight:700;color:var(--ink)}
+  .modal .stat-row .stat .l{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-top:2px}
+
   /* ---------- CLIENT LOGO ---------- */
   #hdrLogo img.client-logo{height:64px;width:auto;max-width:320px;object-fit:contain;display:block}
 
@@ -513,9 +543,9 @@
       </div>
       <div class="header-right">
         <span class="chip"><span class="dot"></span> Xero &amp; XPM connected · Auto-sync ON</span>
-        <button class="icon-btn" title="Notifications">🔔<span class="badge-dot"></span></button>
-        <button class="icon-btn" title="Settings">⚙</button>
-        <div class="avatar" title="Michael Prasad">MP</div>
+        <button class="icon-btn" title="Notifications" data-action="notifications">🔔<span class="badge-dot"></span></button>
+        <button class="icon-btn" title="Settings" data-action="settings">⚙</button>
+        <div class="avatar" title="Michael Prasad" data-action="profile">MP</div>
       </div>
     </div>
     <nav class="tabs" role="tablist">
@@ -550,8 +580,8 @@
           <div class="welcome-sub">Here's what needs your attention today. Ditto has already handled <b>14 tasks</b> for you overnight.</div>
         </div>
         <div class="welcome-actions">
-          <button class="btn btn-ghost">📥 Inbox (3)</button>
-          <button class="btn btn-lime">+ New Job</button>
+          <button class="btn btn-ghost" data-action="inbox">📥 Inbox (3)</button>
+          <button class="btn btn-lime" data-action="new-job">+ New Job</button>
         </div>
       </div>
 
@@ -622,7 +652,7 @@
               </div>
               <button class="att-cta">Open →</button>
             </div>
-            <div class="att-item info">
+            <div class="att-item info" data-goto="m2">
               <div class="att-icon">💰</div>
               <div class="att-main">
                 <div class="att-title">$38,500 of client receivables over 60 days</div>
@@ -631,7 +661,7 @@
               </div>
               <button class="att-cta">Open →</button>
             </div>
-            <div class="att-item info">
+            <div class="att-item info" data-goto="m2">
               <div class="att-icon">📅</div>
               <div class="att-main">
                 <div class="att-title">28 April tax deadline — 14 GST returns to lodge</div>
@@ -680,16 +710,16 @@
         <div class="card">
           <div class="card-head">
             <div><h2>💚 Client Health Watchlist</h2><div class="sub">AI-ranked by financial signals across revenue, margin, cash &amp; debtor days</div></div>
-            <button class="btn btn-ghost">View all 142</button>
+            <button class="btn btn-ghost" data-action="watchlist-all">View all 142</button>
           </div>
           <table class="data">
             <thead><tr><th>Client</th><th>Revenue (3mo)</th><th>Margin</th><th>Cash runway</th><th>Health</th><th></th></tr></thead>
             <tbody>
-              <tr><td><b style="color:var(--ink)">Harbour Cafe Ltd</b><div style="font-size:11px;color:var(--muted)">Hospitality · Ponsonby</div></td><td>$261,840 <span style="color:var(--red);font-size:11px">▼ 6%</span></td><td>15.2%</td><td>1.2 months</td><td><div class="health-bar"><div style="width:32%;background:var(--red)"></div></div><div class="conf-text">32 · At risk</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
-              <tr><td><b style="color:var(--ink)">Aoraki Consulting</b><div style="font-size:11px;color:var(--muted)">Professional · Remuera</div></td><td>$198,420 <span style="color:var(--green);font-size:11px">▲ 4%</span></td><td>67.6%</td><td>6.8 months</td><td><div class="health-bar"><div style="width:58%;background:var(--amber)"></div></div><div class="conf-text">58 · Tax overdue</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
-              <tr><td><b style="color:var(--ink)">Kiwi Build Supplies</b><div style="font-size:11px;color:var(--muted)">Construction · East Tamaki</div></td><td>$712,320 <span style="color:var(--green);font-size:11px">▲ 18%</span></td><td>22.6%</td><td>3.1 months</td><td><div class="health-bar"><div style="width:72%;background:var(--lime)"></div></div><div class="conf-text">72 · Watch debtors</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
-              <tr><td><b style="color:var(--ink)">Greenfield Landscapes</b><div style="font-size:11px;color:var(--muted)">Trades · Henderson</div></td><td>$418,640 <span style="color:var(--green);font-size:11px">▲ 22%</span></td><td>24.3%</td><td>4.6 months</td><td><div class="health-bar"><div style="width:88%;background:var(--green)"></div></div><div class="conf-text">88 · Healthy</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
-              <tr><td><b style="color:var(--ink)">Remuera Property Co</b><div style="font-size:11px;color:var(--muted)">Property · Remuera</div></td><td>$142,800 <span style="color:var(--muted);font-size:11px">▬ flat</span></td><td>31.2%</td><td>12 months+</td><td><div class="health-bar"><div style="width:81%;background:var(--green)"></div></div><div class="conf-text">81 · Healthy</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
+              <tr><td><b style="color:var(--ink)">Harbour Cafe Ltd</b><div style="font-size:11px;color:var(--muted)">Hospitality · Ponsonby</div></td><td>$261,840 <span style="color:var(--red);font-size:11px">▼ 6%</span></td><td>15.2%</td><td>1.2 months</td><td><div class="health-bar"><div style="width:32%;background:var(--red)"></div></div><div class="conf-text">32 · At risk</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px" data-action="client-open">Open</button></td></tr>
+              <tr><td><b style="color:var(--ink)">Aoraki Consulting</b><div style="font-size:11px;color:var(--muted)">Professional · Remuera</div></td><td>$198,420 <span style="color:var(--green);font-size:11px">▲ 4%</span></td><td>67.6%</td><td>6.8 months</td><td><div class="health-bar"><div style="width:58%;background:var(--amber)"></div></div><div class="conf-text">58 · Tax overdue</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px" data-action="client-open">Open</button></td></tr>
+              <tr><td><b style="color:var(--ink)">Kiwi Build Supplies</b><div style="font-size:11px;color:var(--muted)">Construction · East Tamaki</div></td><td>$712,320 <span style="color:var(--green);font-size:11px">▲ 18%</span></td><td>22.6%</td><td>3.1 months</td><td><div class="health-bar"><div style="width:72%;background:var(--lime)"></div></div><div class="conf-text">72 · Watch debtors</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px" data-action="client-open">Open</button></td></tr>
+              <tr><td><b style="color:var(--ink)">Greenfield Landscapes</b><div style="font-size:11px;color:var(--muted)">Trades · Henderson</div></td><td>$418,640 <span style="color:var(--green);font-size:11px">▲ 22%</span></td><td>24.3%</td><td>4.6 months</td><td><div class="health-bar"><div style="width:88%;background:var(--green)"></div></div><div class="conf-text">88 · Healthy</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px" data-action="client-open">Open</button></td></tr>
+              <tr><td><b style="color:var(--ink)">Remuera Property Co</b><div style="font-size:11px;color:var(--muted)">Property · Remuera</div></td><td>$142,800 <span style="color:var(--muted);font-size:11px">▬ flat</span></td><td>31.2%</td><td>12 months+</td><td><div class="health-bar"><div style="width:81%;background:var(--green)"></div></div><div class="conf-text">81 · Healthy</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px" data-action="client-open">Open</button></td></tr>
             </tbody>
           </table>
         </div>
@@ -787,8 +817,8 @@
             <div class="sub" id="clientMeta">NZBN 9429046812334 · GST Reg 112-458-329 · Period: 1–31 March 2025 · NZD</div>
           </div>
           <div style="display:flex;gap:8px">
-            <button class="btn btn-ghost">Compare ▾</button>
-            <button class="btn btn-ghost">Export</button>
+            <button class="btn btn-ghost" data-action="compare">Compare ▾</button>
+            <button class="btn btn-ghost" data-action="export">Export</button>
           </div>
         </div>
         <div class="card-body">
@@ -834,9 +864,9 @@
 
           <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
             <button class="btn btn-ghost" id="editNarrative" disabled>✏ Edit Report</button>
-            <button class="btn btn-ghost" id="downloadPdf" disabled>⬇ Download PDF</button>
-            <button class="btn btn-ghost" disabled>📤 Send to Client</button>
-            <button class="btn btn-ghost" disabled>📎 Attach to XPM Job</button>
+            <button class="btn btn-ghost" id="downloadPdf" disabled data-action="download-pdf">⬇ Download PDF</button>
+            <button class="btn btn-ghost" disabled data-action="send-client">📤 Send to Client</button>
+            <button class="btn btn-ghost" disabled data-action="attach-xpm">📎 Attach to XPM Job</button>
             <span id="editStatus" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
           </div>
         </div>
@@ -852,11 +882,11 @@
           Xero Practice Manager <span class="sep">›</span> Jobs <span class="sep">›</span> <b>Tax Compliance 2025</b>
         </div>
         <div class="toolbar-actions">
-          <div class="chips">
-            <button class="fchip active">All <span class="count">8</span></button>
-            <button class="fchip">Overdue <span class="count">2</span></button>
-            <button class="fchip">Due soon <span class="count">3</span></button>
-            <button class="fchip">Lodged <span class="count">3</span></button>
+          <div class="chips" id="m2Filters">
+            <button class="fchip active" data-filter="all">All <span class="count">8</span></button>
+            <button class="fchip" data-filter="overdue">Overdue <span class="count">2</span></button>
+            <button class="fchip" data-filter="due">Due soon <span class="count">3</span></button>
+            <button class="fchip" data-filter="lodged">Lodged <span class="count">3</span></button>
           </div>
         </div>
       </div>
@@ -995,7 +1025,7 @@
             <div class="sub">Ditto has routed these to the partner for sign-off · <span id="reviewRemaining">0</span> remaining</div>
           </div>
           <div style="display:flex;gap:8px">
-            <button class="btn btn-ghost">Assign all to MP</button>
+            <button class="btn btn-ghost" data-action="assign-all">Assign all to MP</button>
             <button class="btn btn-primary" id="postXero" disabled>✓ Post 10 coded to Xero</button>
           </div>
         </div>
@@ -1353,6 +1383,14 @@
       </form>
     </main>
   </section>
+
+  <!-- Modal -->
+  <div id="modal" class="modal-overlay" hidden>
+    <div class="modal" role="dialog">
+      <button class="modal-close" aria-label="Close">×</button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
 
   <footer>
     Powered by <span class="footer-logo">d<span class="i">i</span>tto</span> · <a href="https://ditto.vip" target="_blank" rel="noopener">ditto.vip</a> · Done-for-you AI for accounting practices
@@ -1843,7 +1881,7 @@ function renderReminderClients(){
     const safeInits = (staff.name||'').trim().split(/\s+/).map(p=>p[0]||'').join('').slice(0,2).toUpperCase() || c.assigned;
     const grad = AV_GRADIENTS[staffIdx];
     const displayName = (window.personalize ? personalize(c.name) : c.name);
-    const tr=document.createElement('tr');tr.dataset.idx=i;
+    const tr=document.createElement('tr');tr.dataset.idx=i;tr.dataset.status=c.status;
     tr.innerHTML=`
       <td class="mono" style="color:var(--muted)">${c.code}</td>
       <td><div style="font-weight:600;color:var(--ink)">${displayName}</div><div style="font-size:11.5px;color:var(--muted);margin-top:1px">${c.contact}</div></td>
@@ -2332,6 +2370,164 @@ document.getElementById('cfgResetBtn')?.addEventListener('click',()=>{
   try{ localStorage.removeItem('ditto-config'); }catch(e){}
   populateSetupForm();
   applyConfig();
+});
+
+/* ============================================================
+   MODAL + ACTION SYSTEM
+   ============================================================ */
+const Modal = {
+  el(){return document.getElementById('modal');},
+  body(){return document.getElementById('modalBody');},
+  open(html){ this.body().innerHTML = html; this.el().hidden=false; document.body.style.overflow='hidden'; },
+  close(){ this.el().hidden=true; document.body.style.overflow=''; }
+};
+document.getElementById('modal').addEventListener('click',e=>{
+  if(e.target.id==='modal' || e.target.classList.contains('modal-close') || e.target.dataset.action==='modal-close') Modal.close();
+});
+document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !document.getElementById('modal').hidden) Modal.close(); });
+
+function tile(icon,title,sub){return `<div class="icon-circle">${icon}</div><h2>${title}</h2><div class="modal-sub">${sub}</div>`;}
+
+const ACTIONS = {
+  notifications(){
+    Modal.open(`${tile('🔔','Notifications','3 unread items from across your practice')}
+      <div class="modal-list">
+        <div class="modal-list-item"><b>2 tax returns are now overdue</b><span>${personalize('Harbour Cafe Ltd · Aoraki Consulting Ltd')} — Ditto has drafted reminder emails for your approval.</span></div>
+        <div class="modal-list-item"><b>Bank reconciliation flagged 2 anomalies</b><span>Possible duplicate payment to JBT Holdings ($2,480) and an unsupported ATM withdrawal ($500).</span></div>
+        <div class="modal-list-item"><b>3 client narratives ready to review</b><span>${personalize('Kiwi Build Supplies · Greenfield Landscapes · Aoraki Consulting')} — March 2025 commentary drafted overnight.</span></div>
+      </div>
+      <div class="modal-actions"><button class="btn btn-ghost" data-action="modal-close">Mark all read</button><button class="btn btn-lime" data-action="modal-close">Open inbox</button></div>`);
+  },
+  settings(){ Modal.close(); document.querySelector('.tab[data-tab="setup"]').click(); },
+  profile(){
+    const c=CONFIG;
+    Modal.open(`${tile('👤',c.partner.name, c.partner.role+' · '+c.practice.full)}
+      <div class="modal-list">
+        <div class="modal-list-item"><b>📍 Location</b><span>${c.practice.location}</span></div>
+        <div class="modal-list-item"><b>📞 Direct line</b><span>${c.practice.phone}</span></div>
+        <div class="modal-list-item"><b>🌐 Website</b><span>${c.practice.website}</span></div>
+      </div>
+      <div class="modal-actions"><button class="btn btn-ghost" data-action="modal-close">Sign out</button><button class="btn btn-lime" data-action="settings">⚙ Edit profile</button></div>`);
+  },
+  inbox(){
+    Modal.open(`${tile('📥','Inbox','3 items awaiting your review')}
+      <div class="modal-list">
+        <div class="modal-list-item"><b>📧 Reminder draft → ${personalize('Harbour Cafe Ltd')}</b><span>GST101A overdue · drafted by Ditto · awaiting approval</span></div>
+        <div class="modal-list-item"><b>📊 Financial narrative → ${personalize('Kiwi Build Supplies Ltd')}</b><span>March 2025 P&L commentary · ready to send</span></div>
+        <div class="modal-list-item"><b>🔍 Coding review → ${CONFIG.practice.short} Practice Account</b><span>2 transactions flagged for partner sign-off</span></div>
+      </div>
+      <div class="modal-actions"><button class="btn btn-lime" data-action="modal-close">Open all</button></div>`);
+  },
+  'new-job'(){
+    Modal.open(`${tile('➕','Create New Job','Add a new tax compliance or accounting job to XPM')}
+      <div class="form-grid">
+        <div class="field wide"><label>Client</label><select><option>${personalize('Kiwi Build Supplies Ltd')}</option><option>${personalize('Harbour Cafe Ltd')}</option><option>${personalize('Greenfield Landscapes Ltd')}</option><option>${personalize('Aoraki Consulting Ltd')}</option></select></div>
+        <div class="field"><label>Job Type</label><select><option>GST Return (GST101A)</option><option>Income Tax (IR3)</option><option>Income Tax (IR4)</option><option>FBT Return</option><option>Provisional Tax</option></select></div>
+        <div class="field"><label>Period</label><input value="March 2025"/></div>
+        <div class="field"><label>Due Date</label><input type="date" value="2025-04-28"/></div>
+        <div class="field"><label>Assigned To</label><select>${CONFIG.staff.map(s=>`<option>${s.name}</option>`).join('')}</select></div>
+      </div>
+      <div class="modal-actions"><button class="btn btn-ghost" data-action="modal-close">Cancel</button><button class="btn btn-lime" data-action="modal-close">✓ Create job</button></div>`);
+  },
+  'watchlist-all'(){
+    Modal.open(`${tile('💚','Client Health Watchlist','142 active clients ranked by AI across revenue, margin, cash and debtor signals')}
+      <div class="modal-list">
+        <div class="modal-list-item"><b>${personalize('Harbour Cafe Ltd')} · Score 32</b><span>At risk · revenue down 6.2% three months in a row · cash runway 1.2 months</span></div>
+        <div class="modal-list-item"><b>${personalize('Aoraki Consulting Ltd')} · Score 58</b><span>Healthy financials but tax return now overdue</span></div>
+        <div class="modal-list-item"><b>${personalize('Kiwi Build Supplies Ltd')} · Score 72</b><span>Strong revenue growth · monitor aged debtors ($38.5k 60+ days)</span></div>
+        <div class="modal-list-item"><b>${personalize('Greenfield Landscapes Ltd')} · Score 88</b><span>Healthy across all signals · structure review recommended</span></div>
+        <div class="modal-list-item"><b>Remuera Property Co · Score 81</b><span>Stable · FBT due 10 April</span></div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);text-align:center">Showing 5 of 142. Full list available in production.</p>`);
+  },
+  'client-open'(btn){
+    const row = btn.closest('tr');
+    const name = row?.querySelector('b')?.textContent || 'Client';
+    const sector = row?.querySelector('div[style*="font-size:11px"]')?.textContent || '';
+    const cells = row?.querySelectorAll('td') || [];
+    const rev = cells[1]?.textContent.trim() || '';
+    const margin = cells[2]?.textContent.trim() || '';
+    const runway = cells[3]?.textContent.trim() || '';
+    Modal.open(`${tile('📁',name,sector)}
+      <div class="stat-row">
+        <div class="stat"><div class="v">${rev}</div><div class="l">Revenue 3mo</div></div>
+        <div class="stat"><div class="v">${margin}</div><div class="l">Margin</div></div>
+        <div class="stat"><div class="v">${runway}</div><div class="l">Cash runway</div></div>
+      </div>
+      <p>Open this client in any module to see Ditto's full AI analysis, draft narrative reports, send tax reminders or reconcile transactions.</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" data-action="modal-close">Close</button>
+        <button class="btn btn-lime" data-action="goto-narratives">📊 Open in Narratives</button>
+      </div>`);
+  },
+  'goto-narratives'(){ Modal.close(); document.querySelector('.tab[data-tab="m1"]').click(); },
+  compare(){
+    Modal.open(`${tile('📈','Compare Periods','Choose what to compare against the current period')}
+      <div class="modal-list">
+        <div class="modal-list-item"><b>February 2025 (previous month)</b><span>Standard month-on-month variance analysis</span></div>
+        <div class="modal-list-item"><b>March 2024 (same month last year)</b><span>Year-on-year seasonal comparison</span></div>
+        <div class="modal-list-item"><b>Year to date vs. budget</b><span>Track performance against the annual plan</span></div>
+        <div class="modal-list-item"><b>Rolling 12-month average</b><span>Smooth out monthly volatility</span></div>
+      </div>
+      <div class="modal-actions"><button class="btn btn-ghost" data-action="modal-close">Cancel</button><button class="btn btn-lime" data-action="modal-close">Apply comparison</button></div>`);
+  },
+  export(){
+    Modal.open(`${tile('⬇','Export Report','Choose a format to export the current view')}
+      <div class="modal-list">
+        <div class="modal-list-item"><b>📄 PDF</b><span>Branded client-ready report with cover page and signature block</span></div>
+        <div class="modal-list-item"><b>📊 Excel (.xlsx)</b><span>Editable workings with all formulas preserved</span></div>
+        <div class="modal-list-item"><b>📋 CSV</b><span>Raw data export for further analysis</span></div>
+        <div class="modal-list-item"><b>📎 Attach to XPM job</b><span>Save directly to the active client job in Practice Manager</span></div>
+      </div>`);
+  },
+  'download-pdf'(){
+    Modal.open(`${tile('⬇','PDF Generated','Your client-ready report has been generated')}
+      <div class="check-success"><div class="ico">✓</div><div>March 2025 Financial Narrative · ${CONFIG.practice.short} branded · 4 pages</div></div>
+      <p>In production this would download immediately. The PDF includes a branded cover page, the full narrative, P&L summary and your signature block.</p>
+      <div class="modal-actions"><button class="btn btn-lime" data-action="modal-close">Got it</button></div>`);
+  },
+  'send-client'(){
+    Modal.open(`${tile('📤','Send Report to Client','Email the AI narrative directly from Ditto')}
+      <div class="form-grid">
+        <div class="field wide"><label>To</label><input value="finance@kiwibuildsupplies.co.nz"/></div>
+        <div class="field wide"><label>Subject</label><input value="Your March 2025 Financial Report"/></div>
+      </div>
+      <div class="check-success"><div class="ico">✉</div><div>The PDF will be attached automatically and the send logged to XPM.</div></div>
+      <div class="modal-actions"><button class="btn btn-ghost" data-action="modal-close">Cancel</button><button class="btn btn-lime" data-action="modal-close">📤 Send now</button></div>`);
+  },
+  'attach-xpm'(){
+    Modal.open(`${tile('📎','Attach to XPM Job','Save this report against an active job in Xero Practice Manager')}
+      <div class="modal-list">
+        <div class="modal-list-item"><b>JOB-00412 · ${personalize('Harbour Cafe Ltd')} GST</b><span>In progress · due 31 Mar</span></div>
+        <div class="modal-list-item"><b>JOB-00421 · ${personalize('Kiwi Build Supplies Ltd')} March Reporting</b><span>In progress · due 12 Apr</span></div>
+        <div class="modal-list-item"><b>JOB-00424 · ${personalize('Greenfield Landscapes Ltd')} Quarterly Review</b><span>In progress · due 30 Apr</span></div>
+      </div>
+      <div class="modal-actions"><button class="btn btn-ghost" data-action="modal-close">Cancel</button><button class="btn btn-lime" data-action="modal-close">✓ Attach</button></div>`);
+  },
+  'assign-all'(){
+    Modal.open(`${tile('👤','Assign Flagged Items','Send all 2 flagged transactions to the partner for review')}
+      <div class="check-success"><div class="ico">✓</div><div>Both flagged items will be assigned to ${CONFIG.partner.name} and added to their review queue.</div></div>
+      <div class="modal-actions"><button class="btn btn-ghost" data-action="modal-close">Cancel</button><button class="btn btn-lime" data-action="modal-close">✓ Assign all</button></div>`);
+  }
+};
+
+document.addEventListener('click',e=>{
+  const trigger = e.target.closest('[data-action]');
+  if(!trigger) return;
+  const action = trigger.dataset.action;
+  if(ACTIONS[action]){ e.preventDefault(); e.stopPropagation(); ACTIONS[action](trigger); }
+});
+
+/* Module 2 filter chips */
+document.querySelectorAll('#m2Filters .fchip').forEach(chip=>{
+  chip.addEventListener('click',()=>{
+    document.querySelectorAll('#m2Filters .fchip').forEach(c=>c.classList.remove('active'));
+    chip.classList.add('active');
+    const f = chip.dataset.filter;
+    document.querySelectorAll('#clientTable tbody tr').forEach(tr=>{
+      tr.style.display = (f==='all' || tr.dataset.status===f) ? '' : 'none';
+    });
+  });
 });
 
 /* Init */
