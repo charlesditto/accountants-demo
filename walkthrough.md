@@ -193,13 +193,49 @@ Scroll to the **Review Queue** that appears.
 
 ---
 
-## 6 · Close (1 minute)
+## 6 · AI Assistant (2–3 minutes)
 
-> "So — to bring it back to the architecture slide I started with — everything you just saw runs entirely inside that secure Sydney environment. Your data never leaves AU/NZ jurisdiction, it's never logged, never used for training, and it's discarded immediately after each run. You keep the partner sign-off on everything that matters, and Ditto handles the grind work in between."
+**Click:** `🤖 AI Assistant` tab.
 
-> "On a practice MPG's size, we'd typically see **10 to 15 hours a week** come back across the three modules in the first month — mostly from narrative reporting and client chasing."
+> "The last thing I want to show you — and this is where it starts to feel less like software and more like having someone on your team. This is the AI Assistant. Instead of going into each module separately, your team can just ask."
 
-> "Any questions about how it would plug into your current month-end?"
+**Click the suggestion chip: "Which clients are overdue?"**
+
+Wait for the tool call indicator and response to complete.
+
+> "See that line — checking XPM, get clients, status overdue — that's the AI deciding what data it needs and going to get it. Zabeen didn't tell it where to look. It just knew."
+
+*[pause]*
+
+> "Three clients, overdue, right there. And now it's offering to draft the reminders in one go."
+
+**Click "Draft all three reminders".**
+
+Wait for the draft to appear.
+
+> "That's a notice ready for Michael's approval. Nobody wrote that — the AI pulled the client details from XPM and drafted it in MPG's voice. And nothing gets sent until a human confirms it."
+
+*[pause]*
+
+> "Let me show you one more."
+
+**Type "Show me the March P&L" in the input field and press Enter.**
+
+Wait for response.
+
+> "Revenue, expenses, margin — pulled live from Xero. And it's already flagged something. A software transaction it doesn't recognise. It's not just reporting the data, it's reading it."
+
+*[pause — let Michael absorb]*
+
+> "This is what we mean by done for you. Your team doesn't learn a new system. They just ask, review, and approve. The AI does the rest."
+
+---
+
+## 7 · Close (1 minute)
+
+> "So that's the full picture — reporting, notice automation, accounts processing, an AI assistant, and the secure architecture underpinning all of it."
+
+> "The question for today is where you want to start. What's costing your team the most time right now?"
 
 ---
 

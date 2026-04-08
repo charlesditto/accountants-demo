@@ -1,4 +1,92 @@
 <!DOCTYPE html>
+<!--
+================================================================================
+DITTO · MPG DEMO WALKTHROUGH SCRIPT  (presenter reference · ~13–18 min)
+================================================================================
+
+0 · OPENING (30s)
+   "Thanks for making time. What I'm going to show you is a private, secure AI
+    workspace we'd deploy specifically for MPG — sitting alongside Xero and
+    Xero Practice Manager, not replacing anything. I'll start by showing you
+    how it's built and where your data lives, then walk through the things
+    it actually does day-to-day."
+   -> click 🏗 Architecture tab
+
+1 · ARCHITECTURE (2–3 min)
+   Walk top to bottom:
+     MPG Staff → WAF + TLS (perimeter) → Ditto Secure Infrastructure →
+     Staff Interface → Ditto Middleware (+ external APIs branch) →
+     Credential Vault / Least-Privilege / Private Network →
+     Private Language Model (Claude via Bedrock) →
+     Output modules → Continuously observed by CloudWatch/GuardDuty/CloudTrail
+   Click each box to show the plain-English side panel.
+   Mention: exportable as SVG + PNG for proposals.
+
+2 · DASHBOARD (2 min)
+   -> click 🏠 Dashboard tab
+   Welcome strip · KPI tiles · ⚡ Needs Your Attention panel ·
+   Ditto AI hero tile (4h 32m saved) · Activity Feed · Client Health
+   Watchlist · Team Workload.
+   Click the critical attention item to show tab routing, then back.
+
+3 · FINANCIAL NARRATIVES (3 min)
+   -> click 📊 Financial Narratives tab
+   Select Kiwi Build Supplies Ltd · walk through KPIs + P&L.
+   Click ⚡ Generate AI Narrative — AI steps animate, report types in.
+   Mention: Edit Report, Download PDF, Send to Client, Attach to XPM.
+   Quick swap to Harbour Cafe to show a different story.
+
+4 · TAX REMINDERS (2–3 min)
+   -> click 📬 Tax Reminders tab
+   Filter chips · Review before send vs Auto-send toggle.
+   Click ⚡ Run AI Automation — emails draft and stream in.
+   Approve one or two (row becomes "Sent · Logged to XPM").
+
+5 · BANK RECONCILIATION (2–3 min)
+   -> click ⚡ Bank Reconciliation tab
+   Walk through the 12 unreconciled lines.
+   Click ⚡ Run AI Coding — 5-step panel, rows animate with confidence bars.
+   Call out the 2 anomalies (JBT Holdings duplicate, ATM withdrawal).
+   Summary tiles (10 coded · 2 flagged · 95% avg · 38 min saved).
+   Resolve a flagged item in the Review Queue and Post to Xero.
+
+6 · AI ASSISTANT (2–3 min)
+   -> click 🤖 AI Assistant tab
+   "The last thing I want to show you — this is where it starts to feel less
+    like software and more like having someone on your team. Instead of
+    going into each module separately, your team can just ask."
+   • Click chip "Which clients are overdue?"
+     → tool call indicator → 3 clients stream in → action buttons appear
+     "See that line — checking XPM, get clients, status overdue — that's the
+      AI deciding what data it needs and going to get it. Zabeen didn't tell
+      it where to look. It just knew."
+   • Click "Draft all three reminders"
+     → draft for Smith Builders streams in
+     "That's a notice ready for Michael's approval. Nobody wrote that — the
+      AI pulled the client details from XPM and drafted it in MPG's voice.
+      And nothing gets sent until a human confirms it."
+   • Type: "Show me the March P&L" (press Enter)
+     "Revenue, expenses, margin — pulled live from Xero. And it's already
+      flagged something. A software transaction it doesn't recognise. It's
+      not just reporting the data, it's reading it."
+   "This is what we mean by done for you. Your team doesn't learn a new
+    system. They just ask, review, and approve. The AI does the rest."
+
+7 · CLOSE (1 min)
+   "So that's the full picture — reporting, notice automation, accounts
+    processing, an AI assistant, and the secure architecture underpinning
+    all of it."
+   "The question for today is where you want to start. What's costing your
+    team the most time right now?"
+
+PRESENTER TIPS
+ • Presenter dot (bottom-left) glows lime so viewers can follow your cursor.
+ • ⚙ Settings in the header jumps to Setup — logo upload + rebranding live.
+ • Click any architecture box for plain-English security answers.
+ • Send / Export / Post buttons are mock popups — call it out if asked.
+
+================================================================================
+-->
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -459,6 +547,67 @@
     .arch-panel{position:static}
   }
 
+  /* ---------- AI ASSISTANT / CHAT ---------- */
+  .chat-card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;overflow:hidden;min-height:620px}
+  .chat-messages{flex:1;padding:28px 28px 12px;overflow-y:auto;display:flex;flex-direction:column;gap:18px;max-height:62vh;min-height:420px}
+  .chat-chips{display:flex;gap:8px;padding:10px 18px 0;flex-wrap:wrap;border-top:1px solid var(--line-2)}
+  .chat-chip{padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:#fff;font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-2);cursor:pointer;transition:all .15s;white-space:nowrap}
+  .chat-chip:hover{border-color:var(--lime);background:var(--lime-soft);color:#0b1220}
+  .chat-input-row{padding:14px 18px 18px;display:flex;gap:10px;align-items:center}
+  .chat-input-row input{flex:1;padding:12px 16px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:14px;color:var(--ink);background:#fff;transition:all .15s}
+  .chat-input-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .chat-input-row .btn{padding:12px 18px}
+
+  .chat-msg{display:flex;gap:12px;align-items:flex-start;animation:chatIn .25s ease;max-width:88%}
+  .chat-msg.ai{align-self:flex-start}
+  .chat-msg.user{align-self:flex-end;flex-direction:row-reverse}
+  @keyframes chatIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .chat-avatar{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-weight:800;font-size:12px;flex-shrink:0;letter-spacing:.02em}
+  .chat-msg.ai .chat-avatar{background:linear-gradient(135deg,#0b1220,#1a2336);color:var(--lime)}
+  .chat-msg.user .chat-avatar{background:linear-gradient(135deg,#13b5ea,#0a8cbd);color:#fff}
+
+  .chat-body{display:flex;flex-direction:column;gap:6px;min-width:0}
+  .chat-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .chat-msg.user .chat-label{text-align:right}
+
+  .chat-bubble{padding:14px 18px;border-radius:14px;font-size:14px;line-height:1.6;color:var(--ink-2);white-space:pre-wrap;word-wrap:break-word}
+  .chat-msg.ai .chat-bubble{background:#fafbfc;border:1px solid var(--line)}
+  .chat-msg.user .chat-bubble{background:#0b1220;color:#fff;border:1px solid #0b1220}
+  .chat-bubble.mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:12.5px;font-variant-numeric:tabular-nums}
+
+  .chat-tool{display:flex;align-items:center;gap:10px;padding:10px 14px;font-size:12px;color:var(--muted);font-style:italic;font-family:'JetBrains Mono',ui-monospace,monospace;background:#fafbfc;border:1px dashed var(--line);border-radius:10px;align-self:flex-start;margin-left:46px;animation:chatIn .25s ease}
+  .chat-tool.done{border-style:solid;color:var(--green);font-style:normal}
+  .chat-tool .spinner{width:12px;height:12px;border:2px solid rgba(11,18,32,.12);border-top-color:var(--accent-dark);border-radius:50%;animation:spin 1s linear infinite;flex-shrink:0}
+  .chat-tool.done .spinner{border:none;width:12px;height:12px;display:grid;place-items:center;animation:none;color:var(--green);font-size:14px}
+  .chat-tool.done .spinner::before{content:'✓'}
+
+  .chat-actions{display:flex;gap:8px;margin-top:8px;margin-left:46px;flex-wrap:wrap;animation:chatIn .3s ease}
+  .chat-actions button{padding:9px 14px;font:inherit;font-size:12.5px;font-weight:600;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:9px;cursor:pointer;transition:all .15s}
+  .chat-actions button:hover{background:#0b1220;color:#fff;border-color:#0b1220}
+  .chat-actions button.primary{background:var(--lime);border-color:var(--lime);color:#0b1220}
+  .chat-actions button.primary:hover{background:#a8df2c;border-color:#a8df2c;color:#0b1220}
+  .chat-actions button:disabled{opacity:.5;cursor:not-allowed}
+
+  .chat-confirm{margin-top:10px;margin-left:46px;padding:16px 18px;background:#fff;border:1px solid var(--line);border-left:4px solid var(--lime);border-radius:12px;box-shadow:0 6px 18px rgba(15,23,42,.08);animation:chatIn .3s ease}
+  .chat-confirm .cc-title{font-weight:700;color:var(--ink);font-size:13.5px;margin-bottom:4px}
+  .chat-confirm .cc-sub{font-size:12.5px;color:var(--muted);margin-bottom:12px}
+  .chat-confirm .cc-row{font-size:12px;color:var(--ink-2);margin-bottom:3px}
+  .chat-confirm .cc-row b{color:var(--ink)}
+  .chat-confirm .cc-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+
+  .chat-success{margin-top:8px;margin-left:46px;padding:12px 16px;background:var(--green-soft);color:var(--green);border-radius:10px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:10px;animation:chatIn .3s ease}
+  .chat-success::before{content:'✓';width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:13px}
+
+  .chat-cursor{display:inline-block;width:6px;height:14px;background:var(--ink);vertical-align:text-bottom;animation:blink 1s infinite;margin-left:1px}
+
+  @media (max-width:780px){
+    .chat-card{min-height:560px}
+    .chat-messages{padding:18px 16px 10px;max-height:54vh}
+    .chat-msg{max-width:95%}
+    .chat-tool,.chat-actions,.chat-confirm,.chat-success{margin-left:0}
+  }
+
   /* ---------- PRESENTER MOUSE FOLLOWER ---------- */
   .presenter-dot{
     position:fixed;width:26px;height:26px;border-radius:50%;
@@ -588,6 +737,7 @@
       <button class="tab" data-tab="m1">📊 Financial Narratives</button>
       <button class="tab" data-tab="m2">📬 Tax Reminders <span class="tab-num" id="m2count">2</span></button>
       <button class="tab" data-tab="m3">⚡ Bank Reconciliation <span class="tab-num" id="m3count">12</span></button>
+      <button class="tab" data-tab="assist">🤖 AI Assistant</button>
       <button class="tab" data-tab="m4">🏗 Architecture</button>
       <button class="tab" data-tab="setup">⚙ Setup</button>
     </nav>
@@ -1065,6 +1215,43 @@
           </div>
         </div>
         <div class="card-body" id="reviewList"></div>
+      </div>
+    </main>
+  </section>
+
+  <!-- ========== AI ASSISTANT ========== -->
+  <section class="module" id="assist">
+    <div class="subtoolbar">
+      <div class="subtoolbar-inner">
+        <div class="breadcrumb">Ditto AI <span class="sep">›</span> <b>AI Assistant</b></div>
+        <div class="toolbar-actions">
+          <span class="chip"><span class="dot"></span> Xero connected</span>
+          <span class="chip"><span class="dot"></span> XPM connected</span>
+          <span class="chip" id="assistBankChip">MPG Practice Account · NZD</span>
+        </div>
+      </div>
+    </div>
+    <main>
+      <div class="module-head">
+        <div>
+          <h1>AI Assistant</h1>
+          <p>Ask the AI to find, draft, or action anything across your Xero and XPM data — every write-back needs your approval.</p>
+        </div>
+        <span class="ditto-badge"><span class="lime-dot"></span> Ditto AI</span>
+      </div>
+
+      <div class="chat-card">
+        <div class="chat-messages" id="chatMessages" aria-live="polite"></div>
+        <div class="chat-chips" id="chatChips">
+          <button class="chat-chip" data-chat-chip="Which clients are overdue?">💡 Which clients are overdue?</button>
+          <button class="chat-chip" data-chat-chip="Show me the March P&amp;L">📊 Show March P&amp;L</button>
+          <button class="chat-chip" data-chat-chip="Code today's transactions">⚡ Code today's transactions</button>
+          <button class="chat-chip" data-chat-chip="Draft a reminder for a client">📬 Draft a reminder for a client</button>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chatInput" placeholder="Ask me anything about your Xero or XPM data..." autocomplete="off"/>
+          <button class="btn btn-lime" id="chatSend">Send →</button>
+        </div>
       </div>
     </main>
   </section>
@@ -2780,6 +2967,351 @@ document.querySelectorAll('#m2Filters .fchip').forEach(chip=>{
   // Hide when leaving window
   document.addEventListener('mouseleave',()=>{ if(enabled) dot.classList.add('hidden'); });
   document.addEventListener('mouseenter',()=>{ if(enabled) dot.classList.remove('hidden'); });
+})();
+
+/* ============================================================
+   AI ASSISTANT CHAT
+   ============================================================ */
+(function(){
+  const messages = document.getElementById('chatMessages');
+  const chips    = document.getElementById('chatChips');
+  const input    = document.getElementById('chatInput');
+  const sendBtn  = document.getElementById('chatSend');
+  if(!messages) return;
+
+  const state = { awaitingClient:false, busy:false };
+  const scroll = ()=>{ messages.scrollTop = messages.scrollHeight; };
+
+  function userName(){ return firstName(CONFIG.partner.name) || 'Michael'; }
+
+  function addUserMessage(text){
+    const div = document.createElement('div');
+    div.className = 'chat-msg user';
+    div.innerHTML = `
+      <div class="chat-avatar">${initials(userName()+' User')||'ME'}</div>
+      <div class="chat-body">
+        <div class="chat-label">${userName()}</div>
+        <div class="chat-bubble"></div>
+      </div>`;
+    div.querySelector('.chat-bubble').textContent = text;
+    messages.appendChild(div); scroll();
+  }
+
+  function addAiBubble(opts={}){
+    const div = document.createElement('div');
+    div.className = 'chat-msg ai';
+    div.innerHTML = `
+      <div class="chat-avatar">AI</div>
+      <div class="chat-body">
+        <div class="chat-label">Ditto AI</div>
+        <div class="chat-bubble ${opts.mono?'mono':''}"></div>
+      </div>`;
+    messages.appendChild(div); scroll();
+    return div.querySelector('.chat-bubble');
+  }
+
+  function addToolCall(label){
+    const div = document.createElement('div');
+    div.className = 'chat-tool';
+    div.innerHTML = `<div class="spinner"></div><div class="txt">${label}</div>`;
+    messages.appendChild(div); scroll();
+    return div;
+  }
+  function resolveToolCall(el){ el.classList.add('done'); }
+
+  async function streamText(el, text, wordMs=28){
+    el.textContent = '';
+    const cursor = document.createElement('span');
+    cursor.className = 'chat-cursor';
+    el.appendChild(cursor);
+    const tokens = text.split(/(\s+)/); // keep whitespace groups
+    for(const tok of tokens){
+      cursor.insertAdjacentText('beforebegin', tok);
+      if(tok.trim()) await sleep(wordMs + Math.random()*40);
+      scroll();
+    }
+    cursor.remove();
+    scroll();
+  }
+
+  function addActionButtons(btns){
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-actions';
+    btns.forEach(b=>{
+      const el = document.createElement('button');
+      if(b.primary) el.classList.add('primary');
+      el.textContent = b.label;
+      el.addEventListener('click',()=>{
+        wrap.querySelectorAll('button').forEach(x=>x.disabled=true);
+        b.cb();
+      });
+      wrap.appendChild(el);
+    });
+    messages.appendChild(wrap); scroll();
+    return wrap;
+  }
+
+  function addConfirmCard(opts){
+    const wrap = document.createElement('div');
+    wrap.className = 'chat-confirm';
+    wrap.innerHTML = `
+      <div class="cc-title">${opts.title}</div>
+      ${opts.sub ? `<div class="cc-sub">${opts.sub}</div>` : ''}
+      ${(opts.rows||[]).map(r=>`<div class="cc-row">${r}</div>`).join('')}
+      <div class="cc-actions"></div>`;
+    const actions = wrap.querySelector('.cc-actions');
+    (opts.buttons||[]).forEach(b=>{
+      const el = document.createElement('button');
+      el.className = 'chat-actions' ? '' : '';
+      el.style.cssText = 'padding:9px 14px;font:inherit;font-size:12.5px;font-weight:600;border-radius:9px;cursor:pointer;transition:all .15s;'+
+        (b.primary ? 'background:var(--lime);border:1px solid var(--lime);color:#0b1220;' : 'background:#fff;border:1px solid var(--line);color:var(--ink);');
+      el.textContent = b.label;
+      el.addEventListener('click',()=>{
+        wrap.querySelectorAll('button').forEach(x=>x.disabled=true);
+        b.cb();
+      });
+      actions.appendChild(el);
+    });
+    messages.appendChild(wrap); scroll();
+    return wrap;
+  }
+
+  function addSuccess(text){
+    const div = document.createElement('div');
+    div.className = 'chat-success';
+    div.textContent = text;
+    messages.appendChild(div); scroll();
+    return div;
+  }
+
+  /* Preloaded opening message */
+  (async function openingMessage(){
+    await sleep(100);
+    const bubble = addAiBubble();
+    bubble.textContent = `Hi ${userName()}. I'm connected to your Xero and XPM accounts. I can pull reports, check client due dates, review transactions, and draft notices — just ask. What would you like to work on?`;
+  })();
+
+  /* ------ Flow implementations ------ */
+  async function runFlow1(){
+    const tool = addToolCall('Checking XPM · get_xpm_clients(status: overdue)');
+    await sleep(1200); resolveToolCall(tool);
+    const bubble = addAiBubble();
+    await streamText(bubble,
+`I found 3 clients with overdue returns in XPM:
+
+• Smith Builders Ltd — GST Return — 14 days overdue
+• Chen Holdings Trust — Income Tax — 7 days overdue
+• Patel Retail Group — GST Return — 3 days overdue
+
+Would you like me to draft reminders for all three, or start with one?`);
+    addActionButtons([
+      {label:'Draft all three reminders', primary:true, cb: async ()=>{
+        addUserMessage('Draft all three reminders');
+        await sleep(250);
+        const t = addToolCall('Drafting · XPM get_client_details × 3');
+        await sleep(1000); resolveToolCall(t);
+        const b = addAiBubble();
+        await streamText(b, `Starting with Smith Builders Ltd — here's the first draft. I'll generate Chen Holdings and Patel Retail next.`);
+        await sleep(300);
+        await runFlow4('Smith Builders Ltd', true);
+      }},
+      {label:'Show full client list', cb: async ()=>{
+        addUserMessage('Show full client list');
+        await sleep(250);
+        const b = addAiBubble();
+        await streamText(b, `The full XPM client list has 142 active clients. In the live version I'd open the full list here with filtering — for the demo, jump to the Tax Reminders tab to see a representative sample.`);
+      }}
+    ]);
+  }
+
+  async function runFlow2(){
+    const tool = addToolCall('Checking Xero · get_financial_report(type: profit_loss, period: March 2026)');
+    await sleep(1500); resolveToolCall(tool);
+    const bubble = addAiBubble({mono:true});
+    await streamText(bubble,
+`Here's the ${CONFIG.practice.short} Practice Account P&L for March 2026:
+
+Revenue
+  Client fees          $84,200
+  Consulting income    $12,400
+  Total revenue        $96,600
+
+Expenses
+  Staff costs          $41,800
+  Office & admin        $6,200
+  Software & tools      $3,100
+  Professional fees     $2,400
+  Total expenses       $53,500
+
+Net profit            $43,100
+Net margin              44.6%`, 18);
+    const narrative = addAiBubble();
+    await streamText(narrative,
+`March was a strong month — revenue up 12% on February. Staff costs held steady. Software spend increased $400 which looks like a new subscription — want me to find the transaction and code it?`);
+    addActionButtons([
+      {label:'Find the transaction', primary:true, cb: async ()=>{
+        addUserMessage('Find the transaction');
+        await sleep(250);
+        await runFlow3(true);
+      }},
+      {label:'Download as PDF', cb: ()=>{
+        addSuccess('PDF generated — in the live version this would download immediately.');
+      }}
+    ]);
+  }
+
+  async function runFlow3(softwareFocus=false){
+    const tool = addToolCall(softwareFocus
+      ? 'Checking Xero · get_transactions(category: software, status: recent)'
+      : 'Checking Xero · get_transactions(date: today, status: unreconciled)');
+    await sleep(1200); resolveToolCall(tool);
+    const bubble = addAiBubble({mono:true});
+    await streamText(bubble,
+`I found 6 unreconciled transactions from today:
+
+  $1,240.00 · Spark NZ · looks like phone/internet
+    $340.00 · NZ Post · courier or postage
+     $89.00 · Adobe Inc · software subscription
+  $2,800.00 · Unknown payee: TRF 88421 · needs review
+    $450.00 · Z Energy · vehicle fuel
+ $12,400.00 · Client payment · Chen Holdings`, 16);
+    const summary = addAiBubble();
+    await streamText(summary,
+`I can code the first 5 with high confidence. The TRF 88421 transfer is flagged — I don't have enough context to code it safely. Want me to apply the suggested codes to the other 5 and leave TRF 88421 for Suhail to review?`);
+    addConfirmCard({
+      title:'Ready to apply 5 transaction codes',
+      sub:'1 flagged for manual review',
+      rows:[
+        '• <b>Spark NZ</b> → Telephone & Internet',
+        '• <b>NZ Post</b> → Postage & Courier',
+        '• <b>Adobe Inc</b> → Software Subscriptions',
+        '• <b>Z Energy</b> → Motor Vehicle Expenses',
+        '• <b>Chen Holdings</b> → Client Payment Received'
+      ],
+      buttons:[
+        {label:'Apply codes', primary:true, cb: async ()=>{
+          await sleep(500);
+          addSuccess(`Done. 5 transactions coded in Xero. TRF 88421 added to ${CONFIG.staff[2]?.name?.split(' ')[0]||'Suhail'}'s review queue.`);
+        }},
+        {label:'Review first', cb: ()=>{
+          const b = addAiBubble();
+          streamText(b, 'Switching to the Bank Reconciliation tab for line-by-line review is the fastest way to check each one. Click the ⚡ Bank Reconciliation tab.');
+        }}
+      ]
+    });
+  }
+
+  async function runFlow4(clientName, fromChain=false){
+    if(!clientName){
+      const b = addAiBubble();
+      await streamText(b, 'Which client? You can give me a name or I can pull the full overdue list.');
+      state.awaitingClient = true;
+      return;
+    }
+    const tool = addToolCall(`Checking XPM · get_client_details(${clientName})`);
+    await sleep(1000); resolveToolCall(tool);
+    const bubble = addAiBubble();
+    const draft =
+`Here's a draft reminder for ${clientName}:
+
+─────────────────────────────────────
+Subject: GST Return — Action Required
+
+Dear Team,
+
+I'm writing regarding your GST return which was due on 26 March 2026 and remains outstanding.
+
+Please forward the required documentation at your earliest convenience so we can complete your filing and avoid any IRD late penalties.
+
+If you have any questions or need assistance gathering the information, please don't hesitate to call us on ${CONFIG.practice.phone}.
+
+Kind regards
+${CONFIG.practice.full}
+─────────────────────────────────────
+
+Want me to adjust the tone, add specific details, or send this for approval?`;
+    await streamText(bubble, draft);
+    addActionButtons([
+      {label:'Send for approval', primary:true, cb: ()=>{
+        addConfirmCard({
+          title:'Send this notice for approval?',
+          sub:'Nothing is sent until the approver confirms.',
+          rows:[
+            `<b>To:</b> ${clientName}`,
+            `<b>Approver:</b> ${CONFIG.partner.name}`
+          ],
+          buttons:[
+            {label:'Confirm send', primary:true, cb: async ()=>{
+              await sleep(500);
+              addSuccess(`Notice sent to ${firstName(CONFIG.partner.name)}'s approval queue. You'll be notified when it's approved and sent.`);
+            }},
+            {label:'Cancel', cb: ()=>{
+              const b = addAiBubble();
+              streamText(b, 'No problem — the draft is saved. Let me know when you\'re ready.');
+            }}
+          ]
+        });
+      }},
+      {label:'Edit tone', cb: ()=>{
+        const b = addAiBubble();
+        streamText(b, 'I can rewrite this in a friendlier, firmer, or more formal tone. Which would you like?');
+      }},
+      {label:'Save as draft', cb: ()=>{
+        addSuccess('Draft saved to the Notices queue.');
+      }}
+    ]);
+  }
+
+  async function runFallback(){
+    const b = addAiBubble();
+    await streamText(b, `I can help with that — in the live version I'd pull the relevant data from Xero or XPM and work through it with you. This demo covers our four core workflows. Want to try one of those?`);
+  }
+
+  /* ------ Routing ------ */
+  function matchFlow(msg){
+    if(state.awaitingClient){
+      state.awaitingClient = false;
+      return {flow:4, client: msg.trim() || 'Smith Builders Ltd'};
+    }
+    const m = msg.toLowerCase();
+    if(/reminder|draft|notice/.test(m))       return {flow:4};
+    if(/overdue|which\s+client|client.*overdue/.test(m)) return {flow:1};
+    if(/transaction|\bcode\b|coding|reconcile/.test(m))  return {flow:3};
+    if(/p&l|p and l|profit|loss|march/.test(m))          return {flow:2};
+    return {flow:'fallback'};
+  }
+
+  async function handleUserMessage(raw){
+    if(state.busy || !raw) return;
+    state.busy = true;
+    input.value = '';
+    addUserMessage(raw);
+    await sleep(320);
+    const match = matchFlow(raw);
+    try {
+      if(match.flow===1)       await runFlow1();
+      else if(match.flow===2)  await runFlow2();
+      else if(match.flow===3)  await runFlow3();
+      else if(match.flow===4)  await runFlow4(match.client);
+      else                     await runFallback();
+    } catch(e){ console.error(e); }
+    state.busy = false;
+  }
+
+  /* ------ Wiring ------ */
+  sendBtn.addEventListener('click',()=>handleUserMessage(input.value.trim()));
+  input.addEventListener('keydown',e=>{
+    if(e.key==='Enter' && !e.shiftKey){
+      e.preventDefault();
+      handleUserMessage(input.value.trim());
+    }
+  });
+  chips.addEventListener('click',e=>{
+    const chip = e.target.closest('[data-chat-chip]');
+    if(!chip) return;
+    const msg = chip.dataset.chatChip.replace(/&amp;/g,'&');
+    handleUserMessage(msg);
+  });
 })();
 
 /* Init */
