@@ -1102,10 +1102,10 @@
                 </symbol>
               </defs>
 
-              <!-- LAYER 0 · MPG Staff (entry point) -->
+              <!-- LAYER 0 · Practice Staff (entry point) -->
               <g class="node node-platform" data-node="user">
-                <rect x="300" y="30" width="200" height="58" rx="10"/>
-                <text x="400" y="54" class="n-title">MPG Staff</text>
+                <rect x="280" y="30" width="240" height="58" rx="10"/>
+                <text x="400" y="54" class="n-title" id="archStaffTitle">MPG Staff</text>
                 <text x="400" y="74" class="n-sub">Partners and accounting team</text>
               </g>
               <line x1="400" y1="88" x2="400" y2="120" stroke="#6b7280" stroke-width="1.6"/>
@@ -1118,12 +1118,12 @@
               <line x1="580" y1="120" x2="580" y2="140" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
 
               <g class="node node-sec" data-node="waf">
-                <rect x="100" y="140" width="240" height="58" rx="10"/>
+                <rect x="60" y="140" width="320" height="58" rx="10"/>
                 <text x="220" y="164" class="n-title">Web Application Firewall</text>
                 <text x="220" y="184" class="n-sub">Blocks common attacks before they hit the app</text>
               </g>
               <g class="node node-sec" data-node="tls">
-                <rect x="460" y="140" width="240" height="58" rx="10"/>
+                <rect x="420" y="140" width="320" height="58" rx="10"/>
                 <text x="580" y="164" class="n-title">Transport Layer Security</text>
                 <text x="580" y="184" class="n-sub">All traffic encrypted in transit</text>
               </g>
@@ -1156,24 +1156,24 @@
 
               <!-- Side branch RIGHT to external data sources -->
               <text x="790" y="394" class="edge-label" text-anchor="middle" style="font-size:10px;font-weight:600;letter-spacing:.05em">EXTERNAL APIS</text>
-              <line x1="540" y1="438" x2="660" y2="438" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="660" y1="438" x2="660" y2="416" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="660" y1="416" x2="700" y2="416" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
-              <line x1="660" y1="438" x2="660" y2="460" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="660" y1="460" x2="700" y2="460" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
+              <line x1="540" y1="438" x2="650" y2="438" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="650" y1="438" x2="650" y2="420" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="650" y1="420" x2="680" y2="420" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
+              <line x1="650" y1="438" x2="650" y2="456" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="650" y1="456" x2="680" y2="456" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
 
               <g class="node node-src" data-node="xero">
-                <rect x="700" y="400" width="180" height="32" rx="8"/>
-                <text x="790" y="416" class="n-title" style="font-size:13px">Xero</text>
-                <text x="790" y="429" class="n-sub" style="font-size:10.5px">Accounting and bookkeeping</text>
+                <rect x="680" y="402" width="210" height="36" rx="8"/>
+                <text x="785" y="418" class="n-title" style="font-size:13px">Xero</text>
+                <text x="785" y="432" class="n-sub" style="font-size:10.5px">Accounting and bookkeeping</text>
               </g>
               <g class="node node-src" data-node="xpm">
-                <rect x="700" y="444" width="180" height="32" rx="8"/>
-                <text x="790" y="460" class="n-title" style="font-size:13px">Xero Practice Manager</text>
-                <text x="790" y="473" class="n-sub" style="font-size:10.5px">Jobs and deadlines</text>
+                <rect x="680" y="442" width="210" height="36" rx="8"/>
+                <text x="785" y="458" class="n-title" style="font-size:13px">Xero Practice Manager</text>
+                <text x="785" y="472" class="n-sub" style="font-size:10.5px">Jobs and deadlines</text>
               </g>
-              <text x="790" y="492" class="edge-label" text-anchor="middle" style="font-size:10px">Delegated authorisation</text>
-              <text x="790" y="505" class="edge-label" text-anchor="middle" style="font-size:10px">Pulled, used, discarded</text>
+              <text x="785" y="494" class="edge-label" text-anchor="middle" style="font-size:10px">Delegated authorisation</text>
+              <text x="785" y="507" class="edge-label" text-anchor="middle" style="font-size:10px">Pulled, used, discarded</text>
 
               <!-- Middleware → Security strip -->
               <line x1="360" y1="468" x2="360" y2="498" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
@@ -1459,7 +1459,7 @@ document.querySelectorAll('.tab').forEach(t=>{
 
 /* ---------- Architecture tab ---------- */
 const ARCH_NODES = {
-  user:{tag:'User entry',type:'platform',title:'MPG Staff',body:'Your partners and team members access the platform from their own browsers. Every action is authenticated, tied to a specific user, and recorded in the audit log.',facts:[['Devices','Workstations and laptops · practice managed'],['Sessions','Single sign-on with multi-factor login'],['Activity','Every click logged to the audit trail']]},
+  user:{tag:'User entry',type:'platform',title:'Practice Staff',body:'Your partners and team members access the platform from their own browsers. Every action is authenticated, tied to a specific user, and recorded in the audit log.',facts:[['Devices','Workstations and laptops · practice managed'],['Sessions','Single sign-on with multi-factor login'],['Activity','Every click logged to the audit trail']]},
   xero:{tag:'External data source',type:'src',title:'Xero Connection',body:"Your accounting data connects via Xero's secure delegated authorisation. Ditto pulls only what each workflow needs — transactions, reports, chart of accounts — and discards the raw data immediately after processing.",facts:[['Access method','Delegated authorisation, refreshed every 30 minutes'],['Scope','Read-only by default'],['Retention','None — discarded after every run']]},
   xpm:{tag:'External data source',type:'src',title:'Xero Practice Manager',body:'Xero Practice Manager holds your client jobs, due dates, and workflow statuses. Ditto reads this data to trigger notice automation and track lodgement deadlines — no permanent copy is stored.',facts:[['Access method','Delegated authorisation'],['Usage','Job list, due dates, client contacts'],['Retention','None — read on demand']]},
   mw:{tag:'Ditto platform',type:'platform',title:'Ditto Middleware',body:'The secure processing layer that sits between your data and the AI engine. It authenticates every request, enforces data scoping, manages credential storage, and ensures nothing is retained after each workflow runs.',facts:[['Hosting','Amazon Web Services Sydney region'],['Credentials','Stored in AWS Secrets Manager, encrypted with a customer-managed key'],['Logging','Access logs only — no client data content']]},
@@ -2325,6 +2325,10 @@ window.applyConfig = function(){
   // Module 4
   const m4bc=document.querySelector('#m4 .breadcrumb');
   if(m4bc) m4bc.innerHTML=`${c.practice.short} <span class="sep">›</span> <b>Private AI Deployment Architecture</b>`;
+  // Architecture SVG staff title + tooltip
+  const archStaff=document.getElementById('archStaffTitle');
+  if(archStaff) archStaff.textContent=`${c.practice.short} Staff`;
+  if(typeof ARCH_NODES!=='undefined' && ARCH_NODES.user){ ARCH_NODES.user.title = `${c.practice.short} Staff`; }
 
   // Dynamic re-renders
   renderTeamCards();
