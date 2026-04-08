@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ditto · AI for Accounting Practices</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Nunito:wght@900&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#f6f7f9;
@@ -40,8 +40,12 @@
     display:flex;align-items:center;justify-content:space-between;gap:24px;
   }
   .logo{display:flex;align-items:center;gap:14px}
-  .logo svg{height:34px;width:auto;display:block}
-  .logo-divider{width:1px;height:24px;background:var(--line)}
+  .ditto-word{
+    font-family:'Nunito',-apple-system,sans-serif;font-weight:900;
+    font-size:34px;line-height:1;color:#0b1220;letter-spacing:-1.5px;
+  }
+  .ditto-word .i{color:#b8f13a}
+  .logo-divider{width:1px;height:22px;background:var(--line)}
   .logo-sub{font-size:12px;color:var(--muted);font-weight:500}
   .header-right{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:13px}
   .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line);border-radius:999px;font-size:12px;color:var(--ink-2);background:#fff}
@@ -187,12 +191,7 @@
   <header class="header">
     <div class="header-inner">
       <div class="logo" aria-label="Ditto">
-        <svg viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ditto logo">
-          <text x="0" y="235" font-family="'Inter',-apple-system,sans-serif" font-weight="900" font-size="280" letter-spacing="-12" fill="#0b1220">d</text>
-          <rect x="290" y="110" width="70" height="148" fill="#b8f13a"/>
-          <circle cx="325" cy="68" r="42" fill="#b8f13a"/>
-          <text x="360" y="235" font-family="'Inter',-apple-system,sans-serif" font-weight="900" font-size="280" letter-spacing="-12" fill="#0b1220">tto</text>
-        </svg>
+        <div class="ditto-word">d<span class="i">i</span>tto</div>
         <div class="logo-divider"></div>
         <div class="logo-sub">AI for Accounting</div>
       </div>
