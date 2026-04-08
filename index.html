@@ -1114,8 +1114,8 @@
               <line x1="220" y1="120" x2="580" y2="120" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="4 3"/>
               <rect x="338" y="110" width="124" height="16" rx="3" fill="#fff"/>
               <text x="400" y="121" class="edge-label" text-anchor="middle">All inbound traffic</text>
-              <line x1="220" y1="120" x2="220" y2="140" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="580" y1="120" x2="580" y2="140" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="220" y1="120" x2="220" y2="140" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
+              <line x1="580" y1="120" x2="580" y2="140" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
 
               <g class="node node-sec" data-node="waf">
                 <rect x="100" y="140" width="240" height="58" rx="10"/>
@@ -1132,7 +1132,7 @@
               <line x1="220" y1="198" x2="220" y2="220" stroke="#6b7280" stroke-width="1.6"/>
               <line x1="580" y1="198" x2="580" y2="220" stroke="#6b7280" stroke-width="1.6"/>
               <line x1="220" y1="220" x2="580" y2="220" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="400" y1="220" x2="400" y2="252" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="400" y1="220" x2="400" y2="252" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
 
               <!-- LAYER 2 · Secure infrastructure container -->
               <rect class="secure-zone" x="60" y="257" width="600" height="402" rx="18" fill="#fafbfc" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="6 5"/>
@@ -1145,7 +1145,7 @@
                 <text x="360" y="342" class="n-title">Staff Interface</text>
                 <text x="360" y="362" class="n-sub">Multi-factor login · Role-based access · Full audit log · Session timeout</text>
               </g>
-              <line x1="360" y1="378" x2="360" y2="408" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="360" y1="378" x2="360" y2="408" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
 
               <!-- Ditto Middleware -->
               <g class="node node-ditto" data-node="mw">
@@ -1158,9 +1158,9 @@
               <text x="790" y="394" class="edge-label" text-anchor="middle" style="font-size:10px;font-weight:600;letter-spacing:.05em">EXTERNAL APIS</text>
               <line x1="540" y1="438" x2="660" y2="438" stroke="#6b7280" stroke-width="1.6"/>
               <line x1="660" y1="438" x2="660" y2="416" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="660" y1="416" x2="700" y2="416" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="660" y1="416" x2="700" y2="416" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
               <line x1="660" y1="438" x2="660" y2="460" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="660" y1="460" x2="700" y2="460" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="660" y1="460" x2="700" y2="460" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
 
               <g class="node node-src" data-node="xero">
                 <rect x="700" y="400" width="180" height="32" rx="8"/>
@@ -1176,7 +1176,7 @@
               <text x="790" y="505" class="edge-label" text-anchor="middle" style="font-size:10px">Pulled, used, discarded</text>
 
               <!-- Middleware → Security strip -->
-              <line x1="360" y1="468" x2="360" y2="498" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="360" y1="468" x2="360" y2="498" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
 
               <!-- Security control strip -->
               <rect class="sec-strip" x="80" y="498" width="560" height="44" rx="8" fill="#eef0f4" stroke="#cdd2dd" stroke-width="1"/>
@@ -1198,7 +1198,7 @@
                 <text x="547" y="531" class="sec-s">no public internet</text>
               </g>
 
-              <line x1="360" y1="542" x2="360" y2="572" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="360" y1="542" x2="360" y2="572" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
 
               <!-- Private Language Model -->
               <g class="node node-ai" data-node="llm">
@@ -1208,7 +1208,7 @@
               </g>
 
               <!-- LLM exits container, returns the result -->
-              <line x1="360" y1="632" x2="360" y2="745" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="360" y1="632" x2="360" y2="745" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
               <rect x="170" y="685" width="380" height="22" rx="4" fill="#fff"/>
               <text x="360" y="700" class="edge-label" text-anchor="middle">256-bit encryption · Signed session token · Tenant isolated</text>
 
