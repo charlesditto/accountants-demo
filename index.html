@@ -1137,11 +1137,11 @@
               <!-- LAYER 2 · Secure infrastructure container -->
               <rect class="secure-zone" x="60" y="257" width="600" height="402" rx="18" fill="#fafbfc" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="6 5"/>
               <text x="80" y="282" class="zone-title">🔒 Ditto Secure Infrastructure</text>
-              <text x="80" y="300" class="zone-sub">Amazon Web Services Sydney region · Private network · Encrypted at rest · Threat monitoring · Full activity logging</text>
+              <text x="80" y="300" class="zone-sub">AWS Sydney · Private network · Encrypted at rest · Threat monitored · Activity logged</text>
 
               <!-- Staff Interface (entry into platform) -->
               <g class="node node-platform" data-node="staff">
-                <rect x="180" y="318" width="360" height="60" rx="10"/>
+                <rect x="110" y="318" width="500" height="60" rx="10"/>
                 <text x="360" y="342" class="n-title">Staff Interface</text>
                 <text x="360" y="362" class="n-sub">Multi-factor login · Role-based access · Full audit log · Session timeout</text>
               </g>
@@ -1149,31 +1149,31 @@
 
               <!-- Ditto Middleware -->
               <g class="node node-ditto" data-node="mw">
-                <rect x="180" y="408" width="360" height="60" rx="10"/>
+                <rect x="110" y="408" width="500" height="60" rx="10"/>
                 <text x="360" y="432" class="n-title">Ditto Middleware</text>
                 <text x="360" y="452" class="n-sub">Secure data processing · pull, process, discard</text>
               </g>
 
               <!-- Side branch RIGHT to external data sources -->
-              <text x="780" y="394" class="edge-label" text-anchor="middle" style="font-size:10px;font-weight:600;letter-spacing:.05em">EXTERNAL APIS</text>
-              <line x1="540" y1="438" x2="640" y2="438" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="640" y1="438" x2="640" y2="420" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="640" y1="420" x2="670" y2="420" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
-              <line x1="640" y1="438" x2="640" y2="456" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="640" y1="456" x2="670" y2="456" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
+              <text x="780" y="390" class="edge-label" text-anchor="middle" style="font-size:10.5px;font-weight:700;letter-spacing:.06em">EXTERNAL APIS</text>
+              <line x1="610" y1="438" x2="640" y2="438" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="640" y1="438" x2="640" y2="418" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="640" y1="418" x2="670" y2="418" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
+              <line x1="640" y1="438" x2="640" y2="472" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="640" y1="472" x2="670" y2="472" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
 
               <g class="node node-src" data-node="xero">
-                <rect x="670" y="402" width="220" height="36" rx="8"/>
-                <text x="780" y="418" class="n-title" style="font-size:13px">Xero</text>
-                <text x="780" y="432" class="n-sub" style="font-size:10.5px">Accounting and bookkeeping</text>
+                <rect x="670" y="398" width="220" height="44" rx="8"/>
+                <text x="780" y="416" class="n-title" style="font-size:13.5px">Xero</text>
+                <text x="780" y="432" class="n-sub" style="font-size:11px">Accounting and bookkeeping</text>
               </g>
               <g class="node node-src" data-node="xpm">
-                <rect x="670" y="442" width="220" height="36" rx="8"/>
-                <text x="780" y="458" class="n-title" style="font-size:13px">Xero Practice Manager</text>
-                <text x="780" y="472" class="n-sub" style="font-size:10.5px">Jobs and deadlines</text>
+                <rect x="670" y="452" width="220" height="44" rx="8"/>
+                <text x="780" y="470" class="n-title" style="font-size:13.5px">Xero Practice Manager</text>
+                <text x="780" y="486" class="n-sub" style="font-size:11px">Jobs and deadlines</text>
               </g>
-              <text x="780" y="494" class="edge-label" text-anchor="middle" style="font-size:10px">Delegated authorisation</text>
-              <text x="780" y="507" class="edge-label" text-anchor="middle" style="font-size:10px">Pulled, used, discarded</text>
+              <text x="780" y="513" class="edge-label" text-anchor="middle" style="font-size:10.5px">Delegated authorisation</text>
+              <text x="780" y="527" class="edge-label" text-anchor="middle" style="font-size:10.5px">Pulled, used, discarded</text>
 
               <!-- Middleware → Security strip -->
               <line x1="360" y1="468" x2="360" y2="498" stroke="#6b7280" stroke-width="1.6" marker-start="url(#arrHead)" marker-end="url(#arrHead)"/>
@@ -1263,37 +1263,37 @@
 
               <!-- Legend -->
               <g class="arch-legend">
-                <rect x="680" y="900" width="210" height="178" rx="10" fill="#fafbfc" stroke="#d0d5dd" stroke-width="1"/>
-                <text x="694" y="920" class="leg-title">Legend</text>
-                <g transform="translate(694 938)">
+                <rect x="640" y="900" width="250" height="178" rx="10" fill="#fafbfc" stroke="#d0d5dd" stroke-width="1"/>
+                <text x="656" y="920" class="leg-title">Legend</text>
+                <g transform="translate(656 938)">
                   <line x1="0" y1="6" x2="22" y2="6" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="4 3"/>
-                  <text x="30" y="10" class="leg-t">Dashed border = secure boundary</text>
+                  <text x="30" y="10" class="leg-t">Dashed = secure boundary</text>
                 </g>
-                <g transform="translate(694 955)">
+                <g transform="translate(656 955)">
                   <line x1="0" y1="6" x2="18" y2="6" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
                   <text x="30" y="10" class="leg-t">Solid arrow = data flow</text>
                 </g>
-                <g transform="translate(694 972)">
+                <g transform="translate(656 972)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#e3f5ec" stroke="#047a4e"/>
                   <text x="30" y="10" class="leg-t">Teal = external sources</text>
                 </g>
-                <g transform="translate(694 989)">
+                <g transform="translate(656 989)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#f2fbdc" stroke="#8dc71f"/>
                   <text x="30" y="10" class="leg-t">Lime = Ditto middleware</text>
                 </g>
-                <g transform="translate(694 1006)">
+                <g transform="translate(656 1006)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#f2edfd" stroke="#6d28d9"/>
                   <text x="30" y="10" class="leg-t">Purple = AI engine</text>
                 </g>
-                <g transform="translate(694 1023)">
+                <g transform="translate(656 1023)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#e5f6fd" stroke="#0a8cbd"/>
-                  <text x="30" y="10" class="leg-t">Blue = staff &amp; interface</text>
+                  <text x="30" y="10" class="leg-t">Blue = staff interface</text>
                 </g>
-                <g transform="translate(694 1040)">
+                <g transform="translate(656 1040)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#fff4e6" stroke="#ea580c"/>
                   <text x="30" y="10" class="leg-t">Orange = output modules</text>
                 </g>
-                <g transform="translate(694 1057)">
+                <g transform="translate(656 1057)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#eef0f4" stroke="#9ca3af"/>
                   <text x="30" y="10" class="leg-t">Gray = security controls</text>
                 </g>
