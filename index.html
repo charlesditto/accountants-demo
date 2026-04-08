@@ -159,7 +159,9 @@
   .av-rn{background:linear-gradient(135deg,#f97316,#c2410c)}
 
   /* ---------- NARRATIVE ---------- */
-  .narrative{background:#fafbfc;border:1px solid var(--line);border-radius:12px;padding:22px 24px;font-size:14px;line-height:1.75;color:var(--ink-2);min-height:120px;white-space:pre-wrap}
+  .narrative{background:#fafbfc;border:1px solid var(--line);border-radius:12px;padding:22px 24px;font-size:14px;line-height:1.75;color:var(--ink-2);min-height:120px;white-space:pre-wrap;transition:all .2s}
+  .narrative.editing{background:#fff;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);outline:none}
+  .narrative.editing:focus{outline:none}
   .narrative.empty{color:var(--muted);font-style:italic;display:flex;align-items:center;justify-content:center;text-align:center;min-height:220px;flex-direction:column;gap:12px}
   .narrative.empty .icon{font-size:28px;opacity:.4}
   .cursor{display:inline-block;width:8px;height:16px;background:#0b1220;vertical-align:text-bottom;animation:blink 1s infinite;margin-left:2px}
@@ -714,10 +716,12 @@
             <div class="progress"><div id="progBar1"></div></div>
           </div>
 
-          <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+          <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+            <button class="btn btn-ghost" id="editNarrative" disabled>✏ Edit Report</button>
             <button class="btn btn-ghost" id="downloadPdf" disabled>⬇ Download PDF</button>
             <button class="btn btn-ghost" disabled>📤 Send to Client</button>
             <button class="btn btn-ghost" disabled>📎 Attach to XPM Job</button>
+            <span id="editStatus" style="font-size:12px;color:var(--muted);margin-left:auto"></span>
           </div>
         </div>
       </div>
@@ -1250,6 +1254,30 @@ document.getElementById('genReport').addEventListener('click',async e=>{
   btn.disabled=false; btn.innerHTML='⚡ Regenerate';
   document.getElementById('downloadPdf').disabled=false;
   document.querySelectorAll('#m1 .btn-ghost').forEach(b=>b.disabled=false);
+});
+
+/* Edit narrative */
+const editBtn=document.getElementById('editNarrative');
+const editStatus=document.getElementById('editStatus');
+editBtn.addEventListener('click',()=>{
+  const n=document.getElementById('narrative');
+  if(n.classList.contains('empty')) return;
+  const editing=n.classList.toggle('editing');
+  if(editing){
+    n.setAttribute('contenteditable','true');
+    n.focus();
+    editBtn.innerHTML='💾 Save Changes';
+    editBtn.classList.remove('btn-ghost');
+    editBtn.classList.add('btn-lime');
+    editStatus.textContent='✏ Editing — click anywhere in the report to make changes';
+  } else {
+    n.removeAttribute('contenteditable');
+    editBtn.innerHTML='✏ Edit Report';
+    editBtn.classList.add('btn-ghost');
+    editBtn.classList.remove('btn-lime');
+    editStatus.innerHTML='<span style="color:var(--green)">✓ Changes saved · '+new Date().toLocaleTimeString('en-NZ',{hour:'2-digit',minute:'2-digit'})+'</span>';
+    setTimeout(()=>{editStatus.textContent='';},4000);
+  }
 });
 
 /* ---------- MODULE 2 ---------- */
