@@ -423,12 +423,18 @@
   /* Panel detail - sec type */
   .arch-panel-detail.sec .ap-tag{background:#eef0f4;color:#374151}
 
-  /* Output nodes (lime/green strong hover) */
-  .arch-svg .node-out rect{fill:#f2fbdc;stroke:#8dc71f;stroke-width:1.8}
-  .arch-svg .node-out .n-title{fill:#3e5a0a}
-  .arch-svg .node-out .n-sub{fill:#5a7d0b}
+  /* Ditto middleware (lime — Ditto brand) */
+  .arch-svg .node-ditto rect{fill:#f2fbdc;stroke:#8dc71f;stroke-width:1.8;filter:drop-shadow(0 3px 10px rgba(184,241,58,.35))}
+  .arch-svg .node-ditto .n-title{fill:#3e5a0a}
+  .arch-svg .node-ditto .n-sub{fill:#5a7d0b}
+  .arch-svg .node-ditto:hover rect{fill:#e7f6c4}
+
+  /* Output nodes (orange — distinct from Ditto brand) */
+  .arch-svg .node-out rect{fill:#fff4e6;stroke:#ea580c;stroke-width:1.8}
+  .arch-svg .node-out .n-title{fill:#7c2d12}
+  .arch-svg .node-out .n-sub{fill:#c2410c}
   .arch-svg .node-out .n-cta{fill:#0b1220}
-  .arch-svg .node-out:hover rect{fill:#b8f13a;stroke:#0b1220;stroke-width:2.5;filter:drop-shadow(0 6px 14px rgba(184,241,58,.55))}
+  .arch-svg .node-out:hover rect{fill:#ffd9b0;stroke:#0b1220;stroke-width:2.5;filter:drop-shadow(0 6px 14px rgba(234,88,12,.45))}
   .arch-svg .node-out:hover .n-cta{opacity:1}
 
   .arch-panel{position:sticky;top:120px}
@@ -450,6 +456,29 @@
   @media (max-width:900px){
     .arch-layout{grid-template-columns:1fr}
     .arch-panel{position:static}
+  }
+
+  /* ---------- CLIENT LOGO ---------- */
+  #hdrLogo img.client-logo{height:40px;width:auto;max-width:200px;object-fit:contain;display:block}
+
+  /* ---------- SETUP FORM ---------- */
+  .setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px 20px}
+  .setup-grid .field-wide{grid-column:1 / -1}
+  .setup-grid .field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+  .setup-grid .field input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font:inherit;font-size:13.5px;color:var(--ink);background:#fff;transition:all .15s}
+  .setup-grid .field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+  .setup-grid .field input::placeholder{color:#9ca3af}
+
+  .logo-uploader{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+  .logo-preview{width:240px;height:110px;border:2px dashed var(--line);border-radius:12px;background:#fafbfc;display:grid;place-items:center;overflow:hidden;padding:14px;flex-shrink:0}
+  .logo-preview img{max-width:100%;max-height:100%;object-fit:contain}
+  .logo-preview-empty{font-size:12px;color:var(--muted);font-style:italic;text-align:center}
+  .logo-upload-actions{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+  .logo-upload-actions label.btn{cursor:pointer;display:inline-flex}
+
+  @media (max-width:700px){
+    .setup-grid{grid-template-columns:1fr}
+    .setup-grid .field-wide{grid-column:auto}
   }
 
   /* Demo badge */
@@ -478,9 +507,9 @@
   <header class="header">
     <div class="header-top">
       <div class="logo" aria-label="Ditto">
-        <div class="ditto-word">d<span class="i">i</span>tto</div>
+        <div id="hdrLogo"><div class="ditto-word">d<span class="i">i</span>tto</div></div>
         <div class="logo-divider"></div>
-        <div class="logo-sub">AI Workspace for Accountants</div>
+        <div class="logo-sub" id="hdrLogoSub">AI Workspace for Accountants</div>
       </div>
       <div class="header-right">
         <span class="chip"><span class="dot"></span> Xero &amp; XPM connected · Auto-sync ON</span>
@@ -495,6 +524,7 @@
       <button class="tab" data-tab="m2">📬 Tax Reminders <span class="tab-num" id="m2count">2</span></button>
       <button class="tab" data-tab="m3">⚡ Bank Reconciliation <span class="tab-num" id="m3count">12</span></button>
       <button class="tab" data-tab="m4">🏗 Architecture</button>
+      <button class="tab" data-tab="setup">⚙ Setup</button>
     </nav>
   </header>
 
@@ -505,7 +535,7 @@
       <div class="subtoolbar-inner">
         <div class="breadcrumb">MPG Chartered Accountants <span class="sep">›</span> <b>Practice Dashboard</b></div>
         <div class="toolbar-actions">
-          <span class="chip">📍 Auckland, NZ</span>
+          <span class="chip" data-role="loc">📍 Auckland, NZ</span>
           <span class="chip">📅 Wednesday 8 April 2026</span>
           <span class="chip">👥 4 staff · 142 active clients</span>
         </div>
@@ -845,7 +875,7 @@
         <div class="card-head">
           <div>
             <h2>Active Tax Returns · 2024 Financial Year</h2>
-            <div class="sub">8 jobs · 2 overdue · 3 due this week · Assigned to Michael Prasad</div>
+            <div class="sub" data-role="assigned">8 jobs · 2 overdue · 3 due this week · Assigned to Michael Prasad</div>
           </div>
           <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
             <button class="toggle" id="autoToggle" title="Toggle auto-send"><span class="sw"></span><span id="autoLabel">Review before send</span></button>
@@ -883,7 +913,7 @@
           Xero <span class="sep">›</span> Business <span class="sep">›</span> Bank accounts <span class="sep">›</span> <b>MPG Practice Account</b> <span class="sep">›</span> Reconcile
         </div>
         <div class="toolbar-actions">
-          <span class="chip">🏦 ANZ · 01-0242-0054321-00</span>
+          <span class="chip" data-role="bank">🏦 ANZ · 01-0242-0054321-00</span>
           <span class="chip">📅 1–31 Mar 2025</span>
         </div>
       </div>
@@ -997,7 +1027,7 @@
       <div class="arch-layout">
         <div class="card arch-card">
           <div class="card-body" style="padding:24px">
-            <svg class="arch-svg" viewBox="0 0 720 1070" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MPG private AI architecture">
+            <svg class="arch-svg" viewBox="0 0 720 1085" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MPG private AI architecture">
               <defs>
                 <marker id="arrHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                   <path d="M2 1L8 5L2 9" fill="none" stroke="#6b7280" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1055,8 +1085,8 @@
               <text x="60" y="289" class="zone-title">🔒 Ditto Secure Infrastructure</text>
               <text x="60" y="307" class="zone-sub">AWS Sydney ap-southeast-2 · VPC private subnet · KMS encryption · GuardDuty enabled · CloudTrail logging</text>
 
-              <!-- Middleware -->
-              <g class="node node-platform" data-node="mw">
+              <!-- Middleware (Ditto brand lime) -->
+              <g class="node node-ditto" data-node="mw">
                 <rect x="140" y="325" width="440" height="60" rx="10"/>
                 <text x="360" y="349" class="n-title">Ditto Middleware</text>
                 <text x="360" y="369" class="n-sub">Secure data processing · pull, process, discard</text>
@@ -1159,35 +1189,39 @@
 
               <!-- Legend -->
               <g class="arch-legend">
-                <rect x="408" y="898" width="292" height="158" rx="10" fill="#fafbfc" stroke="#d0d5dd" stroke-width="1"/>
-                <text x="422" y="918" class="leg-title">Legend</text>
-                <g transform="translate(422 934)">
+                <rect x="408" y="890" width="292" height="178" rx="10" fill="#fafbfc" stroke="#d0d5dd" stroke-width="1"/>
+                <text x="422" y="910" class="leg-title">Legend</text>
+                <g transform="translate(422 928)">
                   <line x1="0" y1="6" x2="22" y2="6" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="4 3"/>
                   <text x="30" y="10" class="leg-t">Dashed border = secure boundary</text>
                 </g>
-                <g transform="translate(422 951)">
+                <g transform="translate(422 945)">
                   <line x1="0" y1="6" x2="18" y2="6" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
                   <text x="30" y="10" class="leg-t">Solid arrow = encrypted data flow</text>
                 </g>
-                <g transform="translate(422 968)">
-                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#e5f6fd" stroke="#0a8cbd"/>
-                  <text x="30" y="10" class="leg-t">Blue boxes = Ditto platform</text>
-                </g>
-                <g transform="translate(422 985)">
-                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#f2edfd" stroke="#6d28d9"/>
-                  <text x="30" y="10" class="leg-t">Purple box = AI engine</text>
-                </g>
-                <g transform="translate(422 1002)">
+                <g transform="translate(422 962)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#e3f5ec" stroke="#047a4e"/>
-                  <text x="30" y="10" class="leg-t">Teal boxes = external APIs</text>
+                  <text x="30" y="10" class="leg-t">Teal = external APIs</text>
                 </g>
-                <g transform="translate(422 1019)">
+                <g transform="translate(422 979)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#f2fbdc" stroke="#8dc71f"/>
-                  <text x="30" y="10" class="leg-t">Green boxes = output modules</text>
+                  <text x="30" y="10" class="leg-t">Lime = Ditto middleware</text>
                 </g>
-                <g transform="translate(422 1036)">
+                <g transform="translate(422 996)">
+                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#f2edfd" stroke="#6d28d9"/>
+                  <text x="30" y="10" class="leg-t">Purple = AI engine (Claude/Bedrock)</text>
+                </g>
+                <g transform="translate(422 1013)">
+                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#e5f6fd" stroke="#0a8cbd"/>
+                  <text x="30" y="10" class="leg-t">Blue = Staff interface</text>
+                </g>
+                <g transform="translate(422 1030)">
+                  <rect x="0" y="1" width="16" height="11" rx="2" fill="#fff4e6" stroke="#ea580c"/>
+                  <text x="30" y="10" class="leg-t">Orange = output modules</text>
+                </g>
+                <g transform="translate(422 1047)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#eef0f4" stroke="#9ca3af"/>
-                  <text x="30" y="10" class="leg-t">Gray bars = security controls</text>
+                  <text x="30" y="10" class="leg-t">Gray = security controls</text>
                 </g>
               </g>
             </svg>
@@ -1204,6 +1238,119 @@
           </div>
         </aside>
       </div>
+    </main>
+  </section>
+
+  <!-- ========== SETUP ========== -->
+  <section class="module" id="setup">
+    <div class="subtoolbar">
+      <div class="subtoolbar-inner">
+        <div class="breadcrumb">Settings <span class="sep">›</span> <b>Demo Setup</b></div>
+        <div class="toolbar-actions">
+          <span class="chip">💾 Saved locally in your browser</span>
+        </div>
+      </div>
+    </div>
+    <main>
+      <div class="module-head">
+        <div>
+          <h1>Demo Setup</h1>
+          <p>Personalise this demo for any accounting practice. Upload the client's logo, fill in their details, and every tab will update instantly. Settings are saved to this browser — nothing is sent anywhere.</p>
+        </div>
+        <span class="ditto-badge"><span class="lime-dot"></span> Ditto AI</span>
+      </div>
+
+      <form id="setupForm" onsubmit="event.preventDefault();saveSetupForm();">
+
+        <!-- Branding -->
+        <div class="card">
+          <div class="card-head">
+            <div><h2>🎨 Practice Branding</h2><div class="sub">The client's logo will appear in the header across every tab</div></div>
+          </div>
+          <div class="card-body">
+            <div class="logo-uploader">
+              <div class="logo-preview" id="cfgLogoPreview">
+                <div class="logo-preview-empty">No logo uploaded</div>
+              </div>
+              <div class="logo-upload-actions">
+                <label class="btn btn-primary" for="cfg-logo">📤 Upload Logo</label>
+                <input type="file" id="cfg-logo" accept="image/*" style="display:none"/>
+                <button type="button" class="btn btn-ghost" id="cfgLogoClear">Remove</button>
+                <div style="font-size:11.5px;color:var(--muted);margin-top:8px">PNG or SVG · transparent background recommended · max 1MB</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Practice -->
+        <div class="card">
+          <div class="card-head">
+            <div><h2>🏢 Practice Details</h2><div class="sub">Appears in headers, breadcrumbs, bank chip, email signatures</div></div>
+          </div>
+          <div class="card-body">
+            <div class="setup-grid">
+              <div class="field"><label>Practice short name</label><input id="cfg-pshort" placeholder="e.g. MPG"/></div>
+              <div class="field"><label>Practice full name</label><input id="cfg-pfull" placeholder="e.g. MPG Chartered Accountants"/></div>
+              <div class="field"><label>Location</label><input id="cfg-ploc" placeholder="e.g. Auckland, NZ"/></div>
+              <div class="field"><label>Phone</label><input id="cfg-pphone" placeholder="e.g. +64 9 555 0142"/></div>
+              <div class="field"><label>Website</label><input id="cfg-pweb" placeholder="e.g. mpg.co.nz"/></div>
+              <div class="field"><label>Bank short code</label><input id="cfg-pbank" placeholder="e.g. ANZ"/></div>
+              <div class="field field-wide"><label>Bank account number</label><input id="cfg-pbankacct" placeholder="e.g. 01-0242-0054321-00"/></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Partner -->
+        <div class="card">
+          <div class="card-head">
+            <div><h2>👤 Primary Partner</h2><div class="sub">This person's name drives the header avatar, welcome greeting, "assigned to" labels and email signatures</div></div>
+          </div>
+          <div class="card-body">
+            <div class="setup-grid">
+              <div class="field"><label>Full name</label><input id="cfg-pname" placeholder="e.g. Michael Prasad"/></div>
+              <div class="field"><label>Role / Title</label><input id="cfg-prole" placeholder="e.g. Director · Partner"/></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Staff -->
+        <div class="card">
+          <div class="card-head">
+            <div><h2>👥 Team Members</h2><div class="sub">Shown on the dashboard Team Workload panel and as avatars on XPM jobs</div></div>
+          </div>
+          <div class="card-body">
+            <div class="setup-grid">
+              <div class="field"><label>Staff 2 name</label><input id="cfg-s1-name" placeholder="e.g. Sarah Koroi"/></div>
+              <div class="field"><label>Staff 2 role</label><input id="cfg-s1-role" placeholder="e.g. Senior Accountant"/></div>
+              <div class="field"><label>Staff 3 name</label><input id="cfg-s2-name" placeholder="e.g. James Tupou"/></div>
+              <div class="field"><label>Staff 3 role</label><input id="cfg-s2-role" placeholder="e.g. Accountant"/></div>
+              <div class="field"><label>Staff 4 name</label><input id="cfg-s3-name" placeholder="e.g. Rahul Naidu"/></div>
+              <div class="field"><label>Staff 4 role</label><input id="cfg-s3-role" placeholder="e.g. Bookkeeper"/></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Clients -->
+        <div class="card">
+          <div class="card-head">
+            <div><h2>📁 Featured Clients</h2><div class="sub">Rename the four clients that appear in the Financial Narratives dropdown — narratives, dashboards and reminders update automatically</div></div>
+          </div>
+          <div class="card-body">
+            <div class="setup-grid">
+              <div class="field field-wide"><label>Client 1 (construction example)</label><input id="cfg-c0-name" placeholder="e.g. Kiwi Build Supplies Ltd"/></div>
+              <div class="field field-wide"><label>Client 2 (hospitality example)</label><input id="cfg-c1-name" placeholder="e.g. Harbour Cafe Ltd"/></div>
+              <div class="field field-wide"><label>Client 3 (trades example)</label><input id="cfg-c2-name" placeholder="e.g. Greenfield Landscapes Ltd"/></div>
+              <div class="field field-wide"><label>Client 4 (professional services example)</label><input id="cfg-c3-name" placeholder="e.g. Aoraki Consulting Ltd"/></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;align-items:center;margin-top:20px;flex-wrap:wrap">
+          <button type="submit" class="btn btn-lime">💾 Save &amp; Apply</button>
+          <button type="button" class="btn btn-ghost" id="cfgResetBtn">↺ Reset to defaults</button>
+          <span id="cfgToast" style="opacity:0;transition:opacity .3s;color:var(--green);font-size:13px;font-weight:600">✓ Applied across the demo</span>
+        </div>
+      </form>
     </main>
   </section>
 
@@ -1632,7 +1779,7 @@ document.getElementById('genReport').addEventListener('click',async e=>{
   await runSteps(document.getElementById('aiSteps1'), document.getElementById('progBar1'), 1400);
   document.getElementById('aiStatus1').textContent='complete ✓';
   const key=document.getElementById('clientPicker').value;
-  await typeInto(document.getElementById('narrative'), CLIENTS[key].narrative, 2);
+  await typeInto(document.getElementById('narrative'), personalize(CLIENTS[key].narrative), 2);
   btn.disabled=false; btn.innerHTML='⚡ Regenerate';
   document.getElementById('downloadPdf').disabled=false;
   document.querySelectorAll('#m1 .btn-ghost').forEach(b=>b.disabled=false);
@@ -1678,21 +1825,39 @@ const statusBadge = {
   due:'<span class="badge amber"><span class="led"></span>Due Soon</span>',
   lodged:'<span class="badge green"><span class="led"></span>Lodged</span>',
 };
-const tbody = document.querySelector('#clientTable tbody');
-clients.forEach((c,i)=>{
-  const tr=document.createElement('tr');tr.dataset.idx=i;
-  tr.innerHTML=`
-    <td class="mono" style="color:var(--muted)">${c.code}</td>
-    <td><div style="font-weight:600;color:var(--ink)">${c.name}</div><div style="font-size:11.5px;color:var(--muted);margin-top:1px">${c.contact}</div></td>
-    <td class="mono">${c.ird}</td>
-    <td>${c.type}</td>
-    <td style="color:var(--muted)">${c.period}</td>
-    <td>${c.due}</td>
-    <td><div class="mini-av ${c.av}" title="${c.assigned}">${c.assigned}</div></td>
-    <td>${statusBadge[c.status]}</td>
-    <td class="action"><span class="badge gray">—</span></td>`;
-  tbody.appendChild(tr);
-});
+const STAFF_IDX_MAP = {'MP':0,'SK':1,'JT':2,'RN':3};
+const AV_GRADIENTS = [
+  'linear-gradient(135deg,#0b1220,#374151)',
+  'linear-gradient(135deg,#13b5ea,#0a8cbd)',
+  'linear-gradient(135deg,#8b5cf6,#6d28d9)',
+  'linear-gradient(135deg,#f97316,#c2410c)'
+];
+function renderReminderClients(){
+  const tbody = document.querySelector('#clientTable tbody');
+  if(!tbody) return;
+  tbody.innerHTML='';
+  clients.forEach((c,i)=>{
+    const staffIdx = STAFF_IDX_MAP[c.assigned] ?? 0;
+    const staff = (window.CONFIG && CONFIG.staff[staffIdx]) || {name:c.assigned};
+    const inits = (window.personalize ? personalize('') && (window.initials ? initials(staff.name) : c.assigned) : c.assigned) || c.assigned;
+    const safeInits = (staff.name||'').trim().split(/\s+/).map(p=>p[0]||'').join('').slice(0,2).toUpperCase() || c.assigned;
+    const grad = AV_GRADIENTS[staffIdx];
+    const displayName = (window.personalize ? personalize(c.name) : c.name);
+    const tr=document.createElement('tr');tr.dataset.idx=i;
+    tr.innerHTML=`
+      <td class="mono" style="color:var(--muted)">${c.code}</td>
+      <td><div style="font-weight:600;color:var(--ink)">${displayName}</div><div style="font-size:11.5px;color:var(--muted);margin-top:1px">${c.contact}</div></td>
+      <td class="mono">${c.ird}</td>
+      <td>${c.type}</td>
+      <td style="color:var(--muted)">${c.period}</td>
+      <td>${c.due}</td>
+      <td><div class="mini-av" style="width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);background:${grad}" title="${staff.name||c.assigned}">${safeInits}</div></td>
+      <td>${statusBadge[c.status]}</td>
+      <td class="action"><span class="badge gray">—</span></td>`;
+    tbody.appendChild(tr);
+  });
+}
+renderReminderClients();
 
 const emailTemplates = {
   'Harbour Cafe Ltd':`Hi Sarah,\n\nA quick note from the team at MPG — your February GST return (GST101A) was due on 31 March and is now showing as overdue on our system. We'd love to get this lodged for you ASAP to keep you clear of any IRD penalties or use-of-money interest.\n\nFrom what we can see in Xero, we're still waiting on a handful of March bank statements and supplier invoices. If you can upload those to Hubdoc by Friday, we'll have it filed early next week.\n\nLet me know if anything's holding things up — happy to drop past the cafe if that's easier.`,
@@ -1737,7 +1902,8 @@ document.getElementById('runReminders').addEventListener('click',async e=>{
     wrap.className='email';
     wrap.dataset.idx=i;
     const subject={overdue:'URGENT: '+c.type+' now overdue',due:'Reminder: '+c.type+' due '+c.due}[c.status];
-    const emailText = emailTemplates[c.name]||`Hi there,\n\nA quick reminder from MPG that your ${c.type} is due on ${c.due}. Let me know if you need anything from us.`;
+    const emailText = personalize(emailTemplates[c.name]||`Hi there,\n\nA quick reminder from MPG that your ${c.type} is due on ${c.due}. Let me know if you need anything from us.`);
+    const sig = personalize('Michael Prasad · Director, MPG Chartered Accountants · +64 9 555 0142 · mpg.co.nz');
     wrap.innerHTML=`
       <div class="email-head">
         <div class="email-to">📨 ${c.contact} &lt;${c.name.toLowerCase().replace(/[^a-z]/g,'')}@gmail.com&gt;</div>
@@ -1747,7 +1913,7 @@ document.getElementById('runReminders').addEventListener('click',async e=>{
         </div>
       </div>
       <div class="email-body"></div>
-      <div class="email-sig" style="padding:0 18px 14px">Michael Prasad · Director, MPG Chartered Accountants · +64 9 555 0142 · mpg.co.nz</div>
+      <div class="email-sig" style="padding:0 18px 14px">${sig}</div>
       <div class="email-actions" style="display:none">
         <span class="badge amber"><span class="led"></span>Awaiting your approval</span>
         <div class="spacer"></div>
@@ -1916,6 +2082,262 @@ document.addEventListener('click',e=>{
     e.target.disabled=true;
   }
 });
+
+/* ============================================================
+   SETUP / CONFIG SYSTEM
+   ============================================================ */
+const DEFAULT_CONFIG = {
+  practice:{short:'MPG',full:'MPG Chartered Accountants',location:'Auckland, NZ',phone:'+64 9 555 0142',website:'mpg.co.nz',bankShort:'ANZ',bankAcct:'01-0242-0054321-00',logo:null},
+  partner:{name:'Michael Prasad',role:'Director · Partner'},
+  staff:[
+    {name:'Michael Prasad',role:'Director · Partner'},
+    {name:'Sarah Koroi',role:'Senior Accountant'},
+    {name:'James Tupou',role:'Accountant'},
+    {name:'Rahul Naidu',role:'Bookkeeper'}
+  ],
+  clients:[
+    {name:'Kiwi Build Supplies Ltd'},
+    {name:'Harbour Cafe Ltd'},
+    {name:'Greenfield Landscapes Ltd'},
+    {name:'Aoraki Consulting Ltd'}
+  ]
+};
+
+function mergeDefaults(c,d){ for(const k in d){ if(Array.isArray(d[k])){ c[k]=c[k]||d[k]; for(let i=0;i<d[k].length;i++){ if(typeof d[k][i]==='object'){ c[k][i]=c[k][i]||{}; mergeDefaults(c[k][i],d[k][i]); } } } else if(typeof d[k]==='object' && d[k]!==null){ c[k]=c[k]||{}; mergeDefaults(c[k],d[k]); } else if(c[k]===undefined){ c[k]=d[k]; } } return c; }
+
+window.CONFIG = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+try{ const saved=localStorage.getItem('ditto-config'); if(saved){ CONFIG=mergeDefaults(JSON.parse(saved),DEFAULT_CONFIG); } }catch(e){}
+
+function firstName(n){ return (n||'').trim().split(/\s+/)[0]||n; }
+window.initials = function(n){ return (n||'').trim().split(/\s+/).map(p=>p[0]||'').join('').slice(0,2).toUpperCase(); };
+
+window.personalize = function(str){
+  if(!str) return str;
+  const c=CONFIG;
+  const pFirst=firstName(c.partner.name);
+  const c1=c.clients[0].name, c2=c.clients[1].name, c3=c.clients[2].name, c4=c.clients[3].name;
+  const strip=n=>n.replace(/\s+Ltd\.?$/i,'').replace(/\s+Limited$/i,'');
+  return str
+    .replace(/MPG Chartered Accountants/g, c.practice.full)
+    .replace(/\bMPG\b/g, c.practice.short)
+    .replace(/Michael Prasad/g, c.partner.name)
+    .replace(/Sarah Koroi/g, c.staff[1].name)
+    .replace(/James Tupou/g, c.staff[2].name)
+    .replace(/Rahul Naidu/g, c.staff[3].name)
+    .replace(/(?<![\w])Michael(?![\w])/g, pFirst)
+    .replace(/mpg\.co\.nz/g, c.practice.website)
+    .replace(/\+64 9 555 0142/g, c.practice.phone)
+    .replace(/Auckland,\s*NZ/g, c.practice.location)
+    .replace(/\bANZ\b/g, c.practice.bankShort)
+    .replace(/01-0242-0054321-00/g, c.practice.bankAcct)
+    .replace(/Kiwi Build Supplies Ltd/g, c1)
+    .replace(/Harbour Cafe Ltd/g, c2)
+    .replace(/Greenfield Landscapes Ltd/g, c3)
+    .replace(/Aoraki Consulting Ltd/g, c4)
+    .replace(/Kiwi Build Supplies/g, strip(c1))
+    .replace(/Harbour Cafe/g, strip(c2))
+    .replace(/Greenfield Landscapes/g, strip(c3))
+    .replace(/Aoraki Consulting/g, strip(c4));
+};
+
+/* Cache original HTML of static sections for re-personalisation */
+const STATIC_SEL = ['.attention-list', '.activity-feed', '.deadline-list', '#m0 .dash-grid2 > .card:first-child table.data tbody'];
+const STATIC_ORIG = {};
+function cacheStatics(){
+  STATIC_SEL.forEach(sel=>{
+    const el=document.querySelector(sel);
+    if(el && !(sel in STATIC_ORIG)) STATIC_ORIG[sel] = el.innerHTML;
+  });
+}
+function restoreStatics(){
+  STATIC_SEL.forEach(sel=>{
+    const el=document.querySelector(sel);
+    if(el && STATIC_ORIG[sel]){ el.innerHTML = personalize(STATIC_ORIG[sel]); }
+  });
+  // Re-bind attention handlers (delegated could be nicer, but this is simple)
+  document.querySelectorAll('.att-item[data-goto]').forEach(it=>{
+    it.onclick = ()=> document.querySelector(`.tab[data-tab="${it.dataset.goto}"]`)?.click();
+  });
+}
+
+/* Re-render team workload cards */
+const TEAM_STATS = [
+  {util:92,jobs:'24 active jobs',over:true},
+  {util:78,jobs:'18 active jobs',over:false},
+  {util:65,jobs:'12 active jobs',over:false},
+  {util:71,jobs:'34 recs · 9 clients',over:false}
+];
+function renderTeamCards(){
+  const grid=document.querySelector('#m0 .team-grid');
+  if(!grid) return;
+  grid.innerHTML = CONFIG.staff.map((s,i)=>{
+    const st=TEAM_STATS[i];
+    const bar = st.over ? 'background:var(--red)' : 'background:var(--lime)';
+    const col = st.over ? 'color:var(--red)' : 'color:var(--green)';
+    return `
+      <div class="team-card">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="mini-av" style="width:40px;height:40px;font-size:13px;background:${AV_GRADIENTS[i]}">${initials(s.name)}</div>
+          <div><div style="font-weight:700;color:var(--ink)">${s.name}</div><div style="font-size:11.5px;color:var(--muted)">${s.role}</div></div>
+        </div>
+        <div class="util-bar"><div style="width:${st.util}%;${bar}"></div></div>
+        <div class="util-text"><span>${st.jobs}</span><span style="${col};font-weight:600">${st.util}%</span></div>
+      </div>`;
+  }).join('');
+}
+
+/* Update CLIENTS names from config and re-populate picker */
+function updateClientsFromConfig(){
+  const keys=['kiwi','harbour','greenfield','aoraki'];
+  keys.forEach((k,i)=>{ if(CLIENTS[k]) CLIENTS[k].name = CONFIG.clients[i].name; });
+  const picker=document.getElementById('clientPicker');
+  if(picker){
+    [...picker.options].forEach((o,i)=>{ if(CONFIG.clients[i]) o.textContent = CONFIG.clients[i].name; });
+    renderClient(picker.value);
+  }
+}
+
+/* Apply config everywhere */
+window.applyConfig = function(){
+  const c=CONFIG;
+  // Header logo
+  const hdrLogo=document.getElementById('hdrLogo');
+  if(hdrLogo){
+    if(c.practice.logo){
+      hdrLogo.innerHTML = `<img class="client-logo" src="${c.practice.logo}" alt="${c.practice.full}"/>`;
+    } else {
+      hdrLogo.innerHTML = '<div class="ditto-word">d<span class="i">i</span>tto</div>';
+    }
+  }
+  const hdrSub=document.getElementById('hdrLogoSub');
+  if(hdrSub) hdrSub.textContent = c.practice.logo ? c.practice.full : 'AI Workspace for Accountants';
+  // Avatar
+  const av=document.querySelector('.header-right .avatar');
+  if(av){ av.textContent=initials(c.partner.name); av.title=c.partner.name; }
+  // Dashboard
+  const dbc=document.querySelector('#m0 .breadcrumb');
+  if(dbc) dbc.innerHTML=`${c.practice.full} <span class="sep">›</span> <b>Practice Dashboard</b>`;
+  const locChip=document.querySelector('.chip[data-role="loc"]');
+  if(locChip) locChip.innerHTML=`📍 ${c.practice.location}`;
+  const wg=document.querySelector('.welcome-greet');
+  if(wg) wg.innerHTML=`Good morning, ${firstName(c.partner.name)} 👋`;
+  // Module 2
+  const m2sub=document.querySelector('[data-role="assigned"]');
+  if(m2sub) m2sub.textContent=`8 jobs · 2 overdue · 3 due this week · Assigned to ${c.partner.name}`;
+  // Module 3
+  const m3bc=document.querySelector('#m3 .breadcrumb');
+  if(m3bc) m3bc.innerHTML=`Xero <span class="sep">›</span> Business <span class="sep">›</span> Bank accounts <span class="sep">›</span> <b>${c.practice.short} Practice Account</b> <span class="sep">›</span> Reconcile`;
+  const m3bank=document.querySelector('[data-role="bank"]');
+  if(m3bank) m3bank.innerHTML=`🏦 ${c.practice.bankShort} · ${c.practice.bankAcct}`;
+  const bi=document.querySelector('#m3 .rec-bank-icon');
+  if(bi) bi.textContent=c.practice.bankShort;
+  const bn=document.querySelector('#m3 .rec-bank .name');
+  if(bn) bn.textContent=`${c.practice.short} Practice Account`;
+  const ba=document.querySelector('#m3 .rec-bank .acct-num');
+  if(ba) ba.textContent=`${c.practice.bankAcct} · Statement #00342`;
+  // Module 4
+  const m4bc=document.querySelector('#m4 .breadcrumb');
+  if(m4bc) m4bc.innerHTML=`${c.practice.short} <span class="sep">›</span> <b>Private AI Deployment Architecture</b>`;
+
+  // Dynamic re-renders
+  renderTeamCards();
+  updateClientsFromConfig();
+  renderReminderClients();
+  restoreStatics();
+};
+
+/* Setup form helpers */
+function populateSetupForm(){
+  const c=CONFIG;
+  const byId=(id,v)=>{ const el=document.getElementById(id); if(el) el.value=v||''; };
+  byId('cfg-pshort',c.practice.short);
+  byId('cfg-pfull',c.practice.full);
+  byId('cfg-ploc',c.practice.location);
+  byId('cfg-pphone',c.practice.phone);
+  byId('cfg-pweb',c.practice.website);
+  byId('cfg-pbank',c.practice.bankShort);
+  byId('cfg-pbankacct',c.practice.bankAcct);
+  byId('cfg-pname',c.partner.name);
+  byId('cfg-prole',c.partner.role);
+  for(let i=1;i<=3;i++){
+    byId(`cfg-s${i}-name`,c.staff[i].name);
+    byId(`cfg-s${i}-role`,c.staff[i].role);
+  }
+  for(let i=0;i<4;i++) byId(`cfg-c${i}-name`,c.clients[i].name);
+  // Logo preview
+  const lp=document.getElementById('cfgLogoPreview');
+  if(lp){
+    if(c.practice.logo){
+      lp.innerHTML=`<img src="${c.practice.logo}" alt="logo"/>`;
+    } else {
+      lp.innerHTML='<div class="logo-preview-empty">No logo uploaded<br><small>Ditto wordmark is shown</small></div>';
+    }
+  }
+}
+
+window.saveSetupForm = function(){
+  const c=CONFIG;
+  const v=id=>{const el=document.getElementById(id); return el? el.value.trim() : '';};
+  c.practice.short=v('cfg-pshort')||'MPG';
+  c.practice.full=v('cfg-pfull')||c.practice.short;
+  c.practice.location=v('cfg-ploc')||c.practice.location;
+  c.practice.phone=v('cfg-pphone')||c.practice.phone;
+  c.practice.website=v('cfg-pweb')||c.practice.website;
+  c.practice.bankShort=v('cfg-pbank')||c.practice.bankShort;
+  c.practice.bankAcct=v('cfg-pbankacct')||c.practice.bankAcct;
+  c.partner.name=v('cfg-pname')||'Partner';
+  c.partner.role=v('cfg-prole')||c.partner.role;
+  c.staff[0].name=c.partner.name;
+  c.staff[0].role=c.partner.role;
+  for(let i=1;i<=3;i++){
+    c.staff[i].name=v(`cfg-s${i}-name`)||c.staff[i].name;
+    c.staff[i].role=v(`cfg-s${i}-role`)||c.staff[i].role;
+  }
+  for(let i=0;i<4;i++){
+    c.clients[i].name=v(`cfg-c${i}-name`)||c.clients[i].name;
+  }
+  try{ localStorage.setItem('ditto-config', JSON.stringify(CONFIG)); }catch(e){ console.warn('Config save failed — localStorage may be full (logo too large?)',e); }
+  applyConfig();
+  const toast=document.getElementById('cfgToast');
+  if(toast){ toast.style.opacity='1'; setTimeout(()=>toast.style.opacity='0',3000); }
+};
+
+/* Logo upload */
+document.getElementById('cfg-logo')?.addEventListener('change',e=>{
+  const file=e.target.files[0];
+  if(!file) return;
+  if(file.size > 1024*1024*1.2){ alert('Logo is larger than 1MB. Please use a smaller image.'); return; }
+  const reader=new FileReader();
+  reader.onload=()=>{
+    CONFIG.practice.logo = reader.result;
+    const lp=document.getElementById('cfgLogoPreview');
+    if(lp) lp.innerHTML=`<img src="${reader.result}" alt="logo"/>`;
+    try{ localStorage.setItem('ditto-config', JSON.stringify(CONFIG)); }catch(err){ alert('Image too large to save in browser storage. Try a smaller file.'); return; }
+    applyConfig();
+  };
+  reader.readAsDataURL(file);
+});
+
+document.getElementById('cfgLogoClear')?.addEventListener('click',()=>{
+  CONFIG.practice.logo=null;
+  const lp=document.getElementById('cfgLogoPreview');
+  if(lp) lp.innerHTML='<div class="logo-preview-empty">No logo uploaded<br><small>Ditto wordmark is shown</small></div>';
+  try{ localStorage.setItem('ditto-config', JSON.stringify(CONFIG)); }catch(e){}
+  applyConfig();
+});
+
+document.getElementById('cfgResetBtn')?.addEventListener('click',()=>{
+  if(!confirm('Reset all demo settings to defaults? This cannot be undone.')) return;
+  window.CONFIG = JSON.parse(JSON.stringify(DEFAULT_CONFIG));
+  try{ localStorage.removeItem('ditto-config'); }catch(e){}
+  populateSetupForm();
+  applyConfig();
+});
+
+/* Init */
+cacheStatics();
+populateSetupForm();
+applyConfig();
 </script>
 </body>
 </html>
