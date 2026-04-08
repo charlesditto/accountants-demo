@@ -458,6 +458,40 @@
     .arch-panel{position:static}
   }
 
+  /* ---------- PRESENTER MOUSE FOLLOWER ---------- */
+  .presenter-dot{
+    position:fixed;width:26px;height:26px;border-radius:50%;
+    background:radial-gradient(circle,rgba(184,241,58,.85) 0%,rgba(184,241,58,.55) 40%,rgba(184,241,58,0) 70%);
+    box-shadow:0 0 20px rgba(184,241,58,.7),0 0 40px rgba(184,241,58,.35);
+    pointer-events:none;z-index:9999;left:0;top:0;
+    transform:translate(-50%,-50%);transition:opacity .2s;
+    mix-blend-mode:normal;
+  }
+  .presenter-dot.hidden{opacity:0}
+  .presenter-ring{
+    position:fixed;width:14px;height:14px;border-radius:50%;
+    border:2px solid rgba(184,241,58,.9);
+    pointer-events:none;z-index:9998;left:0;top:0;
+    transform:translate(-50%,-50%);
+    animation:presenterPing .6s ease-out forwards;
+  }
+  @keyframes presenterPing{
+    0%{width:14px;height:14px;opacity:1;border-width:3px}
+    100%{width:80px;height:80px;opacity:0;border-width:1px}
+  }
+  .presenter-toggle{
+    position:fixed;bottom:20px;left:20px;
+    background:rgba(11,18,32,.92);color:#fff;padding:8px 14px;
+    border-radius:999px;font-size:11px;font-weight:600;
+    letter-spacing:.06em;text-transform:uppercase;
+    backdrop-filter:blur(8px);z-index:100;
+    border:none;cursor:pointer;display:flex;align-items:center;gap:8px;
+    transition:all .15s;
+  }
+  .presenter-toggle:hover{background:#0b1220}
+  .presenter-toggle .led{width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 8px var(--lime)}
+  .presenter-toggle.off .led{background:#6b7280;box-shadow:none}
+
   /* ---------- MODAL ---------- */
   .modal-overlay{position:fixed;inset:0;background:rgba(11,18,32,.55);backdrop-filter:blur(6px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;animation:fade .2s}
   .modal-overlay[hidden]{display:none}
@@ -1057,7 +1091,7 @@
       <div class="arch-layout">
         <div class="card arch-card">
           <div class="card-body" style="padding:24px">
-            <svg class="arch-svg" viewBox="0 0 720 1085" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MPG private AI architecture">
+            <svg class="arch-svg" viewBox="0 0 900 1100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MPG private AI architecture">
               <defs>
                 <marker id="arrHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                   <path d="M2 1L8 5L2 9" fill="none" stroke="#6b7280" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1068,138 +1102,128 @@
                 </symbol>
               </defs>
 
-              <!-- LAYER 0 · Perimeter -->
+              <!-- LAYER 0 · MPG Staff (entry point) -->
+              <g class="node node-platform" data-node="user">
+                <rect x="300" y="30" width="200" height="58" rx="10"/>
+                <text x="400" y="54" class="n-title">MPG Staff</text>
+                <text x="400" y="74" class="n-sub">Partners and accounting team</text>
+              </g>
+              <line x1="400" y1="88" x2="400" y2="120" stroke="#6b7280" stroke-width="1.6"/>
+
+              <!-- LAYER 1 · Perimeter rail + WAF/TLS -->
+              <line x1="220" y1="120" x2="580" y2="120" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="4 3"/>
+              <rect x="338" y="110" width="124" height="16" rx="3" fill="#fff"/>
+              <text x="400" y="121" class="edge-label" text-anchor="middle">All inbound traffic</text>
+              <line x1="220" y1="120" x2="220" y2="140" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="580" y1="120" x2="580" y2="140" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+
               <g class="node node-sec" data-node="waf">
-                <rect x="60" y="40" width="280" height="58" rx="10"/>
-                <text x="200" y="64" class="n-title">Web Application Firewall</text>
-                <text x="200" y="84" class="n-sub">Blocks common attacks before they hit the app</text>
+                <rect x="100" y="140" width="240" height="58" rx="10"/>
+                <text x="220" y="164" class="n-title">Web Application Firewall</text>
+                <text x="220" y="184" class="n-sub">Blocks common attacks before they hit the app</text>
               </g>
               <g class="node node-sec" data-node="tls">
-                <rect x="380" y="40" width="280" height="58" rx="10"/>
-                <text x="520" y="64" class="n-title">Transport Layer Security</text>
-                <text x="520" y="84" class="n-sub">All traffic encrypted in transit</text>
+                <rect x="460" y="140" width="240" height="58" rx="10"/>
+                <text x="580" y="164" class="n-title">Transport Layer Security</text>
+                <text x="580" y="184" class="n-sub">All traffic encrypted in transit</text>
               </g>
-              <!-- perimeter rail + label -->
-              <line x1="200" y1="98" x2="200" y2="122" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="520" y1="98" x2="520" y2="122" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="200" y1="122" x2="520" y2="122" stroke="#9ca3af" stroke-width="1.3" stroke-dasharray="4 3"/>
-              <rect x="302" y="112" width="116" height="16" rx="3" fill="#fff"/>
-              <text x="360" y="123" class="edge-label" text-anchor="middle">All inbound traffic</text>
 
-              <!-- rail → sources -->
-              <line x1="200" y1="122" x2="200" y2="158" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="520" y1="122" x2="520" y2="158" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-
-              <!-- LAYER 1 · Data sources -->
-              <g class="node node-src" data-node="xero">
-                <rect x="80" y="160" width="240" height="58" rx="10"/>
-                <text x="200" y="184" class="n-title">Xero</text>
-                <text x="200" y="204" class="n-sub">Accounting and bookkeeping data</text>
-                <use href="#lockIcon" x="298" y="168" width="14" height="16" color="#047a4e"/>
-              </g>
-              <g class="node node-src" data-node="xpm">
-                <rect x="400" y="160" width="240" height="58" rx="10"/>
-                <text x="520" y="184" class="n-title">Xero Practice Manager</text>
-                <text x="520" y="204" class="n-sub">Practice management data</text>
-                <use href="#lockIcon" x="618" y="168" width="14" height="16" color="#047a4e"/>
-              </g>
-              <text x="200" y="236" class="edge-label" text-anchor="middle">Delegated authorisation · scoped access only</text>
-              <text x="520" y="236" class="edge-label" text-anchor="middle">Delegated authorisation · scoped access only</text>
-
-              <!-- sources → middleware -->
-              <line x1="200" y1="248" x2="200" y2="325" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="520" y1="248" x2="520" y2="325" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <!-- merge perimeter back to centre -->
+              <line x1="220" y1="198" x2="220" y2="220" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="580" y1="198" x2="580" y2="220" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="220" y1="220" x2="580" y2="220" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="400" y1="220" x2="400" y2="252" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
 
               <!-- LAYER 2 · Secure infrastructure container -->
-              <rect class="secure-zone" x="40" y="265" width="640" height="286" rx="18" fill="#fafbfc" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="6 5"/>
-              <text x="60" y="289" class="zone-title">🔒 Ditto Secure Infrastructure</text>
-              <text x="60" y="307" class="zone-sub">Amazon Web Services Sydney region · Private network · Encrypted at rest · Threat monitoring · Full activity logging</text>
+              <rect class="secure-zone" x="60" y="257" width="600" height="402" rx="18" fill="#fafbfc" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="6 5"/>
+              <text x="80" y="282" class="zone-title">🔒 Ditto Secure Infrastructure</text>
+              <text x="80" y="300" class="zone-sub">Amazon Web Services Sydney region · Private network · Encrypted at rest · Threat monitoring · Full activity logging</text>
 
-              <!-- Middleware (Ditto brand lime) -->
+              <!-- Staff Interface (entry into platform) -->
+              <g class="node node-platform" data-node="staff">
+                <rect x="180" y="318" width="360" height="60" rx="10"/>
+                <text x="360" y="342" class="n-title">Staff Interface</text>
+                <text x="360" y="362" class="n-sub">Multi-factor login · Role-based access · Full audit log · Session timeout</text>
+              </g>
+              <line x1="360" y1="378" x2="360" y2="408" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+
+              <!-- Ditto Middleware -->
               <g class="node node-ditto" data-node="mw">
-                <rect x="140" y="325" width="440" height="60" rx="10"/>
-                <text x="360" y="349" class="n-title">Ditto Middleware</text>
-                <text x="360" y="369" class="n-sub">Secure data processing · pull, process, discard</text>
+                <rect x="180" y="408" width="360" height="60" rx="10"/>
+                <text x="360" y="432" class="n-title">Ditto Middleware</text>
+                <text x="360" y="452" class="n-sub">Secure data processing · pull, process, discard</text>
               </g>
 
-              <line x1="360" y1="385" x2="360" y2="405" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <!-- Side branch RIGHT to external data sources -->
+              <text x="790" y="394" class="edge-label" text-anchor="middle" style="font-size:10px;font-weight:600;letter-spacing:.05em">EXTERNAL APIS</text>
+              <line x1="540" y1="438" x2="660" y2="438" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="660" y1="438" x2="660" y2="416" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="660" y1="416" x2="700" y2="416" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="660" y1="438" x2="660" y2="460" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="660" y1="460" x2="700" y2="460" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+
+              <g class="node node-src" data-node="xero">
+                <rect x="700" y="400" width="180" height="32" rx="8"/>
+                <text x="790" y="416" class="n-title" style="font-size:13px">Xero</text>
+                <text x="790" y="429" class="n-sub" style="font-size:10.5px">Accounting and bookkeeping</text>
+              </g>
+              <g class="node node-src" data-node="xpm">
+                <rect x="700" y="444" width="180" height="32" rx="8"/>
+                <text x="790" y="460" class="n-title" style="font-size:13px">Xero Practice Manager</text>
+                <text x="790" y="473" class="n-sub" style="font-size:10.5px">Jobs and deadlines</text>
+              </g>
+              <text x="790" y="492" class="edge-label" text-anchor="middle" style="font-size:10px">Delegated authorisation</text>
+              <text x="790" y="505" class="edge-label" text-anchor="middle" style="font-size:10px">Pulled, used, discarded</text>
+
+              <!-- Middleware → Security strip -->
+              <line x1="360" y1="468" x2="360" y2="498" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
 
               <!-- Security control strip -->
-              <rect class="sec-strip" x="60" y="405" width="600" height="40" rx="8" fill="#eef0f4" stroke="#cdd2dd" stroke-width="1"/>
+              <rect class="sec-strip" x="80" y="498" width="560" height="44" rx="8" fill="#eef0f4" stroke="#cdd2dd" stroke-width="1"/>
               <g class="node sec-badge" data-node="secrets">
-                <rect x="60" y="405" width="200" height="40" fill="transparent"/>
-                <text x="160" y="421" class="sec-t">Credential Vault</text>
-                <text x="160" y="435" class="sec-s">encrypted token storage</text>
+                <rect x="80" y="498" width="186" height="44" fill="transparent"/>
+                <text x="173" y="516" class="sec-t">Credential Vault</text>
+                <text x="173" y="531" class="sec-s">encrypted token storage</text>
               </g>
-              <line x1="260" y1="413" x2="260" y2="437" stroke="#cdd2dd" stroke-width="1"/>
+              <line x1="266" y1="506" x2="266" y2="534" stroke="#cdd2dd" stroke-width="1"/>
               <g class="node sec-badge" data-node="iam">
-                <rect x="260" y="405" width="200" height="40" fill="transparent"/>
-                <text x="360" y="421" class="sec-t">Least-Privilege Access</text>
-                <text x="360" y="435" class="sec-s">narrow application role</text>
+                <rect x="266" y="498" width="188" height="44" fill="transparent"/>
+                <text x="360" y="516" class="sec-t">Least-Privilege Access</text>
+                <text x="360" y="531" class="sec-s">narrow application role</text>
               </g>
-              <line x1="460" y1="413" x2="460" y2="437" stroke="#cdd2dd" stroke-width="1"/>
+              <line x1="454" y1="506" x2="454" y2="534" stroke="#cdd2dd" stroke-width="1"/>
               <g class="node sec-badge" data-node="vpce">
-                <rect x="460" y="405" width="200" height="40" fill="transparent"/>
-                <text x="560" y="421" class="sec-t">Private Network Routes</text>
-                <text x="560" y="435" class="sec-s">no public internet</text>
+                <rect x="454" y="498" width="186" height="44" fill="transparent"/>
+                <text x="547" y="516" class="sec-t">Private Network Routes</text>
+                <text x="547" y="531" class="sec-s">no public internet</text>
               </g>
 
-              <line x1="360" y1="445" x2="360" y2="465" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="360" y1="542" x2="360" y2="572" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
 
-              <!-- LLM -->
+              <!-- Private Language Model -->
               <g class="node node-ai" data-node="llm">
-                <rect x="140" y="465" width="440" height="60" rx="10"/>
-                <text x="360" y="489" class="n-title">Private Language Model</text>
-                <text x="360" y="509" class="n-sub">Claude via AWS Bedrock · no logging · no retention</text>
+                <rect x="180" y="572" width="360" height="60" rx="10"/>
+                <text x="360" y="596" class="n-title">Private Language Model</text>
+                <text x="360" y="616" class="n-sub">Claude via AWS Bedrock · no logging · no retention</text>
               </g>
 
-              <!-- LLM → staff (exits container) -->
-              <line x1="360" y1="525" x2="360" y2="623" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <rect x="170" y="565" width="380" height="22" rx="4" fill="#fff"/>
-              <text x="360" y="580" class="edge-label" text-anchor="middle">256-bit encryption · Signed session token · Tenant isolated</text>
+              <!-- LLM exits container, returns the result -->
+              <line x1="360" y1="632" x2="360" y2="745" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <rect x="170" y="685" width="380" height="22" rx="4" fill="#fff"/>
+              <text x="360" y="700" class="edge-label" text-anchor="middle">256-bit encryption · Signed session token · Tenant isolated</text>
 
-              <!-- LAYER 4 · Staff interface -->
-              <g class="node node-platform" data-node="staff">
-                <rect x="160" y="623" width="400" height="60" rx="10"/>
-                <text x="360" y="647" class="n-title">Staff Interface</text>
-                <text x="360" y="667" class="n-sub">Multi-factor login · Role-based access · Full audit log · Session timeout</text>
-              </g>
+              <!-- LAYER 5 · Output modules (rendered back in the staff interface) -->
+              <line x1="360" y1="745" x2="360" y2="763" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="120" y1="763" x2="600" y2="763" stroke="#6b7280" stroke-width="1.6"/>
+              <line x1="120" y1="763" x2="120" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="360" y1="763" x2="360" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
+              <line x1="600" y1="763" x2="600" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
 
-              <line x1="360" y1="683" x2="360" y2="703" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-
-              <!-- Monitoring strip -->
-              <rect class="sec-strip" x="60" y="703" width="600" height="40" rx="8" fill="#eef0f4" stroke="#cdd2dd" stroke-width="1"/>
-              <g class="node sec-badge" data-node="cloudwatch">
-                <rect x="60" y="703" width="200" height="40" fill="transparent"/>
-                <text x="160" y="719" class="sec-t">CloudWatch</text>
-                <text x="160" y="733" class="sec-s">real-time monitoring</text>
-              </g>
-              <line x1="260" y1="711" x2="260" y2="735" stroke="#cdd2dd" stroke-width="1"/>
-              <g class="node sec-badge" data-node="guardduty">
-                <rect x="260" y="703" width="200" height="40" fill="transparent"/>
-                <text x="360" y="719" class="sec-t">GuardDuty</text>
-                <text x="360" y="733" class="sec-s">threat detection</text>
-              </g>
-              <line x1="460" y1="711" x2="460" y2="735" stroke="#cdd2dd" stroke-width="1"/>
-              <g class="node sec-badge" data-node="cloudtrail">
-                <rect x="460" y="703" width="200" height="40" fill="transparent"/>
-                <text x="560" y="719" class="sec-t">CloudTrail</text>
-                <text x="560" y="733" class="sec-s">full activity audit trail</text>
-              </g>
-
-              <!-- Trunk + branch -->
-              <line x1="360" y1="743" x2="360" y2="765" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="110" y1="765" x2="610" y2="765" stroke="#6b7280" stroke-width="1.6"/>
-              <line x1="110" y1="765" x2="110" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="360" y1="765" x2="360" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-              <line x1="610" y1="765" x2="610" y2="793" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-
-              <!-- LAYER 5 · Output modules -->
               <g class="node node-out" data-node="out-fin" data-goto="m1">
-                <rect x="30" y="795" width="160" height="64" rx="10"/>
-                <text x="110" y="817" class="n-title">Financial Reports</text>
-                <text x="110" y="835" class="n-sub">AI narrative reporting</text>
-                <text x="110" y="851" class="n-cta">View demo →</text>
+                <rect x="40" y="795" width="160" height="64" rx="10"/>
+                <text x="120" y="817" class="n-title">Financial Reports</text>
+                <text x="120" y="835" class="n-sub">AI narrative reporting</text>
+                <text x="120" y="851" class="n-cta">View demo →</text>
               </g>
               <g class="node node-out" data-node="out-not" data-goto="m2">
                 <rect x="280" y="795" width="160" height="64" rx="10"/>
@@ -1208,48 +1232,68 @@
                 <text x="360" y="851" class="n-cta">View demo →</text>
               </g>
               <g class="node node-out" data-node="out-cod" data-goto="m3">
-                <rect x="530" y="795" width="160" height="64" rx="10"/>
-                <text x="610" y="817" class="n-title">Accounts Coding</text>
-                <text x="610" y="835" class="n-sub">AI transaction coding</text>
-                <text x="610" y="851" class="n-cta">View demo →</text>
+                <rect x="520" y="795" width="160" height="64" rx="10"/>
+                <text x="600" y="817" class="n-title">Accounts Coding</text>
+                <text x="600" y="835" class="n-sub">AI transaction coding</text>
+                <text x="600" y="851" class="n-cta">View demo →</text>
               </g>
 
-              <!-- Output footer label -->
-              <text x="360" y="885" class="edge-label" text-anchor="middle">Rate limited · input validated · output logged per tenant</text>
+              <text x="360" y="884" class="edge-label" text-anchor="middle">Rate limited · input validated · output logged per tenant</text>
+
+              <!-- Monitoring strip (parallel observer) -->
+              <text x="360" y="918" class="edge-label" text-anchor="middle" style="font-weight:600">Continuously observed by</text>
+              <rect class="sec-strip" x="80" y="928" width="560" height="44" rx="8" fill="#eef0f4" stroke="#cdd2dd" stroke-width="1"/>
+              <g class="node sec-badge" data-node="cloudwatch">
+                <rect x="80" y="928" width="186" height="44" fill="transparent"/>
+                <text x="173" y="946" class="sec-t">CloudWatch</text>
+                <text x="173" y="961" class="sec-s">real-time monitoring</text>
+              </g>
+              <line x1="266" y1="936" x2="266" y2="964" stroke="#cdd2dd" stroke-width="1"/>
+              <g class="node sec-badge" data-node="guardduty">
+                <rect x="266" y="928" width="188" height="44" fill="transparent"/>
+                <text x="360" y="946" class="sec-t">GuardDuty</text>
+                <text x="360" y="961" class="sec-s">threat detection</text>
+              </g>
+              <line x1="454" y1="936" x2="454" y2="964" stroke="#cdd2dd" stroke-width="1"/>
+              <g class="node sec-badge" data-node="cloudtrail">
+                <rect x="454" y="928" width="186" height="44" fill="transparent"/>
+                <text x="547" y="946" class="sec-t">CloudTrail</text>
+                <text x="547" y="961" class="sec-s">full activity audit trail</text>
+              </g>
 
               <!-- Legend -->
               <g class="arch-legend">
-                <rect x="408" y="890" width="292" height="178" rx="10" fill="#fafbfc" stroke="#d0d5dd" stroke-width="1"/>
-                <text x="422" y="910" class="leg-title">Legend</text>
-                <g transform="translate(422 928)">
+                <rect x="680" y="900" width="210" height="178" rx="10" fill="#fafbfc" stroke="#d0d5dd" stroke-width="1"/>
+                <text x="694" y="920" class="leg-title">Legend</text>
+                <g transform="translate(694 938)">
                   <line x1="0" y1="6" x2="22" y2="6" stroke="#b8c0cc" stroke-width="1.5" stroke-dasharray="4 3"/>
                   <text x="30" y="10" class="leg-t">Dashed border = secure boundary</text>
                 </g>
-                <g transform="translate(422 945)">
+                <g transform="translate(694 955)">
                   <line x1="0" y1="6" x2="18" y2="6" stroke="#6b7280" stroke-width="1.6" marker-end="url(#arrHead)"/>
-                  <text x="30" y="10" class="leg-t">Solid arrow = encrypted data flow</text>
+                  <text x="30" y="10" class="leg-t">Solid arrow = data flow</text>
                 </g>
-                <g transform="translate(422 962)">
+                <g transform="translate(694 972)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#e3f5ec" stroke="#047a4e"/>
-                  <text x="30" y="10" class="leg-t">Teal = external APIs</text>
+                  <text x="30" y="10" class="leg-t">Teal = external sources</text>
                 </g>
-                <g transform="translate(422 979)">
+                <g transform="translate(694 989)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#f2fbdc" stroke="#8dc71f"/>
                   <text x="30" y="10" class="leg-t">Lime = Ditto middleware</text>
                 </g>
-                <g transform="translate(422 996)">
+                <g transform="translate(694 1006)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#f2edfd" stroke="#6d28d9"/>
-                  <text x="30" y="10" class="leg-t">Purple = AI engine (Claude/Bedrock)</text>
+                  <text x="30" y="10" class="leg-t">Purple = AI engine</text>
                 </g>
-                <g transform="translate(422 1013)">
+                <g transform="translate(694 1023)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#e5f6fd" stroke="#0a8cbd"/>
-                  <text x="30" y="10" class="leg-t">Blue = Staff interface</text>
+                  <text x="30" y="10" class="leg-t">Blue = staff &amp; interface</text>
                 </g>
-                <g transform="translate(422 1030)">
+                <g transform="translate(694 1040)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#fff4e6" stroke="#ea580c"/>
                   <text x="30" y="10" class="leg-t">Orange = output modules</text>
                 </g>
-                <g transform="translate(422 1047)">
+                <g transform="translate(694 1057)">
                   <rect x="0" y="1" width="16" height="11" rx="2" fill="#eef0f4" stroke="#9ca3af"/>
                   <text x="30" y="10" class="leg-t">Gray = security controls</text>
                 </g>
@@ -1398,6 +1442,8 @@
 </div>
 
 <div class="demo-badge"><span class="d-dot"></span> Demo · Fictional Data</div>
+<div class="presenter-dot" id="presenterDot"></div>
+<button class="presenter-toggle" id="presenterToggle" title="Toggle presenter mouse highlight"><span class="led"></span> Presenter</button>
 
 <script>
 /* ---------- Tabs ---------- */
@@ -1413,6 +1459,7 @@ document.querySelectorAll('.tab').forEach(t=>{
 
 /* ---------- Architecture tab ---------- */
 const ARCH_NODES = {
+  user:{tag:'User entry',type:'platform',title:'MPG Staff',body:'Your partners and team members access the platform from their own browsers. Every action is authenticated, tied to a specific user, and recorded in the audit log.',facts:[['Devices','Workstations and laptops · practice managed'],['Sessions','Single sign-on with multi-factor login'],['Activity','Every click logged to the audit trail']]},
   xero:{tag:'External data source',type:'src',title:'Xero Connection',body:"Your accounting data connects via Xero's secure delegated authorisation. Ditto pulls only what each workflow needs — transactions, reports, chart of accounts — and discards the raw data immediately after processing.",facts:[['Access method','Delegated authorisation, refreshed every 30 minutes'],['Scope','Read-only by default'],['Retention','None — discarded after every run']]},
   xpm:{tag:'External data source',type:'src',title:'Xero Practice Manager',body:'Xero Practice Manager holds your client jobs, due dates, and workflow statuses. Ditto reads this data to trigger notice automation and track lodgement deadlines — no permanent copy is stored.',facts:[['Access method','Delegated authorisation'],['Usage','Job list, due dates, client contacts'],['Retention','None — read on demand']]},
   mw:{tag:'Ditto platform',type:'platform',title:'Ditto Middleware',body:'The secure processing layer that sits between your data and the AI engine. It authenticates every request, enforces data scoping, manages credential storage, and ensures nothing is retained after each workflow runs.',facts:[['Hosting','Amazon Web Services Sydney region'],['Credentials','Stored in AWS Secrets Manager, encrypted with a customer-managed key'],['Logging','Access logs only — no client data content']]},
@@ -1484,6 +1531,8 @@ document.querySelectorAll('.att-item[data-goto]').forEach(it=>{
 
 /* ---------- Helpers ---------- */
 const sleep = ms => new Promise(r=>setTimeout(r,ms));
+const _decodeBuf = document.createElement('textarea');
+function decodeEntities(s){ if(!s) return s; _decodeBuf.innerHTML = s; return _decodeBuf.value; }
 function typeInto(el, text, speed=10){
   return new Promise(resolve=>{
     el.classList.remove('empty');
@@ -1817,7 +1866,7 @@ document.getElementById('genReport').addEventListener('click',async e=>{
   await runSteps(document.getElementById('aiSteps1'), document.getElementById('progBar1'), 1400);
   document.getElementById('aiStatus1').textContent='complete ✓';
   const key=document.getElementById('clientPicker').value;
-  await typeInto(document.getElementById('narrative'), personalize(CLIENTS[key].narrative), 2);
+  await typeInto(document.getElementById('narrative'), decodeEntities(personalize(CLIENTS[key].narrative)), 2);
   btn.disabled=false; btn.innerHTML='⚡ Regenerate';
   document.getElementById('downloadPdf').disabled=false;
   document.querySelectorAll('#m1 .btn-ghost').forEach(b=>b.disabled=false);
@@ -1960,7 +2009,7 @@ document.getElementById('runReminders').addEventListener('click',async e=>{
         <button class="btn btn-lime btn-approve">✓ Approve &amp; Send</button>
       </div>`;
     list.appendChild(wrap);
-    await typeInto(wrap.querySelector('.email-body'), emailText, 5);
+    await typeInto(wrap.querySelector('.email-body'), decodeEntities(emailText), 5);
 
     if(autoSend){
       markRowSent(i);
@@ -2529,6 +2578,43 @@ document.querySelectorAll('#m2Filters .fchip').forEach(chip=>{
     });
   });
 });
+
+/* ============================================================
+   PRESENTER MOUSE FOLLOWER
+   ============================================================ */
+(function(){
+  const dot = document.getElementById('presenterDot');
+  const toggle = document.getElementById('presenterToggle');
+  let enabled = localStorage.getItem('ditto-presenter') !== 'off';
+  function setState(on){
+    enabled = on;
+    dot.classList.toggle('hidden', !on);
+    toggle.classList.toggle('off', !on);
+    localStorage.setItem('ditto-presenter', on ? 'on' : 'off');
+  }
+  setState(enabled);
+  document.addEventListener('mousemove',e=>{
+    if(!enabled) return;
+    dot.style.left = e.clientX + 'px';
+    dot.style.top  = e.clientY + 'px';
+  },{passive:true});
+  document.addEventListener('click',e=>{
+    if(!enabled) return;
+    const ring=document.createElement('div');
+    ring.className='presenter-ring';
+    ring.style.left = e.clientX + 'px';
+    ring.style.top  = e.clientY + 'px';
+    document.body.appendChild(ring);
+    setTimeout(()=>ring.remove(), 650);
+  });
+  toggle.addEventListener('click',e=>{
+    e.stopPropagation();
+    setState(!enabled);
+  });
+  // Hide when leaving window
+  document.addEventListener('mouseleave',()=>{ if(enabled) dot.classList.add('hidden'); });
+  document.addEventListener('mouseenter',()=>{ if(enabled) dot.classList.remove('hidden'); });
+})();
 
 /* Init */
 cacheStatics();
