@@ -347,9 +347,14 @@
       <!-- KPIs -->
       <div class="card">
         <div class="card-head">
-          <div>
-            <h2>Kiwi Build Supplies Ltd</h2>
-            <div class="sub">NZBN 9429046812334 · GST Reg 112-458-329 · Period: 1–31 March 2025 · NZD</div>
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+            <select id="clientPicker" style="font:inherit;font-weight:700;font-size:15px;padding:8px 34px 8px 12px;border:1px solid var(--line);border-radius:9px;background:#fff url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%2212%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22%230b1220%22 stroke-width=%223%22><polyline points=%226 9 12 15 18 9%22/></svg>') no-repeat right 12px center;-webkit-appearance:none;appearance:none;cursor:pointer;color:var(--ink);min-width:240px">
+              <option value="kiwi">Kiwi Build Supplies Ltd</option>
+              <option value="harbour">Harbour Cafe Ltd</option>
+              <option value="greenfield">Greenfield Landscapes Ltd</option>
+              <option value="aoraki">Aoraki Consulting Ltd</option>
+            </select>
+            <div class="sub" id="clientMeta">NZBN 9429046812334 · GST Reg 112-458-329 · Period: 1–31 March 2025 · NZD</div>
           </div>
           <div style="display:flex;gap:8px">
             <button class="btn btn-ghost">Compare ▾</button>
@@ -357,49 +362,11 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="kpi-grid">
-            <div class="kpi">
-              <div class="label">Total Revenue</div>
-              <div class="value" data-count="248540" data-prefix="$">$248,540</div>
-              <div class="delta up">▲ 12.4% vs Feb · ▲ 18.2% YoY</div>
-              <svg class="spark" width="60" height="22" viewBox="0 0 60 22"><polyline fill="none" stroke="#047a4e" stroke-width="1.5" points="0,18 8,15 16,17 24,12 32,14 40,9 48,7 58,3"/></svg>
-            </div>
-            <div class="kpi">
-              <div class="label">Operating Expenses</div>
-              <div class="value" data-count="192310" data-prefix="$">$192,310</div>
-              <div class="delta down">▲ 18.7% vs Feb</div>
-              <svg class="spark" width="60" height="22" viewBox="0 0 60 22"><polyline fill="none" stroke="#b3261e" stroke-width="1.5" points="0,15 8,14 16,13 24,12 32,10 40,8 48,6 58,3"/></svg>
-            </div>
-            <div class="kpi">
-              <div class="label">Net Profit (Pre-tax)</div>
-              <div class="value" data-count="56230" data-prefix="$">$56,230</div>
-              <div class="delta up">▲ 4.1% vs Feb · 22.6% margin</div>
-              <svg class="spark" width="60" height="22" viewBox="0 0 60 22"><polyline fill="none" stroke="#047a4e" stroke-width="1.5" points="0,14 8,12 16,13 24,11 32,10 40,8 48,9 58,7"/></svg>
-            </div>
-            <div class="kpi">
-              <div class="label">GST Position · IRD</div>
-              <div class="value" data-count="8420" data-prefix="$">$8,420</div>
-              <div class="delta">Payable · Due 28 April</div>
-              <svg class="spark" width="60" height="22" viewBox="0 0 60 22"><polyline fill="none" stroke="#13b5ea" stroke-width="1.5" points="0,12 8,14 16,11 24,13 32,10 40,12 48,8 58,10"/></svg>
-            </div>
-          </div>
+          <div class="kpi-grid" id="kpiGrid"></div>
 
           <!-- P&L detail -->
           <div style="margin-top:22px;border:1px solid var(--line);border-radius:10px;overflow:hidden">
-            <table class="pl-table">
-              <tr class="section"><td colspan="3">Trading Income</td></tr>
-              <tr><td class="acct">200</td><td class="name">Sales — Commercial Fitouts</td><td class="amt">$186,420.00</td></tr>
-              <tr><td class="acct">201</td><td class="name">Sales — Residential Supply</td><td class="amt">$52,120.00</td></tr>
-              <tr><td class="acct">260</td><td class="name">Other Revenue</td><td class="amt">$10,000.00</td></tr>
-              <tr class="total"><td></td><td>Total Income</td><td class="amt">$248,540.00</td></tr>
-              <tr class="section"><td colspan="3">Operating Expenses</td></tr>
-              <tr><td class="acct">310</td><td class="name">Cost of Goods Sold</td><td class="amt">$128,740.00</td></tr>
-              <tr><td class="acct">441</td><td class="name">Subcontractor Costs</td><td class="amt">$38,200.00</td></tr>
-              <tr><td class="acct">449</td><td class="name">Motor Vehicle Expenses</td><td class="amt">$6,840.00</td></tr>
-              <tr><td class="acct">453</td><td class="name">Office &amp; Admin</td><td class="amt">$5,120.00</td></tr>
-              <tr><td class="acct">477</td><td class="name">Wages &amp; Salaries</td><td class="amt">$13,410.00</td></tr>
-              <tr class="total"><td></td><td>Net Profit</td><td class="amt">$56,230.00</td></tr>
-            </table>
+            <table class="pl-table" id="plTable"></table>
           </div>
         </div>
       </div>
@@ -660,24 +627,305 @@ async function runSteps(stepsRoot, progBar, total=2800){
 }
 
 /* ---------- MODULE 1 ---------- */
-const narrativeText =
-`March was a strong revenue month for Kiwi Build Supplies, closing at $248,540 — up 12.4% on February and 18.2% on the same month last year. The lift was driven primarily by three commercial fit-out contracts coming through in the second half of the month, which together contributed an additional $31k over February's run rate. Gross margin held steady at 38%, suggesting the team is successfully passing recent supplier price increases through to customers.
+const CLIENTS = {
+  kiwi:{
+    name:'Kiwi Build Supplies Ltd',
+    meta:'NZBN 9429046812334 · GST Reg 112-458-329 · Period: 1–31 March 2025 · NZD',
+    kpis:[
+      {lbl:'Total Revenue',val:'$248,540',delta:'▲ 12.4% vs Feb · ▲ 18.2% YoY',dcls:'up',spark:'0,18 8,15 16,17 24,12 32,14 40,9 48,7 58,3',scol:'#047a4e'},
+      {lbl:'Operating Expenses',val:'$192,310',delta:'▲ 18.7% vs Feb',dcls:'down',spark:'0,15 8,14 16,13 24,12 32,10 40,8 48,6 58,3',scol:'#b3261e'},
+      {lbl:'Net Profit (Pre-tax)',val:'$56,230',delta:'▲ 4.1% vs Feb · 22.6% margin',dcls:'up',spark:'0,14 8,12 16,13 24,11 32,10 40,8 48,9 58,7',scol:'#047a4e'},
+      {lbl:'GST Position · IRD',val:'$8,420',delta:'Payable · Due 28 April',dcls:'',spark:'0,12 8,14 16,11 24,13 32,10 40,12 48,8 58,10',scol:'#13b5ea'},
+    ],
+    pl:[
+      ['section','Trading Income'],
+      ['row','200','Sales — Commercial Fitouts','$186,420.00'],
+      ['row','201','Sales — Residential Supply','$52,120.00'],
+      ['row','260','Other Revenue','$10,000.00'],
+      ['total','','Total Income','$248,540.00'],
+      ['section','Cost of Sales'],
+      ['row','310','Purchases — Materials','$108,420.00'],
+      ['row','311','Freight Inwards','$12,320.00'],
+      ['row','315','Plant Hire','$8,000.00'],
+      ['total','','Total COS','$128,740.00'],
+      ['total','','Gross Profit (38.2%)','$94,800.00'],
+      ['section','Operating Expenses'],
+      ['row','441','Subcontractor Costs','$38,200.00'],
+      ['row','449','Motor Vehicle Expenses','$6,840.00'],
+      ['row','453','Office &amp; Admin','$5,120.00'],
+      ['row','468','Insurance','$2,310.00'],
+      ['row','477','Wages &amp; Salaries','$13,410.00'],
+      ['row','485','Software Subscriptions','$1,290.00'],
+      ['row','489','Telephone &amp; Internet','$890.00'],
+      ['row','493','Travel &amp; Accommodation','$1,460.00'],
+      ['total','','Total Operating Expenses','$63,570.00'],
+      ['total','','Net Profit before Tax','$56,230.00'],
+    ],
+    narrative:
+`EXECUTIVE SUMMARY — MARCH 2025
 
-On the flip side, operating expenses jumped 18.7% month-on-month. The main driver was subcontractor costs, which climbed to $38,200 — roughly $9,400 above the 6-month average. A one-off motor vehicle repair of $4,200 also contributed. If subcontractor spend continues at this pace it will start to compress net margin through Q2, and we'd suggest reviewing subcontractor rates on upcoming quotes before they lock in.
+March was the strongest trading month of the financial year for Kiwi Build Supplies, with total revenue closing at $248,540. This is a 12.4% lift on February ($221,120) and 18.2% ahead of March 2024 ($210,270). The business has now posted three consecutive months of growth and the 12-month rolling revenue has pushed above $2.5m for the first time.
 
-Cashflow is otherwise healthy — the ANZ operating account improved by approximately $22,000 over the month. However, debtor days have crept out from 34 to 41, and $38,500 is now sitting in the 60+ day bucket, concentrated across three accounts. With GST of $8,420 falling due on 28 April, we'd recommend tightening collections on those aged accounts this week to protect the cash position.
+REVENUE PERFORMANCE
 
-Recommended next step: review the top three aged debtors with Kiwi Build's GM this Thursday and confirm payment plans, and check in on the new subcontractor rates before the Q2 commercial projects are quoted.`;
+The growth was driven primarily by the commercial fit-out division, which contributed $186,420 (75% of total revenue) — up $24,310 on February. Three contracts settled in the second half of the month: the Newmarket office refit ($78k), the Parnell retail project ($42k) and a partial invoice on the Viaduct Harbour job ($31k). Residential supply sales of $52,120 were broadly flat against February, reflecting the normal seasonal slowdown as we move out of summer.
+
+Gross margin held firm at 38.2% — almost identical to February's 38.1% — indicating the team has successfully passed through the February supplier price increases without eroding profitability. This is a strong result given market conditions.
+
+COST ANALYSIS
+
+Operating expenses rose to $192,310, up 18.7% on February. The key variances are:
+
+• Subcontractor costs: $38,200 — this is approximately $9,400 above the 6-month average of $28,800. The increase relates to additional hours required on the Newmarket fit-out to meet the accelerated handover date. While justified, this represents a pattern worth monitoring: subcontractor spend as a percentage of commercial revenue has crept from 18% in Q1 to 20.5% in March.
+
+• Motor vehicle expenses: $6,840 — includes a one-off $4,200 gearbox repair on the Hilux. Absent this, MV costs would be in line with trend.
+
+• All other expense categories are tracking within 5% of their 6-month averages.
+
+CASHFLOW &amp; WORKING CAPITAL
+
+The ANZ operating account improved by approximately $22,000 over the month, closing at $142,380. However, the working capital position has weakened: debtor days have moved out from 34 to 41, and accounts receivable above 60 days now stands at $38,500, concentrated across three customers (Westfield Auckland, Prime Retail Group, and Lakeside Developments). Together these represent 15.5% of total debtors — a concerning concentration.
+
+With GST of $8,420 and PAYE of $4,120 both falling due on 28 April, and a provisional tax instalment of $14,200 due 7 May, the business will need to collect at least $20k from the aged debtor bucket over the next three weeks to maintain a comfortable cash buffer.
+
+RECOMMENDED ACTIONS
+
+1. This week: contact the three 60+ day debtors and agree firm payment dates. We'd suggest a formal letter from MPG if needed.
+2. Review subcontractor rates on upcoming Q2 quotes before they are locked in — recommend building in a 2% contingency.
+3. Consider a short-term overdraft facility increase with ANZ as a precaution until the aged debtors clear.
+4. Schedule a cashflow forecast review for mid-April to reassess the May tax position.
+
+Happy to walk through any of the above with you on our next catch-up.`
+  },
+  harbour:{
+    name:'Harbour Cafe Ltd',
+    meta:'NZBN 9429041123889 · GST Reg 088-224-117 · Period: 1–31 March 2025 · NZD',
+    kpis:[
+      {lbl:'Total Revenue',val:'$84,320',delta:'▼ 6.2% vs Feb',dcls:'down',spark:'0,10 8,8 16,11 24,9 32,12 40,10 48,14 58,16',scol:'#b3261e'},
+      {lbl:'Operating Expenses',val:'$71,480',delta:'▲ 2.1% vs Feb',dcls:'down',spark:'0,14 8,13 16,14 24,12 32,13 40,12 48,11 58,10',scol:'#b3261e'},
+      {lbl:'Net Profit (Pre-tax)',val:'$12,840',delta:'▼ 38.2% vs Feb · 15.2% margin',dcls:'down',spark:'0,6 8,8 16,7 24,10 32,11 40,13 48,15 58,17',scol:'#b3261e'},
+      {lbl:'GST Position · IRD',val:'$2,140',delta:'Payable · Due 28 April',dcls:'',spark:'0,12 8,11 16,13 24,10 32,12 40,11 48,10 58,9',scol:'#13b5ea'},
+    ],
+    pl:[
+      ['section','Trading Income'],
+      ['row','200','Food Sales','$62,110.00'],
+      ['row','201','Beverage Sales','$19,880.00'],
+      ['row','260','Catering &amp; Events','$2,330.00'],
+      ['total','','Total Income','$84,320.00'],
+      ['section','Cost of Sales'],
+      ['row','310','Food Cost','$22,450.00'],
+      ['row','311','Beverage Cost','$6,120.00'],
+      ['total','','Total COS','$28,570.00'],
+      ['total','','Gross Profit (66.1%)','$55,750.00'],
+      ['section','Operating Expenses'],
+      ['row','461','Rent','$9,800.00'],
+      ['row','477','Wages &amp; Salaries','$24,620.00'],
+      ['row','478','Kiwisaver &amp; ACC','$1,970.00'],
+      ['row','449','Power &amp; Gas','$2,180.00'],
+      ['row','453','Consumables','$1,420.00'],
+      ['row','468','Insurance','$920.00'],
+      ['row','485','POS &amp; Software','$440.00'],
+      ['row','493','Marketing','$1,560.00'],
+      ['total','','Total Operating Expenses','$42,910.00'],
+      ['total','','Net Profit before Tax','$12,840.00'],
+    ],
+    narrative:
+`EXECUTIVE SUMMARY — MARCH 2025
+
+March was a softer month for Harbour Cafe, with revenue of $84,320 down 6.2% on February and 4.1% below March 2024. Net profit of $12,840 is $7,940 behind February and represents a 15.2% margin — the lowest of the financial year to date. While the cafe remains comfortably profitable, the trend over the last eight weeks warrants attention.
+
+REVENUE PERFORMANCE
+
+Food sales held up reasonably well at $62,110 (down 3% on February), but beverage sales fell sharply to $19,880 — a $3,200 drop month-on-month. Looking at the Xero POS integration, the decline is concentrated in morning coffee volumes, which are down approximately 11% on February. The new cafe that opened on Jervois Road in late February looks to be having an impact on your weekday morning foot traffic.
+
+Catering revenue of $2,330 was in line with February but well below the $6–8k monthly average you were running through the summer.
+
+COST ANALYSIS
+
+Food cost percentage was 36.1% (above your target of 33%) — the third consecutive month over target. Given supplier prices have been stable, this likely points to waste or portion control issues in the kitchen. A one-week wastage audit would help isolate the cause.
+
+Wages of $24,620 were up $1,100 on February despite lower revenue, pushing labour cost to 29.2% of sales versus the 26% benchmark. Roster hours look high for a month with declining covers.
+
+CASHFLOW
+
+Bank balance closed at $18,240, down from $24,910 at the end of February. With rent ($9,800) and GST ($2,140) both due in the first week of April, and the April PAYE of approximately $3,200 on 20 April, cash will be tight. The business needs to generate $16k of positive operating cashflow in April to maintain a reasonable buffer.
+
+RECOMMENDED ACTIONS
+
+1. Immediate: review the roster for April and reduce labour hours by 8–10% to realign with current trading levels.
+2. Run a one-week kitchen wastage audit to identify the source of the elevated food cost.
+3. Launch a targeted winter menu and loyalty push to reclaim morning coffee volume from the new competitor.
+4. Let us know if you'd like us to apply for a short-term tax payment plan with IRD to ease the April cash pressure — we can usually get 3 months at a reasonable rate.
+
+We'd recommend booking a 30-minute review call this week to work through these in detail.`
+  },
+  greenfield:{
+    name:'Greenfield Landscapes Ltd',
+    meta:'NZBN 9429048821117 · GST Reg 201-334-556 · Period: 1–31 March 2025 · NZD',
+    kpis:[
+      {lbl:'Total Revenue',val:'$142,880',delta:'▲ 4.8% vs Feb · ▲ 22.3% YoY',dcls:'up',spark:'0,16 8,14 16,15 24,12 32,10 40,11 48,8 58,6',scol:'#047a4e'},
+      {lbl:'Operating Expenses',val:'$108,120',delta:'▲ 3.1% vs Feb',dcls:'down',spark:'0,14 8,13 16,12 24,13 32,11 40,12 48,10 58,9',scol:'#b3261e'},
+      {lbl:'Net Profit (Pre-tax)',val:'$34,760',delta:'▲ 10.4% vs Feb · 24.3% margin',dcls:'up',spark:'0,15 8,13 16,14 24,11 32,10 40,9 48,7 58,5',scol:'#047a4e'},
+      {lbl:'GST Position · IRD',val:'$4,820',delta:'Payable · Due 28 April',dcls:'',spark:'0,11 8,13 16,10 24,12 32,9 40,11 48,8 58,10',scol:'#13b5ea'},
+    ],
+    pl:[
+      ['section','Trading Income'],
+      ['row','200','Landscaping Contracts','$112,340.00'],
+      ['row','201','Maintenance Contracts','$26,100.00'],
+      ['row','260','Plant &amp; Materials Resale','$4,440.00'],
+      ['total','','Total Income','$142,880.00'],
+      ['section','Cost of Sales'],
+      ['row','310','Plants &amp; Materials','$38,220.00'],
+      ['row','311','Equipment Hire','$4,180.00'],
+      ['total','','Total COS','$42,400.00'],
+      ['total','','Gross Profit (70.3%)','$100,480.00'],
+      ['section','Operating Expenses'],
+      ['row','441','Subcontractors','$12,600.00'],
+      ['row','449','Motor Vehicle Expenses','$8,940.00'],
+      ['row','477','Wages &amp; Salaries','$38,210.00'],
+      ['row','453','Office &amp; Admin','$2,160.00'],
+      ['row','468','Insurance','$1,850.00'],
+      ['row','485','Software Subscriptions','$760.00'],
+      ['row','493','Yard Rent','$1,200.00'],
+      ['total','','Total Operating Expenses','$65,720.00'],
+      ['total','','Net Profit before Tax','$34,760.00'],
+    ],
+    narrative:
+`EXECUTIVE SUMMARY — MARCH 2025
+
+A solid finish to summer for Greenfield Landscapes, with revenue of $142,880 up 4.8% on February and 22.3% ahead of March 2024. Net profit of $34,760 represents a healthy 24.3% margin — your best result of the financial year — and the 12-month trailing profit has passed $360k for the first time.
+
+REVENUE PERFORMANCE
+
+Landscaping contract revenue of $112,340 (up $6,200 on February) drove the growth, with four large residential installs completing in the month. The Titirangi terrace garden and the Remuera pool surrounds project together contributed $48k. Maintenance contracts of $26,100 were broadly flat and continue to provide a stable recurring base — this segment is now averaging $25k+ per month and represents your most predictable revenue line.
+
+Plant and materials resale margin improved slightly to 31%, reflecting the new supplier terms we negotiated in January.
+
+COST ANALYSIS
+
+Cost of sales at 29.7% of revenue is the best ratio we've seen in 18 months. The benefit of the bulk material ordering you introduced in February is now flowing through clearly.
+
+Wages of $38,210 are up $1,640 on February — you've added one full-time labourer, which is sensible given the current pipeline. Subcontractor costs of $12,600 are well controlled.
+
+The only notable variance on the expense side is motor vehicle expenses at $8,940 — up $1,800 on February. This appears to be driven by fuel (reflecting the higher project activity) and a $680 tyre replacement. Nothing of concern.
+
+CASHFLOW &amp; WORKING CAPITAL
+
+Bank balance of $78,440 at month end is up $18,200 on February. Debtor days have tightened from 38 to 31, which is the best position we've seen — the credit policy changes you made in January are clearly working. Receivables over 60 days are now just $2,100 (one account).
+
+With GST of $4,820 due 28 April, PAYE of $5,400 due 20 April, and the P2 provisional tax instalment of $12,400 due 15 April, total April tax commitments are approximately $22,600 — comfortably covered.
+
+RECOMMENDED ACTIONS
+
+1. Now is the right time to have a conversation about structure — with profitability at current levels, there may be value in reviewing the shareholder salary / dividend split for FY26 to optimise the overall tax position.
+2. Consider locking in the current material supplier terms for another 12 months given the favourable results.
+3. With winter approaching, let's build a cashflow forecast through August to make sure the maintenance revenue covers the quieter landscaping period.
+4. Suggest a discussion about investing some of the surplus cash — either into equipment (the second ute is overdue for replacement) or a term deposit.
+
+Overall, a strong result. Let's catch up next week to discuss the FY26 planning items.`
+  },
+  aoraki:{
+    name:'Aoraki Consulting Ltd',
+    meta:'NZBN 9429032118004 · GST Reg 089-224-117 · Period: 1–31 March 2025 · NZD',
+    kpis:[
+      {lbl:'Total Revenue',val:'$68,400',delta:'▲ 2.1% vs Feb',dcls:'up',spark:'0,14 8,13 16,12 24,11 32,12 40,10 48,11 58,9',scol:'#047a4e'},
+      {lbl:'Operating Expenses',val:'$22,180',delta:'▼ 3.4% vs Feb',dcls:'up',spark:'0,10 8,11 16,10 24,12 32,11 40,13 48,12 58,14',scol:'#047a4e'},
+      {lbl:'Net Profit (Pre-tax)',val:'$46,220',delta:'▲ 5.1% vs Feb · 67.6% margin',dcls:'up',spark:'0,16 8,14 16,15 24,12 32,13 40,10 48,8 58,6',scol:'#047a4e'},
+      {lbl:'GST Position · IRD',val:'$5,940',delta:'Payable · Due 28 April',dcls:'',spark:'0,12 8,11 16,13 24,10 32,12 40,9 48,11 58,8',scol:'#13b5ea'},
+    ],
+    pl:[
+      ['section','Trading Income'],
+      ['row','200','Consulting Fees','$64,800.00'],
+      ['row','260','Workshop &amp; Training','$3,600.00'],
+      ['total','','Total Income','$68,400.00'],
+      ['section','Operating Expenses'],
+      ['row','477','Contractor Payments','$11,200.00'],
+      ['row','449','Motor Vehicle','$1,420.00'],
+      ['row','453','Office &amp; Admin','$1,820.00'],
+      ['row','468','Professional Development','$1,640.00'],
+      ['row','485','Software Subscriptions','$980.00'],
+      ['row','489','Telephone &amp; Internet','$420.00'],
+      ['row','493','Travel &amp; Accommodation','$3,480.00'],
+      ['row','494','Marketing','$1,220.00'],
+      ['total','','Total Operating Expenses','$22,180.00'],
+      ['total','','Net Profit before Tax','$46,220.00'],
+    ],
+    narrative:
+`EXECUTIVE SUMMARY — MARCH 2025
+
+Another strong month for Aoraki Consulting, with revenue of $68,400 and net profit of $46,220 — a 67.6% margin. Year to date, the business has now generated $472k of revenue at a 64% average margin, tracking well ahead of last year's full-year result.
+
+REVENUE PERFORMANCE
+
+Consulting fees of $64,800 are up $1,340 on February, with billable utilisation holding at approximately 82% — which is close to the practical ceiling for a business your size. Three clients continue to account for roughly 60% of revenue (Contact Energy, Downer, and the Auckland Council framework). This concentration remains a key risk worth discussing.
+
+Workshop and training revenue of $3,600 came in from the two-day governance workshop delivered in Wellington. With the training pipeline for Q2 looking strong, this could become a meaningful secondary revenue stream.
+
+COST ANALYSIS
+
+Contractor payments of $11,200 are in line with budget and reflect the two specialist contractors you use on the Downer project. All other operating expenses are tracking within 5% of plan.
+
+Travel and accommodation of $3,480 is elevated due to the Wellington workshop and the Christchurch client visit, but is billable and has been recovered through invoicing.
+
+CASHFLOW &amp; WORKING CAPITAL
+
+Bank balance is $124,800, up $28,400 on February. Debtor days are excellent at 22 — most clients pay on 7-day terms. There are no aged receivables of concern.
+
+With GST of $5,940, PAYE of $2,180, and the P2 provisional tax instalment of $18,200 all due across April and May, total near-term tax commitments are approximately $26,320 — comfortably covered.
+
+RECOMMENDED ACTIONS
+
+1. 2024 IR3 — this is now overdue. We need the vehicle log and confirmation of home office percentage to file. Please prioritise this week.
+2. With profit tracking this strongly, it's time to revisit the shareholder salary for FY26 — we should run the numbers on whether the current $120k is still optimal given the company's trading position.
+3. Recommend discussing client concentration risk and whether there's an opportunity to diversify the revenue base, particularly as the Downer contract approaches its renewal window in September.
+4. Consider whether the surplus cash should be moved to a higher-interest account or used to pre-pay the P3 provisional tax instalment for the tax pooling interest benefit.
+
+Let's schedule a 45-minute FY26 planning session in the next fortnight.`
+  }
+};
+
+function renderClient(key){
+  const c=CLIENTS[key];
+  document.getElementById('clientMeta').textContent=c.meta;
+  const grid=document.getElementById('kpiGrid');grid.innerHTML='';
+  c.kpis.forEach(k=>{
+    grid.insertAdjacentHTML('beforeend',`
+      <div class="kpi">
+        <div class="label">${k.lbl}</div>
+        <div class="value">${k.val}</div>
+        <div class="delta ${k.dcls}">${k.delta}</div>
+        <svg class="spark" width="60" height="22" viewBox="0 0 60 22"><polyline fill="none" stroke="${k.scol}" stroke-width="1.5" points="${k.spark}"/></svg>
+      </div>`);
+  });
+  const t=document.getElementById('plTable');t.innerHTML='';
+  c.pl.forEach(r=>{
+    if(r[0]==='section'){t.insertAdjacentHTML('beforeend',`<tr class="section"><td colspan="3">${r[1]}</td></tr>`);}
+    else if(r[0]==='row'){t.insertAdjacentHTML('beforeend',`<tr><td class="acct">${r[1]}</td><td class="name">${r[2]}</td><td class="amt">${r[3]}</td></tr>`);}
+    else {t.insertAdjacentHTML('beforeend',`<tr class="total"><td></td><td>${r[2]}</td><td class="amt">${r[3]}</td></tr>`);}
+  });
+  /* reset narrative when switching */
+  const n=document.getElementById('narrative');
+  n.classList.add('empty');
+  n.innerHTML='<div class="icon">✨</div><div>Click "Generate AI Narrative" to have Ditto read the March 2025 P&amp;L and draft a client-ready report.</div>';
+  document.getElementById('aiPanel1').classList.remove('visible');
+  document.getElementById('aiSteps1').querySelectorAll('.ai-step').forEach((s,idx)=>{s.classList.remove('done','active');s.querySelector('.check').textContent=String(idx+1);});
+  document.getElementById('progBar1').style.width='0';
+  document.getElementById('downloadPdf').disabled=true;
+}
+document.getElementById('clientPicker').addEventListener('change',e=>renderClient(e.target.value));
+renderClient('kiwi');
 
 document.getElementById('genReport').addEventListener('click',async e=>{
   const btn=e.currentTarget;btn.disabled=true;btn.innerHTML='<div class="spinner" style="width:12px;height:12px;border:2px solid rgba(11,18,32,.2);border-top-color:#0b1220;border-radius:50%;animation:spin 1s linear infinite"></div> Generating…';
   const panel=document.getElementById('aiPanel1');
   panel.classList.add('visible');
+  document.getElementById('aiSteps1').querySelectorAll('.ai-step').forEach((s,idx)=>{s.classList.remove('done','active');s.querySelector('.check').textContent=String(idx+1);});
+  document.getElementById('progBar1').style.width='0';
   document.getElementById('aiStatus1').textContent='analysing…';
-  await runSteps(document.getElementById('aiSteps1'), document.getElementById('progBar1'), 2600);
+  await runSteps(document.getElementById('aiSteps1'), document.getElementById('progBar1'), 1400);
   document.getElementById('aiStatus1').textContent='complete ✓';
-  await sleep(200);
-  await typeInto(document.getElementById('narrative'), narrativeText, 7);
+  const key=document.getElementById('clientPicker').value;
+  await typeInto(document.getElementById('narrative'), CLIENTS[key].narrative, 2);
   btn.disabled=false; btn.innerHTML='⚡ Regenerate';
   document.getElementById('downloadPdf').disabled=false;
   document.querySelectorAll('#m1 .btn-ghost').forEach(b=>b.disabled=false);
