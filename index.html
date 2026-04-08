@@ -277,6 +277,94 @@
   .fchip.active{background:#0b1220;color:#fff;border-color:#0b1220}
   .fchip .count{margin-left:5px;opacity:.7;font-weight:500}
 
+  /* ---------- DASHBOARD ---------- */
+  .welcome{background:linear-gradient(135deg,#0b1220 0%,#1a2336 50%,#0b1220 100%);color:#fff;padding:26px 30px;border-radius:16px;margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
+  .welcome::before{content:'';position:absolute;top:-80px;right:-80px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(184,241,58,.18),transparent 70%);pointer-events:none}
+  .welcome::after{content:'';position:absolute;bottom:-60px;left:40%;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(19,181,234,.10),transparent 70%);pointer-events:none}
+  .welcome-greet{font-size:22px;font-weight:700;letter-spacing:-.01em;position:relative}
+  .welcome-sub{font-size:13.5px;color:rgba(255,255,255,.65);margin-top:4px;position:relative}
+  .welcome-sub b{color:var(--lime);font-weight:700}
+  .welcome-actions{display:flex;gap:10px;position:relative;z-index:2}
+
+  .dash-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+  .dash-kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;position:relative;overflow:hidden;transition:all .2s}
+  .dash-kpi:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+  .dk-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+  .dk-value{font-size:28px;font-weight:800;margin-top:6px;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--ink)}
+  .dk-delta{font-size:11.5px;margin-top:4px;font-weight:600;color:var(--muted)}
+  .dk-delta.up{color:var(--green)}
+  .dk-delta.down{color:var(--red)}
+  .dk-spark{position:absolute;right:12px;bottom:10px;opacity:.85}
+
+  .dash-grid{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:22px}
+  .dash-grid2{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:22px}
+
+  .attention-list{padding:6px}
+  .att-item{display:flex;align-items:center;gap:16px;padding:16px 18px;border-radius:12px;border:1px solid transparent;transition:all .2s;cursor:pointer;border-left:3px solid transparent}
+  .att-item:hover{background:#fafbfc}
+  .att-item.critical{border-left-color:var(--red)}
+  .att-item.critical:hover{background:#fffafa}
+  .att-item.warning{border-left-color:var(--amber)}
+  .att-item.warning:hover{background:#fffdf6}
+  .att-item.info{border-left-color:var(--accent)}
+  .att-item.info:hover{background:#f6fbfe}
+  .att-item + .att-item{border-top:1px solid var(--line-2)}
+  .att-icon{width:44px;height:44px;border-radius:12px;background:#fafbfc;display:grid;place-items:center;font-size:20px;flex-shrink:0;border:1px solid var(--line)}
+  .att-main{flex:1;min-width:0}
+  .att-title{font-weight:700;color:var(--ink);font-size:14px;margin-bottom:3px}
+  .att-desc{font-size:12.5px;color:var(--muted);line-height:1.55}
+  .att-desc b{color:var(--ink-2);font-weight:600}
+  .att-meta{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+  .att-cta{border:1px solid var(--line);background:#fff;padding:8px 14px;border-radius:8px;font:inherit;font-weight:600;font-size:12px;color:var(--ink);cursor:pointer;white-space:nowrap;transition:all .15s}
+  .att-item:hover .att-cta{background:#0b1220;color:#fff;border-color:#0b1220}
+
+  .ditto-hero{background:linear-gradient(160deg,#0b1220 0%,#1a2336 100%);border-radius:14px;padding:24px 26px;color:#fff;position:relative;overflow:hidden;box-shadow:var(--shadow-lg)}
+  .dh-glow{position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(184,241,58,.28),transparent 70%);animation:dh-pulse 4s ease-in-out infinite}
+  @keyframes dh-pulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.1);opacity:1}}
+  .dh-label{font-size:10.5px;color:var(--lime);letter-spacing:.1em;font-weight:700;position:relative}
+  .dh-metric{font-family:'Nunito',sans-serif;font-weight:900;font-size:54px;line-height:1;margin-top:10px;letter-spacing:-.03em;color:#fff;position:relative;text-shadow:0 0 30px rgba(184,241,58,.3)}
+  .dh-sub{font-size:13px;color:rgba(255,255,255,.65);margin-top:6px;position:relative}
+  .dh-divider{height:1px;background:rgba(255,255,255,.08);margin:18px 0;position:relative}
+  .dh-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;position:relative}
+  .dh-stat-val{font-size:20px;font-weight:800;color:var(--lime);font-variant-numeric:tabular-nums}
+  .dh-stat-lbl{font-size:10.5px;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-top:2px}
+
+  .activity-feed{padding:4px 0}
+  .act{padding:12px 20px;border-bottom:1px solid var(--line-2);display:flex;gap:14px;align-items:flex-start}
+  .act:last-child{border-bottom:none}
+  .act::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--lime);flex-shrink:0;margin-top:7px;box-shadow:0 0 0 3px rgba(184,241,58,.18)}
+  .act-time{font-size:11px;color:var(--muted);font-weight:600;white-space:nowrap;min-width:65px}
+  .act-text{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+  .act-text b{color:var(--ink);font-weight:600}
+
+  .health-bar{width:80px;height:6px;background:#eef0f4;border-radius:3px;overflow:hidden}
+  .health-bar > div{height:100%;border-radius:3px}
+
+  .deadline-list{padding:4px 0}
+  .dl{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--line-2)}
+  .dl:last-child{border-bottom:none}
+  .dl-date{width:48px;text-align:center;background:#fafbfc;border:1px solid var(--line);border-radius:10px;padding:6px 0;flex-shrink:0}
+  .dl-day{font-size:18px;font-weight:800;color:var(--ink);line-height:1}
+  .dl-mo{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:2px}
+  .dl-main{flex:1;min-width:0}
+  .dl-title{font-weight:600;color:var(--ink);font-size:13.5px}
+  .dl-sub{font-size:11.5px;color:var(--muted);margin-top:1px}
+
+  .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding:20px}
+  .team-card{background:#fafbfc;border:1px solid var(--line);border-radius:12px;padding:16px}
+  .util-bar{height:6px;background:#eef0f4;border-radius:3px;overflow:hidden;margin-top:14px}
+  .util-bar > div{height:100%;background:var(--red);border-radius:3px;transition:width .6s}
+  .util-text{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:6px;font-weight:500}
+
+  @media (max-width:900px){
+    .dash-kpi-grid{grid-template-columns:repeat(2,1fr)}
+    .dash-grid,.dash-grid2{grid-template-columns:1fr}
+    .team-grid{grid-template-columns:repeat(2,1fr)}
+    .welcome{padding:20px}
+    .welcome-greet{font-size:18px}
+    .dh-metric{font-size:42px}
+  }
+
   /* Demo badge */
   .demo-badge{position:fixed;bottom:20px;right:20px;background:rgba(11,18,32,.92);color:#fff;padding:8px 14px;border-radius:999px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(8px);z-index:100;display:flex;align-items:center;gap:8px}
   .demo-badge .d-dot{width:6px;height:6px;border-radius:50%;background:var(--lime)}
@@ -315,18 +403,242 @@
       </div>
     </div>
     <nav class="tabs" role="tablist">
-      <button class="tab active" data-tab="m1">📊 Financial Narratives</button>
+      <button class="tab active" data-tab="m0">🏠 Dashboard</button>
+      <button class="tab" data-tab="m1">📊 Financial Narratives</button>
       <button class="tab" data-tab="m2">📬 Tax Reminders <span class="tab-num" id="m2count">2</span></button>
       <button class="tab" data-tab="m3">⚡ Bank Reconciliation <span class="tab-num" id="m3count">12</span></button>
     </nav>
   </header>
 
   <!-- ========== MODULE 1 ========== -->
-  <section class="module active" id="m1">
+  <!-- ========== MODULE 0 · DASHBOARD ========== -->
+  <section class="module active" id="m0">
+    <div class="subtoolbar">
+      <div class="subtoolbar-inner">
+        <div class="breadcrumb">MPG Chartered Accountants <span class="sep">›</span> <b>Practice Dashboard</b></div>
+        <div class="toolbar-actions">
+          <span class="chip">📍 Auckland, NZ</span>
+          <span class="chip">📅 Wednesday 8 April 2026</span>
+          <span class="chip">👥 4 staff · 142 active clients</span>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <!-- Welcome hero -->
+      <div class="welcome">
+        <div>
+          <div class="welcome-greet">Good morning, Michael 👋</div>
+          <div class="welcome-sub">Here's what needs your attention today. Ditto has already handled <b>14 tasks</b> for you overnight.</div>
+        </div>
+        <div class="welcome-actions">
+          <button class="btn btn-ghost">📥 Inbox (3)</button>
+          <button class="btn btn-lime">+ New Job</button>
+        </div>
+      </div>
+
+      <!-- Top-line KPIs -->
+      <div class="dash-kpi-grid">
+        <div class="dash-kpi">
+          <div class="dk-label">Practice Revenue MTD</div>
+          <div class="dk-value">$184,620</div>
+          <div class="dk-delta up">▲ 8.2% vs last Apr · 62% of target</div>
+          <svg class="dk-spark" width="100" height="36" viewBox="0 0 100 36"><defs><linearGradient id="gg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b8f13a" stop-opacity=".5"/><stop offset="100%" stop-color="#b8f13a" stop-opacity="0"/></linearGradient></defs><path d="M0,28 L10,24 L20,26 L30,20 L40,22 L50,16 L60,18 L70,12 L80,14 L90,8 L100,10 L100,36 L0,36 Z" fill="url(#gg1)"/><polyline fill="none" stroke="#8dc71f" stroke-width="2" points="0,28 10,24 20,26 30,20 40,22 50,16 60,18 70,12 80,14 90,8 100,10"/></svg>
+        </div>
+        <div class="dash-kpi">
+          <div class="dk-label">Unbilled WIP</div>
+          <div class="dk-value">$72,410</div>
+          <div class="dk-delta down">▲ 12% · 38 jobs</div>
+          <svg class="dk-spark" width="100" height="36" viewBox="0 0 100 36"><polyline fill="none" stroke="#a0590b" stroke-width="2" points="0,22 10,24 20,20 30,22 40,18 50,20 60,16 70,18 80,14 90,12 100,10"/></svg>
+        </div>
+        <div class="dash-kpi">
+          <div class="dk-label">Cash in Bank</div>
+          <div class="dk-value">$214,890</div>
+          <div class="dk-delta up">▲ $18k vs 30 days ago</div>
+          <svg class="dk-spark" width="100" height="36" viewBox="0 0 100 36"><polyline fill="none" stroke="#13b5ea" stroke-width="2" points="0,22 10,20 20,24 30,18 40,20 50,16 60,18 70,12 80,14 90,10 100,8"/></svg>
+        </div>
+        <div class="dash-kpi">
+          <div class="dk-label">Active Jobs</div>
+          <div class="dk-value">47</div>
+          <div class="dk-delta">12 due this week · 2 overdue</div>
+          <svg class="dk-spark" width="100" height="36" viewBox="0 0 100 36"><polyline fill="none" stroke="#6b7280" stroke-width="2" points="0,18 10,16 20,20 30,14 40,16 50,18 60,14 70,20 80,16 90,18 100,14"/></svg>
+        </div>
+      </div>
+
+      <!-- Main grid -->
+      <div class="dash-grid">
+        <!-- Needs Attention -->
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h2>⚡ Needs Your Attention</h2>
+              <div class="sub">Ranked by Ditto AI · updated 2 min ago</div>
+            </div>
+            <span class="badge red"><span class="led"></span>5 items</span>
+          </div>
+          <div class="attention-list">
+            <div class="att-item critical" data-goto="m2">
+              <div class="att-icon">🚨</div>
+              <div class="att-main">
+                <div class="att-title">2 tax returns are overdue</div>
+                <div class="att-desc"><b>Harbour Cafe Ltd</b> (GST101A) and <b>Aoraki Consulting</b> (IR3 2024). IRD penalties accruing. Ditto has drafted reminder emails — ready to review.</div>
+                <div class="att-meta"><span class="badge red">Critical</span><span class="badge gray">Due now</span></div>
+              </div>
+              <button class="att-cta">Review →</button>
+            </div>
+            <div class="att-item warning" data-goto="m3">
+              <div class="att-icon">🔍</div>
+              <div class="att-main">
+                <div class="att-title">2 unusual transactions flagged in MPG Practice Account</div>
+                <div class="att-desc">Ditto detected a possible duplicate payment to <b>JBT Holdings</b> ($2,480) and an unsupported ATM withdrawal ($500).</div>
+                <div class="att-meta"><span class="badge amber">Partner review</span><span class="badge gray">Bank Rec</span></div>
+              </div>
+              <button class="att-cta">Review →</button>
+            </div>
+            <div class="att-item warning" data-goto="m1">
+              <div class="att-icon">📉</div>
+              <div class="att-main">
+                <div class="att-title">Harbour Cafe — revenue declining 3 months in a row</div>
+                <div class="att-desc">March down 6.2%, labour cost at 29% of sales vs 26% target. Ditto suggests booking a 30-min review call with the client this week.</div>
+                <div class="att-meta"><span class="badge amber">Client watch</span><span class="badge gray">AI insight</span></div>
+              </div>
+              <button class="att-cta">Open →</button>
+            </div>
+            <div class="att-item info">
+              <div class="att-icon">💰</div>
+              <div class="att-main">
+                <div class="att-title">$38,500 of client receivables over 60 days</div>
+                <div class="att-desc">Concentrated across 3 clients. Ditto can draft collections letters in MPG tone.</div>
+                <div class="att-meta"><span class="badge blue">Cashflow</span></div>
+              </div>
+              <button class="att-cta">Open →</button>
+            </div>
+            <div class="att-item info">
+              <div class="att-icon">📅</div>
+              <div class="att-main">
+                <div class="att-title">28 April tax deadline — 14 GST returns to lodge</div>
+                <div class="att-desc">Ditto is already collecting source data. 9 of 14 clients have complete records.</div>
+                <div class="att-meta"><span class="badge blue">Upcoming</span></div>
+              </div>
+              <button class="att-cta">Open →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ditto AI Hero + activity -->
+        <div>
+          <div class="ditto-hero">
+            <div class="dh-glow"></div>
+            <div class="dh-label">DITTO AI · LAST 7 DAYS</div>
+            <div class="dh-metric">4h 32m</div>
+            <div class="dh-sub">saved by automation this week</div>
+            <div class="dh-divider"></div>
+            <div class="dh-stats">
+              <div><div class="dh-stat-val">47</div><div class="dh-stat-lbl">reminders sent</div></div>
+              <div><div class="dh-stat-val">212</div><div class="dh-stat-lbl">txns coded</div></div>
+              <div><div class="dh-stat-val">18</div><div class="dh-stat-lbl">reports drafted</div></div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:16px">
+            <div class="card-head">
+              <div><h2>🤖 Ditto Activity</h2><div class="sub">Live feed</div></div>
+              <span class="chip"><span class="dot"></span> Live</span>
+            </div>
+            <div class="activity-feed">
+              <div class="act"><div class="act-time">2 min ago</div><div class="act-text">Coded <b>12 transactions</b> in Xero for MPG Practice Account</div></div>
+              <div class="act"><div class="act-time">14 min ago</div><div class="act-text">Flagged <b>duplicate payment</b> to JBT Holdings for review</div></div>
+              <div class="act"><div class="act-time">1 hr ago</div><div class="act-text">Drafted <b>March narrative</b> for Kiwi Build Supplies</div></div>
+              <div class="act"><div class="act-time">3 hr ago</div><div class="act-text">Sent <b>reminder email</b> to Ponsonby Dental (IR4 due)</div></div>
+              <div class="act"><div class="act-time">Last night</div><div class="act-text">Synced <b>142 clients</b> from XPM · 8 status changes</div></div>
+              <div class="act"><div class="act-time">Last night</div><div class="act-text">Reconciled <b>89 bank lines</b> across 4 client files</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Client watchlist + Deadlines -->
+      <div class="dash-grid2">
+        <div class="card">
+          <div class="card-head">
+            <div><h2>💚 Client Health Watchlist</h2><div class="sub">AI-ranked by financial signals across revenue, margin, cash &amp; debtor days</div></div>
+            <button class="btn btn-ghost">View all 142</button>
+          </div>
+          <table class="data">
+            <thead><tr><th>Client</th><th>Revenue (3mo)</th><th>Margin</th><th>Cash runway</th><th>Health</th><th></th></tr></thead>
+            <tbody>
+              <tr><td><b style="color:var(--ink)">Harbour Cafe Ltd</b><div style="font-size:11px;color:var(--muted)">Hospitality · Ponsonby</div></td><td>$261,840 <span style="color:var(--red);font-size:11px">▼ 6%</span></td><td>15.2%</td><td>1.2 months</td><td><div class="health-bar"><div style="width:32%;background:var(--red)"></div></div><div class="conf-text">32 · At risk</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
+              <tr><td><b style="color:var(--ink)">Aoraki Consulting</b><div style="font-size:11px;color:var(--muted)">Professional · Remuera</div></td><td>$198,420 <span style="color:var(--green);font-size:11px">▲ 4%</span></td><td>67.6%</td><td>6.8 months</td><td><div class="health-bar"><div style="width:58%;background:var(--amber)"></div></div><div class="conf-text">58 · Tax overdue</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
+              <tr><td><b style="color:var(--ink)">Kiwi Build Supplies</b><div style="font-size:11px;color:var(--muted)">Construction · East Tamaki</div></td><td>$712,320 <span style="color:var(--green);font-size:11px">▲ 18%</span></td><td>22.6%</td><td>3.1 months</td><td><div class="health-bar"><div style="width:72%;background:var(--lime)"></div></div><div class="conf-text">72 · Watch debtors</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
+              <tr><td><b style="color:var(--ink)">Greenfield Landscapes</b><div style="font-size:11px;color:var(--muted)">Trades · Henderson</div></td><td>$418,640 <span style="color:var(--green);font-size:11px">▲ 22%</span></td><td>24.3%</td><td>4.6 months</td><td><div class="health-bar"><div style="width:88%;background:var(--green)"></div></div><div class="conf-text">88 · Healthy</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
+              <tr><td><b style="color:var(--ink)">Remuera Property Co</b><div style="font-size:11px;color:var(--muted)">Property · Remuera</div></td><td>$142,800 <span style="color:var(--muted);font-size:11px">▬ flat</span></td><td>31.2%</td><td>12 months+</td><td><div class="health-bar"><div style="width:81%;background:var(--green)"></div></div><div class="conf-text">81 · Healthy</div></td><td><button class="btn btn-ghost" style="padding:6px 10px;font-size:12px">Open</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><h2>📅 Deadlines · Next 30 Days</h2><div class="sub">Auto-synced from XPM &amp; IRD</div></div>
+          </div>
+          <div class="deadline-list">
+            <div class="dl"><div class="dl-date"><div class="dl-day">10</div><div class="dl-mo">APR</div></div><div class="dl-main"><div class="dl-title">FBT Return · Q4 FY25</div><div class="dl-sub">Remuera Property Co · 4 vehicles</div></div><span class="badge amber">2d</span></div>
+            <div class="dl"><div class="dl-date"><div class="dl-day">15</div><div class="dl-mo">APR</div></div><div class="dl-main"><div class="dl-title">Provisional Tax · P2</div><div class="dl-sub">Greenfield Landscapes · $12,400</div></div><span class="badge amber">7d</span></div>
+            <div class="dl"><div class="dl-date"><div class="dl-day">20</div><div class="dl-mo">APR</div></div><div class="dl-main"><div class="dl-title">PAYE</div><div class="dl-sub">14 employer clients</div></div><span class="badge blue">12d</span></div>
+            <div class="dl"><div class="dl-date"><div class="dl-day">28</div><div class="dl-mo">APR</div></div><div class="dl-main"><div class="dl-title">GST Returns · March Period</div><div class="dl-sub">14 clients · 9 data complete</div></div><span class="badge blue">20d</span></div>
+            <div class="dl"><div class="dl-date"><div class="dl-day">07</div><div class="dl-mo">MAY</div></div><div class="dl-main"><div class="dl-title">IR3 / IR4 Tax Returns</div><div class="dl-sub">Ponsonby Dental · draft ready</div></div><span class="badge gray">29d</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Team workload -->
+      <div class="card">
+        <div class="card-head">
+          <div><h2>👥 Team Workload</h2><div class="sub">Live view of WIP and capacity across the team</div></div>
+          <span class="chip">Utilisation avg 78%</span>
+        </div>
+        <div class="team-grid">
+          <div class="team-card">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="mini-av av-mp" style="width:40px;height:40px;font-size:13px">MP</div>
+              <div><div style="font-weight:700;color:var(--ink)">Michael Prasad</div><div style="font-size:11.5px;color:var(--muted)">Director · Partner</div></div>
+            </div>
+            <div class="util-bar"><div style="width:92%"></div></div>
+            <div class="util-text"><span>24 active jobs</span><span style="color:var(--red);font-weight:600">92%</span></div>
+          </div>
+          <div class="team-card">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="mini-av av-sk" style="width:40px;height:40px;font-size:13px">SK</div>
+              <div><div style="font-weight:700;color:var(--ink)">Sarah Koroi</div><div style="font-size:11.5px;color:var(--muted)">Senior Accountant</div></div>
+            </div>
+            <div class="util-bar"><div style="width:78%;background:var(--lime)"></div></div>
+            <div class="util-text"><span>18 active jobs</span><span style="color:var(--green);font-weight:600">78%</span></div>
+          </div>
+          <div class="team-card">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="mini-av av-jt" style="width:40px;height:40px;font-size:13px">JT</div>
+              <div><div style="font-weight:700;color:var(--ink)">James Tupou</div><div style="font-size:11.5px;color:var(--muted)">Accountant</div></div>
+            </div>
+            <div class="util-bar"><div style="width:65%;background:var(--lime)"></div></div>
+            <div class="util-text"><span>12 active jobs</span><span style="color:var(--green);font-weight:600">65%</span></div>
+          </div>
+          <div class="team-card">
+            <div style="display:flex;align-items:center;gap:12px">
+              <div class="mini-av av-rn" style="width:40px;height:40px;font-size:13px">RN</div>
+              <div><div style="font-weight:700;color:var(--ink)">Rahul Naidu</div><div style="font-size:11.5px;color:var(--muted)">Bookkeeper</div></div>
+            </div>
+            <div class="util-bar"><div style="width:71%;background:var(--lime)"></div></div>
+            <div class="util-text"><span>34 recs · 9 clients</span><span style="color:var(--green);font-weight:600">71%</span></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <section class="module " id="m1">
     <div class="subtoolbar">
       <div class="subtoolbar-inner">
         <div class="breadcrumb">
-          Xero <span class="sep">›</span> Reports <span class="sep">›</span> <b>Profit &amp; Loss</b> <span class="sep">›</span> Kiwi Build Supplies Ltd
+          Xero <span class="sep">›</span> Reports <span class="sep">›</span> <b>Profit &amp; Loss</b> <span class="sep">›</span> <span id="clientCrumb">Kiwi Build Supplies Ltd</span>
         </div>
         <div class="toolbar-actions">
           <span class="chip">📅 Period: March 2025</span>
@@ -588,6 +900,14 @@ document.querySelectorAll('.tab').forEach(t=>{
     t.classList.add('active');
     document.getElementById(t.dataset.tab).classList.add('active');
     window.scrollTo({top:0,behavior:'smooth'});
+  });
+});
+
+/* Dashboard attention-item click routing */
+document.querySelectorAll('.att-item[data-goto]').forEach(it=>{
+  it.addEventListener('click',()=>{
+    const target=it.dataset.goto;
+    document.querySelector(`.tab[data-tab="${target}"]`)?.click();
   });
 });
 
@@ -887,6 +1207,7 @@ Let's schedule a 45-minute FY26 planning session in the next fortnight.`
 function renderClient(key){
   const c=CLIENTS[key];
   document.getElementById('clientMeta').textContent=c.meta;
+  const cb=document.getElementById('clientCrumb');if(cb) cb.textContent=c.name;
   const grid=document.getElementById('kpiGrid');grid.innerHTML='';
   c.kpis.forEach(k=>{
     grid.insertAdjacentHTML('beforeend',`
