@@ -1707,6 +1707,7 @@ const ARCH_NODES = {
   guardduty:{tag:'Monitoring',type:'sec',title:'GuardDuty',body:"Amazon's GuardDuty continuously watches for unusual activity patterns, credential misuse, and known threat actor addresses across the entire platform.",facts:[['Coverage','Account-wide, continuous'],['Feeds','Amazon threat intelligence plus custom feeds'],['Response','Automatic ticket plus triage']]},
   cloudtrail:{tag:'Monitoring',type:'sec',title:'CloudTrail',body:'Every action on the platform is logged — who performed it, when, from where, and what the result was. Retained for compliance and available for client audit on request.',facts:[['Retention','7 years'],['Storage','Immutable with object lock'],['Access','Read-only, audit role only']]}
 };
+window.ARCH_NODES = ARCH_NODES;
 
 function renderArchPanel(key){
   const n = ARCH_NODES[key];
